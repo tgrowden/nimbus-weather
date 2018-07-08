@@ -1,0 +1,86 @@
+{
+  "name": "nimbus-weather-electron",
+  "version": "0.1.2",
+  "description": "The desktop app for Nimbus Weather.",
+  "main": "main/main.js",
+  "repository": "github:tgrowden/nimbus-weather",
+  "author": {
+    "name": "Taylor Growden",
+    "email": "taylor.growden@gmail.com",
+    "url": "https://github.com/tgrowden"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/tgrowden/nimbus-weather#readme",
+  "private": true,
+  "build": {
+    "productName": "Nimbus Weather",
+    "appId": "com.tgrowden.NimbusWeather",
+    "files": [
+      "**",
+      "!main/index.js",
+      "!**/*.test.js",
+      "!renderer/**",
+      "renderer/.parcel/**",
+      "!**/*.map"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "publish": [
+        "github"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "publish": [
+        "github"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "AppImage"
+      ],
+      "category": "Development",
+      "publish": [
+        "github"
+      ]
+    },
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    }
+  },
+  "dependencies": {
+    "app-root-path": "^2.1.0",
+    "babel-polyfill": "^6.26.0",
+    "devtron": "^1.4.0",
+    "electron-debug": "^2.0.0",
+    "electron-devtools-installer": "^2.2.4",
+    "electron-is-dev": "^0.3.0",
+    "nimbus-weather-core": "^0.1.2",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "redux-logger": "^3.0.6"
+  },
+  "devDependencies": {
+    "electron": "^2.0.4",
+    "electron-builder": "^20.19.2",
+    "flow-bin": "^0.75.0"
+  },
+  "scripts": {
+    "release": "NODE_ENV=production build"
+  }
+}

@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+const program = require('commander')
+const server = require('../scripts/server')
+const config = require('../scripts/config')
+
+program
+	.version(config.version, '-v, --version')
+
+program
+	.command('dev')
+	.description('Start nimbus-weather-server in dev mode')
+	.action(server.dev)
+
+program
+	.command('start')
+	.description('Start nimbus-weather-server')
+	.action(server.start)
+
+program.parse(process.argv)

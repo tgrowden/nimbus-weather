@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+
+const program = require('commander')
+const electron = require('../scripts/electron')
+const config = require('../scripts/config')
+
+program
+	.version(config.version, '-v, --version')
+
+program
+	.command('dev')
+	.description('Start nimbus-weather-electron in dev mode')
+	.action(electron.dev)
+
+program
+	.command('build')
+	.description('Run the production build of nimbus-weather-electron')
+	.action(electron.build)
+
+program
+	.command('package')
+	.description('Build the Nimbus Weather electron app')
+	.option('-m, --mac', 'Package the app for macOS')
+	.option('-l, --linux', 'Package the app for Linux')
+	.option('-w, --windows', 'Package the app for Windows')
+	.option('-a, --all', 'Package the app for macOS, Linux, and Windows')
+	.option('-o, --open', 'Open the release directory after building is complete')
+	.action(electron.package)
+
+program
+	.command('release')
+	.description('Build and release the Nimbus Weather electron app')
+	.option('-m, --mac', 'Release the app for macOS')
+	.option('-l, --linux', 'Release the app for Linux')
+	.option('-w, --windows', 'Release the app for Windows')
+	.action(electron.release)
+
+program.parse(process.argv)

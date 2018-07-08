@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+const program = require('commander')
+const core = require('../scripts/core')
+const config = require('../scripts/config')
+
+program
+	.version(config.version, '-v, --version')
+
+program
+	.command('dev')
+	.description('Start nimbus-weather-core in dev mode')
+	.action(core.dev)
+
+program
+	.command('build')
+	.description('Run the nimbus-weather-core production build')
+	.action(core.build)
+
+program.parse(process.argv)

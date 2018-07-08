@@ -1,0 +1,21 @@
+{
+	"presets": [
+	  "react",
+	  "stage-3",
+	  ["env", {
+		"targets": {
+		  "electron": "2.0"
+		}
+	  }]
+	],
+	"plugins": [
+    "add-module-exports",
+	  "transform-class-properties",
+	  ["transform-runtime",
+		{
+			"polyfill": false,
+			"regenerator": true
+		}
+	  ]
+	]
+}
