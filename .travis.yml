@@ -56,11 +56,3 @@ before_cache:
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
-
-deploy:
-  provider: heroku
-  app: nimbus-weather-app
-  api_key: "$HEROKU_TOKEN"
-  on:
-    branch: master
-    condition: "$TRAVIS_OS_NAME = linux"
