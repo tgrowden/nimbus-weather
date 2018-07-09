@@ -9,7 +9,8 @@
 [include]
 
 [libs]
-<PROJECT_ROOT>/packages/nimbus-weather-core/flow-typed/*
+<PROJECT_ROOT>/flow-typed/nimbus-weather-core_vx.x.x.js
+../../flow-typed/nimbus-weather-core_vx.x.x.js
 
 [options]
 esproposal.class_static_fields=enable

@@ -1,10 +1,14 @@
 import axios from 'axios'
-import { store } from '../store/configureStore'
-import { setWeatherApiError } from '../actions/home'
+import Store from '../store/configureStore'
+import { setWeatherApiError, setFetchingWeather } from '../actions/home'
 import { apiHost } from '../../config'
 
-export default ({ lat, lng }, preferredUnits: string = 'us') =>
-	axios
+const { store } = Store
+
+export default ({ lat, lng }, preferredUnits: string = 'us') => {
+	store.dispatch(setFetchingWeather(true))
+
+	return axios
 		.get(
 			`${apiHost}/forecast`,
 			{
@@ -16,6 +20,12 @@ export default ({ lat, lng }, preferredUnits: string = 'us') =>
 			}
 		)
 		.then(res => res.data)
+		.then((res) => {
+			store.dispatch(setFetchingWeather(false))
+			return res
+		})
 		.catch(() => {
 			store.dispatch(setWeatherApiError(true))
+			store.dispatch(setFetchingWeather(false))
 		})
+}

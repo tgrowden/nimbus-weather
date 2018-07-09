@@ -34,8 +34,7 @@ node_modules
 **/flow-typed/npm/*
 
 **/docs
-
-
+packages/nimbus-weather-webapp/dev
 
 # App packaged
 release

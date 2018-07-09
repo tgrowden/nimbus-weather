@@ -1,7 +1,7 @@
 /* eslint flowtype-errors/show-errors: 0 */
 import React from 'react'
 import { Switch, Route } from 'react-router'
-import HomeIcon from '@material-ui/icons/WbSunny'
+import HomeIcon from '@material-ui/icons/Cloud'
 import SettingsIcon from '@material-ui/icons/Settings'
 import Drawer from './containers/drawer'
 import HomePage from './containers/home-page'

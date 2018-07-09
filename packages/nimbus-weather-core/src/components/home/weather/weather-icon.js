@@ -53,7 +53,7 @@ class WeatherIcon extends React.Component<Props> {
 
 		return (
 			<div style={style}>
-				<Tooltip title={iconLabel}>
+				<Tooltip title={iconLabel} placement="top">
 					<Skycons
 						color={theme.palette.type === 'dark' ? 'white' : 'black'}
 						icon={iconType}
