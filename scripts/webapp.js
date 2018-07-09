@@ -6,7 +6,7 @@ const rimraf = require('rimraf')
 const config = require('./config')
 
 async function dev() {
-	shell.exec(`npx parcel ${path.join(config.paths.webapp, 'src', 'index.html')} -p ${process.env.WEBAPP_DEV_PORT || 3000} --no-cache`)
+	shell.exec(`npx parcel ${path.join(config.paths.webapp, 'src', 'index.html')} -p ${process.env.WEBAPP_DEV_PORT || 3000} --no-cache --out-dir=${path.join(config.paths.webapp, 'dev')}`)
 }
 
 async function build() {
