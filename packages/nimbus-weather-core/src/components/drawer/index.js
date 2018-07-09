@@ -17,6 +17,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import Tooltip from '@material-ui/core/Tooltip'
+import LinearProgress from '@material-ui/core/LinearProgress'
 import { withRouter } from 'react-router-dom'
 import type { Node } from 'react'
 import { animateScroll as scroll } from 'react-scroll'
@@ -35,7 +36,8 @@ type Props = {
 	open: boolean,
 	toggleDrawer: () => void,
 	location: Object,
-	history: Object
+	history: Object,
+	fetchingWeather: boolean
 }
 
 const styles = (theme: MuiTheme) => ({
@@ -163,7 +165,7 @@ class Drawer extends React.Component<Props> {
 	}
 
 	render() {
-		const { classes, theme, children, open } = this.props
+		const { classes, theme, children, open, fetchingWeather } = this.props
 
 		return (
 			<div className={classes.root}>
@@ -209,6 +211,18 @@ class Drawer extends React.Component<Props> {
 							</Link>
 						</Tooltip>
 					</Toolbar>
+					{
+						fetchingWeather &&
+						(
+							<LinearProgress
+								style={{
+									backgroundColor: 'transparent'
+								}}
+								// $FlowFixMe
+								color="secondary"
+							/>
+						)
+					}
 				</AppBar>
 				<MuiDrawer
 					variant="permanent"

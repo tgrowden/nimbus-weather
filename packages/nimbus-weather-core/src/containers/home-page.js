@@ -17,10 +17,6 @@ function mapStateToProps(state) {
 }
 
 function updateWeather(dispatch, { lat, lng }, preferredUnits) {
-	dispatch({
-		type: HomeActions.SET_FETCHING_WEATHER,
-		fetchingWeather: true
-	})
 	fetchWeather({ lat, lng }, preferredUnits)
 		.then(weather =>
 			dispatch({
@@ -31,18 +27,8 @@ function updateWeather(dispatch, { lat, lng }, preferredUnits) {
 				}
 			})
 		)
-		.then(() =>
-			dispatch({
-				type: HomeActions.SET_FETCHING_WEATHER,
-				fetchingWeather: false
-			})
-		)
 		.catch(() => {
 			dispatch({ type: HomeActions.WEATHER_FETCH_ERROR })
-			dispatch({
-				type: HomeActions.SET_FETCHING_WEATHER,
-				fetchingWeather: false
-			})
 		})
 }
 
