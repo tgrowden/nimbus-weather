@@ -47,8 +47,6 @@ export default (theme: MuiTheme) => {
 			margin: chartMargins
 		},
 		responsiveContainer: {
-			minWidth: 300,
-			minHeight: 100,
 			aspect: 3,
 			debounce: 200,
 			maxWidth: '100%',

@@ -101,7 +101,8 @@ const styles = (theme: MuiTheme) => ({
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.leavingScreen
 		}),
-		width: theme.spacing.unit * 7,
+		borderRight: 'none',
+		width: 0,
 		[theme.breakpoints.up('sm')]: {
 			width: theme.spacing.unit * 9
 		}
@@ -117,7 +118,7 @@ const styles = (theme: MuiTheme) => ({
 		flexGrow: 1,
 		backgroundColor: theme.palette.background.default,
 		padding: theme.spacing.unit * 3,
-		marginLeft: theme.spacing.unit * 7,
+		marginLeft: 0,
 		[theme.breakpoints.up('sm')]: {
 			marginLeft: theme.spacing.unit * 9
 		}
@@ -146,7 +147,8 @@ const styles = (theme: MuiTheme) => ({
 	mainContent: {
 		maxWidth: theme.breakpoints.values.xl,
 		marginLeft: 'auto',
-		marginRight: 'auto'
+		marginRight: 'auto',
+		width: '100%'
 	}
 })
 
