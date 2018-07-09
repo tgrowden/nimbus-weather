@@ -19,7 +19,8 @@ async function build() {
 	const opts = {
 		cache: false,
 		watch: false,
-		outDir: distPath
+		outDir: distPath,
+		publicUrl: '/nimbus-weather/'
 	}
 
 	const bundler = new Bundler(path.join(config.paths.webapp, 'src', 'index.html'), opts)
