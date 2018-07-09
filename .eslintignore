@@ -33,6 +33,10 @@ node_modules
 # flow-typed
 **/flow-typed/npm/*
 
+**/docs
+
+
+
 # App packaged
 release
 app/main.prod.js
