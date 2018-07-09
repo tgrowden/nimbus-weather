@@ -1,0 +1,23 @@
+{
+  "name": "nimbus-weather-webapp",
+  "version": "0.2.0",
+  "description": "The webapp for Nimbus Weather",
+  "repository": "github:tgrowden/nimbus-weather",
+  "author": {
+    "name": "Taylor Growden",
+    "email": "taylor.growden@gmail.com",
+    "url": "https://github.com/tgrowden"
+  },
+  "homepage": "https://github.com/tgrowden/nimbus-weather#readme",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "nimbus-weather-core": "^0.2.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.75.0"
+  }
+}

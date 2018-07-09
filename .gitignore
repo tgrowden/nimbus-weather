@@ -46,6 +46,8 @@ packages/nimbus-weather-electron/main/main.*
 packages/nimbus-weather-electron/dist
 packages/nimbus-weather-electron/release
 
+packages/nimbus-weather-webapp/dev
+
 # caches
 .*-cache
 **/.cache

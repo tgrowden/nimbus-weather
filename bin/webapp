@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+const program = require('commander')
+const webapp = require('../scripts/webapp')
+const config = require('../scripts/config')
+
+program
+	.version(config.version, '-v, --version')
+
+program
+	.command('dev')
+	.description('Start nimbus-weather-webapp in dev mode')
+	.action(webapp.dev)
+
+program
+	.command('build')
+	.description('Run the nimbus-weather-webapp production build')
+	.action(webapp.build)
+
+program.parse(process.argv)
