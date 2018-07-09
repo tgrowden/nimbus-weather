@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+    <msapplication>
+        <tile>
+            <square70x70logo src="/nimbus-weather/mstile-70x70.png"/>
+            <square150x150logo src="/nimbus-weather/mstile-150x150.png"/>
+            <wide310x150logo src="/nimbus-weather/mstile-310x150.png"/>
+            <square310x310logo src="/nimbus-weather/mstile-310x310.png"/>
+            <TileColor>rgba(0, 0, 0, 0)</TileColor>
+
+        </tile>
+
+    </msapplication>
+
+</browserconfig>

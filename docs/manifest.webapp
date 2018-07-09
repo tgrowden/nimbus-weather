@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "name": "Nimbus Weather",
+  "description": null,
+  "icons": {
+    "60": "/nimbus-weather/firefox_app_60x60.png",
+    "128": "/nimbus-weather/firefox_app_128x128.png",
+    "512": "/nimbus-weather/firefox_app_512x512.png"
+  },
+  "developer": {
+    "name": null,
+    "url": null
+  }
+}
