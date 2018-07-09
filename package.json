@@ -46,7 +46,7 @@
     "flow:setup": "rimraf packages/nimbus-weather-*/.flow-config packages/nimbus-weather-*/flow-typed/npm && flow-mono install-types && flow-mono create-symlinks .flowconfig",
     "postinstall": "is-ci 'alert-not-ci' 'flow:setup'",
     "test": "jest",
-    "build": "./bin/core build && ./bin/electron build",
+    "build": "./bin/core build && ./bin/electron build && ./bin/webapp build",
     "package": "./bin/electron package",
     "release": "./bin/electron release",
     "server:start": "./bin/server start",
