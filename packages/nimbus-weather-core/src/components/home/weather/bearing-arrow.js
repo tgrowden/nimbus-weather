@@ -1,5 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
+import Arrow from '@material-ui/icons/ArrowUpward'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = (theme: MuiTheme) => ({
@@ -13,7 +14,7 @@ const styles = (theme: MuiTheme) => ({
 type Props = {
 	classes: Object,
 	bearing: number,
-	arrowCharacter?: string,
+	arrow?: React.Node,
 	offset?: number,
 	tooltipProps?: {
 		label: string,
@@ -24,7 +25,7 @@ type Props = {
 const BearingArrow = ({
 	classes,
 	bearing,
-	arrowCharacter,
+	arrow,
 	offset,
 	tooltipProps,
 	...props
@@ -38,15 +39,15 @@ const BearingArrow = ({
 				style={{ transform: `rotate(${calculatedBearing}deg)` }}
 				{...props}
 			>
-				{arrowCharacter}
+				{arrow}
 			</div>
 		</Tooltip>
 	)
 }
 
 BearingArrow.defaultProps = {
-	arrowCharacter: '↖',
-	offset: 135,
+	arrow: <Arrow style={{ height: 14, width: 14 }} />,
+	offset: 180,
 	tooltipProps: {
 		label: 'Bearing: ',
 		unit: '°'
