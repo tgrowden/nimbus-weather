@@ -12,6 +12,9 @@ import Daily from './daily'
 import Alerts from './alerts'
 
 const styles = (theme: MuiTheme) => ({
+	root: {
+		maxWidth: `calc(100vw - ${theme.spacing.unit * 6}px)`
+	},
 	buttonContainer: {
 		position: 'fixed',
 		bottom: theme.spacing.unit * 2,
