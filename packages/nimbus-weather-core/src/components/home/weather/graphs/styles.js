@@ -50,7 +50,8 @@ export default (theme: MuiTheme) => {
 			aspect: 3,
 			debounce: 200,
 			maxWidth: '100%',
-			height: 'auto'
+			height: 'auto',
+			minWidth: theme.breakpoints.values.sm
 		},
 		cartesianGrid: {
 			strokeDasharray: '3 3',

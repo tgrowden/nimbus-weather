@@ -16,6 +16,12 @@ const styles = (theme: MuiTheme) => ({
 		maxWidth: theme.breakpoints.values.lg,
 		marginLeft: 'auto',
 		marginRight: 'auto'
+	},
+	graphWrapper: {
+		width: '100%',
+		overflow: 'auto',
+		paddingTop: theme.spacing.unit * 2,
+		paddingBottom: theme.spacing.unit * 2
 	}
 })
 
@@ -37,15 +43,43 @@ type Props = {
 	tempRangeDateFormat?: string,
 	tempDateFormat?: string,
 	precipDateFormat?: string,
-	onGraphChange: (graph: GraphOptions) => void
+	onGraphChange: (graph: GraphOptions) => void,
+	only?: GraphOptions
 }
 
 class Graphs extends React.Component<Props> {
+	options: Array<GraphOptions>
+
 	static defaultProps = {
 		exclude: [],
 		tempRangeDateFormat: undefined,
 		tempDateFormat: undefined,
-		precipDateFormat: 'ddd, MMM D, YYYY'
+		precipDateFormat: 'ddd, MMM D, YYYY',
+		only: undefined
+	}
+
+	constructor(props) {
+		super(props)
+
+		this.setOptions()
+	}
+
+	setOptions = () => {
+		const { only, exclude = [] } = this.props
+		let options = []
+
+		if (only) {
+			options = [ only ]
+		} else {
+			Object.keys(graphOptions)
+				.forEach(opt => {
+					if (exclude.indexOf(opt) === -1) {
+						options.push(opt)
+					}
+				})
+		}
+
+		this.options = options
 	}
 
 	render() {
@@ -53,7 +87,6 @@ class Graphs extends React.Component<Props> {
 			classes,
 			timezone,
 			data,
-			exclude,
 			tempRangeDateFormat,
 			tempDateFormat,
 			precipDateFormat,
@@ -61,59 +94,62 @@ class Graphs extends React.Component<Props> {
 			onGraphChange
 		} = this.props
 
-		const options = { ...graphOptions }
-		// $FlowFixMe
-		exclude.forEach(exclusion => {
-			delete options[exclusion]
-		})
+		const { options } = this
 
 		return (
 			<div className={classes.root}>
 				<Grid container>
-					<Grid item xs={12} sm={6}>
-						<Select
-							value={graph}
-							onChange={(e: SyntheticEvent<EventTarget>) =>
-								/* $FlowFixMe */
-								onGraphChange(e.target.value)
-							}
-						>
-							{Object.keys(options).map(key => (
-								<MenuItem key={`graph-option-${key}`} value={key}>
-									{options[key]}
-								</MenuItem>
-							))}
-						</Select>
-					</Grid>
+					{
+						options.length > 1 &&
+						(
+							<Grid item xs={12} sm={6}>
+								<Select
+									value={graph}
+									onChange={(e: SyntheticEvent<EventTarget>) =>
+										/* $FlowFixMe */
+										onGraphChange(e.target.value)
+									}
+								>
+									{options.map(key => (
+										<MenuItem key={`graph-option-${key}`} value={key}>
+											{graphOptions[key]}
+										</MenuItem>
+									))}
+								</Select>
+							</Grid>
+						)
+					}
 					<Grid item xs={12}>
-						{graph === 'tempRange' && (
-							<TemperatureRange
-								timezone={timezone}
-								data={data}
-								dateFormat={tempRangeDateFormat}
-							/>
-						)}
-						{graph === 'temp' && (
-							<Temperature
-								timezone={timezone}
-								data={data}
-								dateFormat={tempDateFormat}
-							/>
-						)}
-						{graph === 'precip' && (
-							<Precipitation
-								data={data}
-								timezone={timezone}
-								dateFormat={precipDateFormat}
-							/>
-						)}
-						{graph === 'pressure' && (
-							<Pressure
-								data={data}
-								timezone={timezone}
-								dateFormat={precipDateFormat}
-							/>
-						)}
+						<div className={classes.graphWrapper}>
+							{graph === 'tempRange' && (
+								<TemperatureRange
+									timezone={timezone}
+									data={data}
+									dateFormat={tempRangeDateFormat}
+								/>
+							)}
+							{graph === 'temp' && (
+								<Temperature
+									timezone={timezone}
+									data={data}
+									dateFormat={tempDateFormat}
+								/>
+							)}
+							{graph === 'precip' && (
+								<Precipitation
+									data={data}
+									timezone={timezone}
+									dateFormat={precipDateFormat}
+								/>
+							)}
+							{graph === 'pressure' && (
+								<Pressure
+									data={data}
+									timezone={timezone}
+									dateFormat={precipDateFormat}
+								/>
+							)}
+						</div>
 					</Grid>
 				</Grid>
 			</div>

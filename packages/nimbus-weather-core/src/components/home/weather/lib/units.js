@@ -98,7 +98,7 @@ export const us: Units = {
 	windSpeed: 'mph'
 }
 
-export default function getUnits() {
+export default function getUnits(): Units {
 	const state = store.getState()
 	const preferredUnits = state.home.preferredUnits || 'us'
 

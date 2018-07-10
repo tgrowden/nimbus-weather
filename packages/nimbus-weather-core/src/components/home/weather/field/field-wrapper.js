@@ -22,19 +22,12 @@ type Props = {
 	children: React.ReactNode
 }
 
-const FieldWrapper = ({
-	classes,
-	children,
-	...props
-}: Props) => {
-
-	return (
-		<LazyLoad>
-			<div className={classes.root} {...props}>
-				{children}
-			</div>
-		</LazyLoad>
-	)
-}
+const FieldWrapper = ({ classes, children, ...props }: Props) => (
+	<LazyLoad>
+		<div className={classes.root} {...props}>
+			{children}
+		</div>
+	</LazyLoad>
+)
 
 export default withStyles(styles)(FieldWrapper)
