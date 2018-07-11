@@ -7,6 +7,7 @@
 <PROJECT_ROOT>/node_modules/config-chain/test/broken.json
 
 [include]
+<PROJECT_ROOT>/../../node_modules/.*
 
 [libs]
 <PROJECT_ROOT>/flow-typed/nimbus-weather-core_vx.x.x.js
