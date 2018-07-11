@@ -12,28 +12,39 @@ const styles = (theme: MuiTheme) => ({
 })
 
 type Props = {
-	active: boolean
+	active: boolean,
+	payload: Array<Object>,
+	label: string,
+	classes: Object
 }
 
 class TooltipContent extends React.Component<Props> {
 	render() {
-		const { active } = this.props
+		const { active, payload } = this.props
 
-		if (!active) return null
-		console.log({ props: this.props })
+		if (!active || payload.length < 1) return null
 
-		const { payload, label, classes } = this.props
+		const { label, classes } = this.props
 
 		return (
 			<div className={classes.root}>
-				<Typography className={classes.label}>{label}</Typography>
-				<Typography>
-					{
-						!!payload[0].dataKey &&
-						`${payload[0].dataKey}: `
-					}
-					{payload[0].value}
+				<Typography className={classes.label} variant="body2">
+					{label}
 				</Typography>
+				{payload.map((item, i) => (
+					/* eslint-disable react/no-array-index-key */
+					<Typography
+						key={`payload-item-${item.name}-${item.value}-${i}`}
+						style={{
+							color: item.color || 'inherit'
+						}}
+					>
+						{!!item.name && `${item.name}: `}
+						{item.value}
+						{!!item.unit && item.unit}
+					</Typography>
+					/* eslint-enable react/no-array-index-key */
+				))}
 			</div>
 		)
 	}
