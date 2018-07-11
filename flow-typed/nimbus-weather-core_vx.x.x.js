@@ -99,7 +99,7 @@ export type HourlyWeatherData = Array<{
 	precipType?: PrecipTypes,
 	pressure?: number,
 	summary?: string,
-	temperature?: number,
+	temperature: number,
 	time: number,
 	uvIndex?: number,
 	visibility?: number,
@@ -293,3 +293,14 @@ export type OSMResponse = {
 	type?: string,
 	icon?: string
 }
+
+export interface WeatherDataVisualization {
+	units: Units;
+
+	+data: Array<{
+		time: string | number,
+		[key: string]: any
+	}>;
+}
+
+export type Width = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
