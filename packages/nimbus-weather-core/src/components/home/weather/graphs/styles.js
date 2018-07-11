@@ -1,3 +1,6 @@
+import React from 'react'
+import TooltipContent from './tooltip-content'
+
 export default (theme: MuiTheme) => {
 	const chartMargins = {
 		left: theme.spacing.unit,
@@ -23,7 +26,8 @@ export default (theme: MuiTheme) => {
 			cursor: {
 				stroke: theme.palette.divider,
 				strokeWidth: 2
-			}
+			},
+			content: (<TooltipContent />)
 		},
 		yAxis: {
 			tick: {
