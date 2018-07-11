@@ -69,14 +69,13 @@ class Graphs extends React.Component<Props> {
 		let options = []
 
 		if (only) {
-			options = [ only ]
+			options = [only]
 		} else {
-			Object.keys(graphOptions)
-				.forEach(opt => {
-					if (exclude.indexOf(opt) === -1) {
-						options.push(opt)
-					}
-				})
+			Object.keys(graphOptions).forEach(opt => {
+				if (exclude.indexOf(opt) === -1) {
+					options.push(opt)
+				}
+			})
 		}
 
 		this.options = options
@@ -99,26 +98,23 @@ class Graphs extends React.Component<Props> {
 		return (
 			<div className={classes.root}>
 				<Grid container>
-					{
-						options.length > 1 &&
-						(
-							<Grid item xs={12} sm={6}>
-								<Select
-									value={graph}
-									onChange={(e: SyntheticEvent<EventTarget>) =>
-										/* $FlowFixMe */
-										onGraphChange(e.target.value)
-									}
-								>
-									{options.map(key => (
-										<MenuItem key={`graph-option-${key}`} value={key}>
-											{graphOptions[key]}
-										</MenuItem>
-									))}
-								</Select>
-							</Grid>
-						)
-					}
+					{options.length > 1 && (
+						<Grid item xs={12} sm={6}>
+							<Select
+								value={graph}
+								onChange={(e: SyntheticEvent<EventTarget>) =>
+									/* $FlowFixMe */
+									onGraphChange(e.target.value)
+								}
+							>
+								{options.map(key => (
+									<MenuItem key={`graph-option-${key}`} value={key}>
+										{graphOptions[key]}
+									</MenuItem>
+								))}
+							</Select>
+						</Grid>
+					)}
 					<Grid item xs={12}>
 						<div className={classes.graphWrapper}>
 							{graph === 'tempRange' && (

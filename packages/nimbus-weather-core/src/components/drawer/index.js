@@ -211,18 +211,15 @@ class Drawer extends React.Component<Props> {
 							</Link>
 						</Tooltip>
 					</Toolbar>
-					{
-						fetchingWeather &&
-						(
-							<LinearProgress
-								style={{
-									backgroundColor: 'transparent'
-								}}
-								// $FlowFixMe
-								color="secondary"
-							/>
-						)
-					}
+					{fetchingWeather && (
+						<LinearProgress
+							style={{
+								backgroundColor: 'transparent'
+							}}
+							// $FlowFixMe
+							color="secondary"
+						/>
+					)}
 				</AppBar>
 				<MuiDrawer
 					variant="permanent"

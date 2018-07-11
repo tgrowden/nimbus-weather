@@ -18,9 +18,7 @@ const installExtensions = async () => {
 	const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS']
 	/* eslint no-console: 0, compat/compat: 0 */
 	return Promise.all(
-		extensions.map(name =>
-			installer.default(installer[name], forceDownload)
-		)
+		extensions.map(name => installer.default(installer[name], forceDownload))
 	).catch(console.log)
 	/* eslint no-console: 0, compat/compat: 0 */
 }
@@ -45,7 +43,14 @@ app.on('ready', async () => {
 	const devPath = `http://localhost:${process.env.PORT || 1124}`
 	// const devPath = `file://${__dirname}/../renderer/.parcel/development/index.html`
 
-	const prodPath = `file://${path.resolve(__dirname, '..', 'renderer', '.parcel', 'production', 'index.html')}`
+	const prodPath = `file://${path.resolve(
+		__dirname,
+		'..',
+		'renderer',
+		'.parcel',
+		'production',
+		'index.html'
+	)}`
 
 	const url = isDev ? devPath : prodPath
 

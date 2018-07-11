@@ -27,7 +27,7 @@ export default (theme: MuiTheme) => {
 				stroke: theme.palette.divider,
 				strokeWidth: 2
 			},
-			content: (<TooltipContent />)
+			content: <TooltipContent />
 		},
 		yAxis: {
 			tick: {

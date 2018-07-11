@@ -19,7 +19,7 @@ async function dev() {
 		.on('quit', () => {
 			process.exit()
 		})
-		.on('restart', (files) => {
+		.on('restart', files => {
 			// eslint-disable-next-line no-console
 			console.log('App restarted due to: ', files)
 		})

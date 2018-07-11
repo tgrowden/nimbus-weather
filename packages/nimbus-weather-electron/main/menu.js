@@ -12,10 +12,7 @@ class MenuBuilder {
 	}
 
 	buildMenu() {
-		if (
-			isDev ||
-			isDebug
-		) {
+		if (isDev || isDebug) {
 			this.setupDevelopmentEnvironment()
 		}
 
@@ -177,8 +174,7 @@ class MenuBuilder {
 			]
 		}
 
-		const subMenuView =
-			isDev || isDebug ? subMenuViewDev : subMenuViewProd
+		const subMenuView = isDev || isDebug ? subMenuViewDev : subMenuViewProd
 
 		return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp]
 	}

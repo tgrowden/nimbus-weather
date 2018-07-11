@@ -33,7 +33,9 @@ const BearingArrow = ({
 	const calculatedBearing = bearing - offset
 
 	return (
-		<Tooltip title={`${tooltipProps.label}${calculatedBearing}${tooltipProps.unit}`}>
+		<Tooltip
+			title={`${tooltipProps.label}${calculatedBearing}${tooltipProps.unit}`}
+		>
 			<div
 				className={classes.arrowWrapper}
 				style={{ transform: `rotate(${calculatedBearing}deg)` }}

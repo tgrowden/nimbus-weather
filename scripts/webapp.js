@@ -6,7 +6,14 @@ const rimraf = require('rimraf')
 const config = require('./config')
 
 async function dev() {
-	shell.exec(`npx parcel ${path.join(config.paths.webapp, 'src', 'index.html')} -p ${process.env.WEBAPP_DEV_PORT || 3000} --no-cache --out-dir=${path.join(config.paths.webapp, 'dev')}`)
+	shell.exec(
+		`npx parcel ${path.join(
+			config.paths.webapp,
+			'src',
+			'index.html'
+		)} -p ${process.env.WEBAPP_DEV_PORT ||
+			3000} --no-cache --out-dir=${path.join(config.paths.webapp, 'dev')}`
+	)
 }
 
 async function build() {
@@ -23,7 +30,10 @@ async function build() {
 		publicUrl: '/nimbus-weather/'
 	}
 
-	const bundler = new Bundler(path.join(config.paths.webapp, 'src', 'index.html'), opts)
+	const bundler = new Bundler(
+		path.join(config.paths.webapp, 'src', 'index.html'),
+		opts
+	)
 
 	await bundler.bundle()
 }

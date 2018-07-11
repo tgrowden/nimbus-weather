@@ -24,7 +24,9 @@ class DarkSkyLogo extends React.Component<Props> {
 	get imgSrc() {
 		const { theme } = this.props
 
-		return theme.palette.type === 'dark' ? LogoDarkBackground : LogoLightBackground
+		return theme.palette.type === 'dark'
+			? LogoDarkBackground
+			: LogoLightBackground
 	}
 
 	render() {
