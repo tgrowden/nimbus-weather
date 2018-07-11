@@ -16,19 +16,13 @@ type Props = {
 	activeTab: number,
 	classes: Object,
 	location: Object,
-	fetchWeather: (
-		coords: Coords,
-		preferredUnits: Unit
-	) => void,
+	fetchWeather: (coords: Coords, preferredUnits: Unit) => void,
 	setLocation: (location: Object) => void,
 	setActiveTab: (activeTab: number) => void,
 	weather: Weather,
 	fetchingWeather: boolean,
 	preferredUnits: Unit,
-	setPreferredUnits: (
-		preferredUnits: Unit,
-		coords: Coords
-	) => void
+	setPreferredUnits: (preferredUnits: Unit, coords: Coords) => void
 }
 
 const styles = (theme: MuiTheme) => ({
@@ -80,10 +74,7 @@ class Home extends Component<Props> {
 	onLocationChange = location => {
 		this.props.setLocation(location)
 
-		this.props.fetchWeather(
-			location.coords,
-			this.props.preferredUnits
-		)
+		this.props.fetchWeather(location.coords, this.props.preferredUnits)
 	}
 
 	render() {

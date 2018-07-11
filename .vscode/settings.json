@@ -16,5 +16,9 @@
 		"test/**/__snapshots__": true,
 		"yarn.lock": true
   },
-  "eslint.packageManager": "yarn"
+  "prettier.eslintIntegration": true,
+  "eslint.packageManager": "yarn",
+  "eslint.options": {
+    "cache": true
+  }
 }

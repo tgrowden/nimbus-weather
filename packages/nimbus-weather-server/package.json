@@ -1,6 +1,6 @@
 {
   "name": "nimbus-weather-server",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "The server for Nimbus Weather",
   "main": "index.js",
   "license": "MIT",

@@ -68,16 +68,17 @@ class Alert extends React.Component<Props> {
 				<CardHeader
 					title={`${data.title} until ${endTime}`}
 					subheader={formatRegions(data.regions)}
-					avatar={<Icon color="inherit"><AlertIcon severity={data.severity} /></Icon>}
+					avatar={
+						<Icon color="inherit">
+							<AlertIcon severity={data.severity} />
+						</Icon>
+					}
 				/>
 				<CardContent>
 					<Typography>{data.description}</Typography>
 				</CardContent>
 				<CardActions>
-					<Button
-						size="small"
-						onClick={open.bind(null, data.uri)}
-					>
+					<Button size="small" onClick={open.bind(null, data.uri)}>
 						Learn More
 					</Button>
 				</CardActions>

@@ -1,5 +1,10 @@
 /* eslint import/no-mutable-exports: 0, global-require: 0 */
-export const isElectron = !!(window && window.require && window.process && window.process.type)
+export const isElectron = !!(
+	window &&
+	window.require &&
+	window.process &&
+	window.process.type
+)
 
 let res
 

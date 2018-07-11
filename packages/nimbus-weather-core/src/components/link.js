@@ -7,7 +7,7 @@ type Props = {
 }
 
 class Link extends React.Component<Props> {
-	handleClick = (e) => {
+	handleClick = e => {
 		if (!isElectron) return
 
 		e.preventDefault()
@@ -18,11 +18,7 @@ class Link extends React.Component<Props> {
 		const { href, children, ...props } = this.props
 
 		return (
-			<a
-				href={href}
-				onClick={this.handleClick}
-				{...props}
-			>
+			<a href={href} onClick={this.handleClick} {...props}>
 				{children}
 			</a>
 		)

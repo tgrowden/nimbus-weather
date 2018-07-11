@@ -10,11 +10,10 @@ import {
 	CartesianGrid
 } from 'recharts'
 import { withStyles } from '@material-ui/core/styles'
-import { Typography } from '@material-ui/core'
-import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent'
 import formatDate from '../lib/format-date'
 import graphStyles from './styles'
 import getUnits from '../lib/units'
+import TooltipContent from './tooltip-content'
 
 const styles = (theme: MuiTheme) => ({
 	root: {
@@ -61,18 +60,10 @@ const CustomTooltip = (props: { payload: Array<Object>, units: Units }) => {
 			}
 		})
 
-		return (
-			<Typography component="div">
-				<DefaultTooltipContent {...props} payload={payload} />
-			</Typography>
-		)
+		return <TooltipContent {...props} payload={payload} />
 	}
 
-	return (
-		<Typography component="div">
-			<DefaultTooltipContent {...props} />
-		</Typography>
-	)
+	return <TooltipContent {...props} />
 }
 
 class PrecipitationGraph extends React.Component<Props> {

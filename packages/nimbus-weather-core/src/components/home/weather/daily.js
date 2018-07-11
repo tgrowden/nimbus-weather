@@ -19,6 +19,7 @@ import Ozone from './field/ozone'
 import Wind from './field/wind'
 import GeneralSummary from './general-summary'
 import Graphs from './graphs'
+import FieldWrapper from './field/field-wrapper'
 
 type Props = {
 	classes: Object,
@@ -60,7 +61,7 @@ class Daily extends React.Component<Props> {
 				/>
 				<GeneralSummary summary={weather.summary} />
 				{weather.data.map(day => (
-					<div key={`day-${day.time}`} className={classes.day}>
+					<FieldWrapper key={`day-${day.time}`}>
 						<Summary
 							icon={day.icon}
 							time={day.time}
@@ -90,7 +91,7 @@ class Daily extends React.Component<Props> {
 						<UVIndex value={day.uvIndex} />
 						<Visibility value={day.visibility} units={units} />
 						<Ozone value={day.ozone} units={units} />
-					</div>
+					</FieldWrapper>
 				))}
 			</div>
 		)

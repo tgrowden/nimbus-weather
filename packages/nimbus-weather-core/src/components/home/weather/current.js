@@ -16,8 +16,9 @@ import CloudCover from './field/cloud-cover'
 import UVIndex from './field/uv-index'
 import Visibility from './field/visibility'
 import Ozone from './field/ozone'
-import PrecipitationGraph from './graphs/precipitation'
 import Wind from './field/wind'
+import FieldWrapper from './field/field-wrapper'
+import Graphs from './graphs'
 
 type Props = {
 	classes: Object,
@@ -29,7 +30,6 @@ type Props = {
 
 const styles = (theme: MuiTheme) => ({
 	root: {},
-	fields: {},
 	graphWrapper: {
 		maxWidth: theme.breakpoints.values.lg,
 		marginLeft: 'auto',
@@ -44,7 +44,7 @@ class Current extends React.Component<Props> {
 
 		return (
 			<div className={classes.root}>
-				<div className={classes.fields}>
+				<FieldWrapper>
 					<Summary
 						icon={weather.icon}
 						time={weather.time}
@@ -84,11 +84,17 @@ class Current extends React.Component<Props> {
 					<UVIndex value={weather.uvIndex} />
 					<Visibility value={weather.visibility} units={units} />
 					<Ozone value={weather.ozone} units={units} />
-				</div>
+				</FieldWrapper>
 				{minutely &&
 					minutely.data && (
 					<div className={classes.graphWrapper}>
-						<PrecipitationGraph data={minutely.data} timezone={timezone} />
+						<Graphs
+							data={minutely.data}
+							timezone={timezone}
+							only="precip"
+							onGraphChange={() => {}}
+							graph="precip"
+						/>
 					</div>
 				)}
 			</div>

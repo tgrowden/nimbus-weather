@@ -34,8 +34,12 @@ function exec(cmdStr) {
 async function build() {
 	shell.cd(config.paths.electron)
 
-	exec('NODE_ENV=production npx parcel build main/index.js -d main --out-file=main --target=electron')
-	exec('NODE_ENV=production npx parcel build renderer/index.html --public-url ./ -d renderer/.parcel/production')
+	exec(
+		'NODE_ENV=production npx parcel build main/index.js -d main --out-file=main --target=electron'
+	)
+	exec(
+		'NODE_ENV=production npx parcel build renderer/index.html --public-url ./ -d renderer/.parcel/production'
+	)
 }
 
 async function packageApp(cmd) {
@@ -81,7 +85,9 @@ async function packageApp(cmd) {
 async function dev() {
 	shell.cd(config.paths.electron)
 	const port = process.env.PORT || 1124
-	exec(`npx concurrently --kill-others-on-fail "npx parcel renderer/index.html -p ${port} --no-cache" "npx parcel build main/index.js -d main --out-file=main --target=electron --no-cache && npx electron ."`)
+	exec(
+		`npx concurrently --kill-others-on-fail "npx parcel renderer/index.html -p ${port} --no-cache" "npx parcel build main/index.js -d main --out-file=main --target=electron --no-cache && npx electron ."`
+	)
 }
 
 async function release(cmd) {

@@ -2,7 +2,12 @@ require('../dotenv')()
 const Bundler = require('parcel-bundler')
 const path = require('path')
 
-const corePath = path.resolve(__dirname, '..', 'packages', 'nimbus-weather-core')
+const corePath = path.resolve(
+	__dirname,
+	'..',
+	'packages',
+	'nimbus-weather-core'
+)
 
 async function dev() {
 	const opts = {

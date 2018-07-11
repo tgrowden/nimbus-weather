@@ -1,6 +1,6 @@
 {
   "name": "nimbus-weather-electron",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "The desktop app for Nimbus Weather.",
   "main": "main/main.js",
   "repository": "github:tgrowden/nimbus-weather",
@@ -70,7 +70,7 @@
     "electron-debug": "^2.0.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-is-dev": "^0.3.0",
-    "nimbus-weather-core": "^0.3.0",
+    "nimbus-weather-core": "^0.4.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "redux-logger": "^3.0.6"

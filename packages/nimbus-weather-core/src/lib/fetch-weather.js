@@ -9,18 +9,15 @@ export default ({ lat, lng }, preferredUnits: string = 'us') => {
 	store.dispatch(setFetchingWeather(true))
 
 	return axios
-		.get(
-			`${apiHost}/forecast`,
-			{
-				params: {
-					lat,
-					lng,
-					units: preferredUnits
-				}
+		.get(`${apiHost}/forecast`, {
+			params: {
+				lat,
+				lng,
+				units: preferredUnits
 			}
-		)
+		})
 		.then(res => res.data)
-		.then((res) => {
+		.then(res => {
 			store.dispatch(setFetchingWeather(false))
 			return res
 		})

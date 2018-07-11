@@ -21,35 +21,31 @@ forecastRouter.get('/', async (req, res) => {
 
 	try {
 		if (!lat || !lng) {
-			return res
-				.status(400)
-				.json({
-					error: 'Both `lat` and `lng` query params are required'
-				})
+			return res.status(400).json({
+				error: 'Both `lat` and `lng` query params are required'
+			})
 		}
-		const response = await axios.get(`https://api.darksky.net/forecast/${apiKey}/${lat},${lng}`, {
-			params: {
-				units
+		const response = await axios.get(
+			`https://api.darksky.net/forecast/${apiKey}/${lat},${lng}`,
+			{
+				params: {
+					units
+				}
 			}
-		})
+		)
 
 		res.json(response.data)
 	} catch (e) {
 		// eslint-disable-next-line no-console
 		console.error(e)
 
-		res
-			.status(500)
-			.json({
-				error: 'There was an error'
-			})
+		res.status(500).json({
+			error: 'There was an error'
+		})
 	}
 })
 
-app.use(
-	'/forecast',
-	forecastRouter
-)
+app.use('/forecast', forecastRouter)
 
 app.listen(port, () => {
 	/* eslint-disable-next-line no-console */
