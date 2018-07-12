@@ -4,6 +4,7 @@ import withWidth from '@material-ui/core/withWidth'
 import formatDate from '../../lib/format-date'
 import getUnits from '../../lib/units'
 import DesktopTemperature from './desktop'
+import MobileTemperature from './mobile'
 
 type Props = {
 	data: HourlyWeatherData,
@@ -44,7 +45,14 @@ class TemperatureVisualization extends React.Component<Props>
 		const { width } = this.props
 
 		if (width === 'xs') {
-			return null
+			return (
+				<MobileTemperature
+					units={this.units}
+					data={this.props.data}
+					dateFormat={this.props.dateFormat}
+					timezone={this.props.timezone}
+				/>
+			)
 		}
 
 		return <DesktopTemperature units={this.units} data={this.data} />
