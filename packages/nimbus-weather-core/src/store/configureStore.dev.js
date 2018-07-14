@@ -7,6 +7,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import rootReducer from '../reducers'
 import * as drawerActions from '../actions/drawer'
+import locationChangeMiddleware from './middleware/location-change'
 
 const persistConfig = {
 	key: 'root',
@@ -37,6 +38,8 @@ const configureStore = (initialState?) => {
 	// Router Middleware
 	const router = routerMiddleware(history)
 	middleware.push(router)
+
+	middleware.push(locationChangeMiddleware)
 
 	// Redux DevTools Configuration
 	const actionCreators = {
