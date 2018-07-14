@@ -11,6 +11,13 @@ import Hourly from './hourly'
 import Daily from './daily'
 import Alerts from './alerts'
 
+const VIEWS = {
+	current: 0,
+	hourly: 1,
+	daily: 2,
+	alerts: 3
+}
+
 const styles = (theme: MuiTheme) => ({
 	root: {
 		maxWidth: `calc(100vw - ${theme.spacing.unit * 6}px)`
@@ -61,64 +68,79 @@ class WeatherApp extends React.Component<Props> {
 		}
 	}
 
-	render() {
-		const {
-			classes,
-			weather,
-			activeTab,
-			setActiveTab,
-			fetchWeather,
-			fetchingWeather
-		} = this.props
+	get alertsDisabled(): boolean {
+		const { weather } = this.props
+
+		return !weather.alerts || !weather.alerts.length
+	}
+
+	get activeTab() {
+		const { activeTab } = this.props
+		if (activeTab === VIEWS.alerts && this.alertsDisabled) {
+			return VIEWS.current
+		}
+
+		return activeTab
+	}
+
+	get activeView() {
+		const { weather } = this.props
 
 		const units = (weather && weather.flags && weather.flags.units) || undefined
+
+		switch (this.activeTab) {
+			case VIEWS.hourly:
+				return (
+					<Hourly
+						weather={weather.hourly}
+						timezone={weather.timezone}
+						units={units}
+					/>
+				)
+			case VIEWS.daily:
+				return (
+					<Daily
+						weather={weather.daily}
+						timezone={weather.timezone}
+						units={units}
+					/>
+				)
+			case VIEWS.alerts:
+				return <Alerts alerts={weather.alerts} timezone={weather.timezone} />
+			default:
+				return (
+					<Current
+						weather={weather.currently}
+						minutely={weather.minutely}
+						timezone={weather.timezone}
+						units={units}
+					/>
+				)
+		}
+	}
+
+	render() {
+		const { classes, setActiveTab, fetchWeather, fetchingWeather } = this.props
 
 		return (
 			<div className={classes.root}>
 				<Paper>
 					<AppBar position="static">
 						<Tabs
-							value={activeTab}
+							value={this.activeTab}
 							onChange={(e, tabIndex) => {
 								setActiveTab(tabIndex)
 							}}
+							scrollable
+							scrollButtons="auto"
 						>
 							<Tab label="Current" />
 							<Tab label="Hourly" />
 							<Tab label="Daily" />
-							<Tab
-								label="Alerts"
-								disabled={!weather.alerts || !weather.alerts.length}
-							/>
+							<Tab label="Alerts" disabled={this.alertsDisabled} />
 						</Tabs>
 					</AppBar>
-					<div className={classes.weatherContainer}>
-						{activeTab === 0 && (
-							<Current
-								weather={weather.currently}
-								minutely={weather.minutely}
-								timezone={weather.timezone}
-								units={units}
-							/>
-						)}
-						{activeTab === 1 && (
-							<Hourly
-								weather={weather.hourly}
-								timezone={weather.timezone}
-								units={units}
-							/>
-						)}
-						{activeTab === 2 && (
-							<Daily
-								weather={weather.daily}
-								timezone={weather.timezone}
-								units={units}
-							/>
-						)}
-						{activeTab === 3 && (
-							<Alerts alerts={weather.alerts} timezone={weather.timezone} />
-						)}
-					</div>
+					<div className={classes.weatherContainer}>{this.activeView}</div>
 				</Paper>
 				<div className={classes.buttonContainer}>
 					<Tooltip title="Refresh Weather" placement="left">
