@@ -6,7 +6,7 @@ export default function renderInput(inputProps) {
 
 	return (
 		<TextField
-			InputLabelProps={{ shrink: true }}
+			multiline
 			InputProps={{
 				inputRef: ref,
 				classes: {

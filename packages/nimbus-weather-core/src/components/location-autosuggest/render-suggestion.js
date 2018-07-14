@@ -24,7 +24,7 @@ export default function renderSuggestion({
 			key={`${suggestion.osm_id}-${suggestion.place_id}`}
 			selected={isHighlighted}
 			component="p"
-			style={{ whiteSpace: 'normal' }}
+			style={{ whiteSpace: 'normal', height: 'auto' }}
 		>
 			{suggestion.display_name}
 		</MenuItem>

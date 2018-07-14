@@ -52,12 +52,20 @@ type Props = {
 }
 
 type State = {
-	suggestions: Array<Object>
+	suggestions: Array<Object>,
+	inputValue: string
 }
 
 class LocationAutosuggest extends React.Component<Props, State> {
-	state = {
-		suggestions: []
+	inputEl: HTMLElement
+
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			suggestions: [],
+			inputValue: (props.location && props.location.name) || ''
+		}
 	}
 
 	fetchSuggestions = debounce(
@@ -66,8 +74,16 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		300
 	)
 
+	handleInputValueChange(inputValue) {
+		this.setState({ inputValue })
+	}
+
 	handleChange = item => {
 		if (!item) return
+
+		this.setState({
+			inputValue: item.display_name
+		})
 
 		const res = {
 			name: item.display_name,
@@ -83,12 +99,17 @@ class LocationAutosuggest extends React.Component<Props, State> {
 	render() {
 		const { classes, location } = this.props
 
+		const { inputValue } = this.state
+
 		return (
 			<div className={classes.root}>
 				<Downshift
 					onChange={this.handleChange}
 					value={location}
 					itemToString={i => (i && i.name ? i.name : '')}
+					inputValue={inputValue}
+					defaultInputValue={(location && location.name) || ''}
+					onInputValueChange={this.handleInputValueChange.bind(this)}
 				>
 					{({
 						getInputProps,
@@ -102,6 +123,9 @@ class LocationAutosuggest extends React.Component<Props, State> {
 								fullWidth: true,
 								classes,
 								label: 'Location',
+								ref: el => {
+									this.inputEl = el
+								},
 								InputProps: getInputProps({
 									onChange: e => {
 										const { value } = e.target
@@ -109,8 +133,10 @@ class LocationAutosuggest extends React.Component<Props, State> {
 
 										this.fetchSuggestions(value)
 									},
-									placeholder:
-										location && location.name ? location.name : undefined
+									onFocus: e => {
+										const { target } = e
+										target.setSelectionRange(0, target.value.length)
+									}
 								})
 							})}
 							{isOpen && (
