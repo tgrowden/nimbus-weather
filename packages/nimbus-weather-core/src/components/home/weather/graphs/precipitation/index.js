@@ -3,8 +3,8 @@ import * as React from 'react'
 import withWidth from '@material-ui/core/withWidth'
 import formatDate from '../../lib/format-date'
 import getUnits from '../../lib/units'
-import DesktopPrecipitation from './desktop'
-import MobilePrecipitation from './mobile'
+import PrecipitationGraph from './graph'
+import PrecipitationTable from './table'
 
 type Props = {
 	data: WeatherData,
@@ -55,24 +55,29 @@ class PrecipitationVisualization extends React.Component<Props>
 
 		const { displayIntensity } = this
 
+		const table = (
+			<PrecipitationTable
+				units={this.units}
+				data={this.props.data}
+				dateFormat={this.props.dateFormat}
+				timezone={this.props.timezone}
+				displayIntensity={displayIntensity}
+			/>
+		)
+
 		if (width === 'xs') {
-			return (
-				<MobilePrecipitation
-					units={this.units}
-					data={this.props.data}
-					dateFormat={this.props.dateFormat}
-					timezone={this.props.timezone}
-					displayIntensity={displayIntensity}
-				/>
-			)
+			return table
 		}
 
 		return (
-			<DesktopPrecipitation
-				units={this.units}
-				data={this.data}
-				displayIntensity={displayIntensity}
-			/>
+			<React.Fragment>
+				<PrecipitationGraph
+					units={this.units}
+					data={this.data}
+					displayIntensity={displayIntensity}
+				/>
+				{table}
+			</React.Fragment>
 		)
 	}
 }

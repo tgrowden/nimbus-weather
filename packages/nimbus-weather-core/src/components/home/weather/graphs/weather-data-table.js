@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
 import getUnits from '../lib/units'
+import WeatherDataExpansionPanel from './weather-data-expansion-panel'
 
 const styles = theme => ({
 	root: {
@@ -81,80 +82,87 @@ class WeatherDataTable extends React.Component<Props, State> {
 		const units = getUnits()
 
 		return (
-			<div className={classes.root}>
-				<div className={classes.tableWrapper}>
-					<Table className={classes.table} aria-labelledby="Weather Data">
-						<TableHead>
-							<TableRow>
-								{fields.map(field => {
-									/* eslint-disable no-prototype-builtins */
-									const sortable = field.hasOwnProperty('sortable')
-										? field.sortable
-										: true
-									/* eslint-disable no-prototype-builtins */
-
-									return (
-										<TableCell
-											key={field.key}
-											numeric={field.numeric}
-											padding="none"
-											className={classes.tableCell}
-											sortDirection={orderBy === field.key ? order : false}
-										>
-											{sortable ? (
-												<TableSortLabel
-													active={orderBy === field.key}
-													direction={order}
-													onClick={this.handleRequestSort.bind(this, field.key)}
-												>
-													{field.label || field.key}
-												</TableSortLabel>
-											) : (
-												field.label || field.key
-											)}
-										</TableCell>
-									)
-								})}
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{/* eslint-disable react/no-array-index-key */
-								data.sort(getSorting(order, orderBy)).map((datum, datumIndex) => (
-									<TableRow tabIndex={-1} key={`row-${datumIndex}`}>
-										{fields.map((field, fieldIndex) => {
+			<WeatherDataExpansionPanel>
+				<div className={classes.root}>
+					<div className={classes.tableWrapper}>
+						<Table className={classes.table} aria-labelledby="Weather Data">
+							<TableHead>
+								<TableRow>
+									{fields.map(field => {
 										/* eslint-disable no-prototype-builtins */
-											if (!datum.hasOwnProperty(field.key)) return null
-											/* eslint-enable no-prototype-builtins */
-											const item = datum[field.key]
+										const sortable = field.hasOwnProperty('sortable')
+											? field.sortable
+											: true
+										/* eslint-disable no-prototype-builtins */
 
-											return (
-												<TableCell
-													key={`cell-${datumIndex}-${fieldIndex}-${item}`}
-													numeric={!!field.numeric}
-													padding="none"
-													className={classes.tableCell}
-													style={
-														!!field.styleFormatter &&
-													typeof field.styleFormatter === 'function'
-															? field.styleFormatter({ value: item, theme })
-															: undefined
-													}
-												>
-													{!!field.formatter &&
-												typeof field.formatter === 'function'
-														? field.formatter(item, units)
-														: item}
-												</TableCell>
-											)
-										})}
-									</TableRow>
-								))
-							/* eslint-enable react/no-array-index-key */
-							}
-						</TableBody>
-					</Table>
+										return (
+											<TableCell
+												key={field.key}
+												numeric={field.numeric}
+												padding="none"
+												className={classes.tableCell}
+												sortDirection={orderBy === field.key ? order : false}
+											>
+												{sortable ? (
+													<TableSortLabel
+														active={orderBy === field.key}
+														direction={order}
+														onClick={this.handleRequestSort.bind(
+															this,
+															field.key
+														)}
+													>
+														{field.label || field.key}
+													</TableSortLabel>
+												) : (
+													field.label || field.key
+												)}
+											</TableCell>
+										)
+									})}
+								</TableRow>
+							</TableHead>
+							<TableBody>
+								{/* eslint-disable react/no-array-index-key */
+									data
+										.sort(getSorting(order, orderBy))
+										.map((datum, datumIndex) => (
+											<TableRow tabIndex={-1} key={`row-${datumIndex}`}>
+												{fields.map((field, fieldIndex) => {
+												/* eslint-disable no-prototype-builtins */
+													if (!datum.hasOwnProperty(field.key)) return null
+													/* eslint-enable no-prototype-builtins */
+													const item = datum[field.key]
+
+													return (
+														<TableCell
+															key={`cell-${datumIndex}-${fieldIndex}-${item}`}
+															numeric={!!field.numeric}
+															padding="none"
+															className={classes.tableCell}
+															style={
+																!!field.styleFormatter &&
+															typeof field.styleFormatter === 'function'
+																	? field.styleFormatter({ value: item, theme })
+																	: undefined
+															}
+														>
+															{!!field.formatter &&
+														typeof field.formatter === 'function'
+																? field.formatter(item, units)
+																: item}
+														</TableCell>
+													)
+												})}
+											</TableRow>
+										))
+								/* eslint-enable react/no-array-index-key */
+								}
+							</TableBody>
+						</Table>
+					</div>
 				</div>
-			</div>
+			</WeatherDataExpansionPanel>
 		)
 	}
 }

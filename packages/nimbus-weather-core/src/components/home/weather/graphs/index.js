@@ -21,7 +21,12 @@ const styles = (theme: MuiTheme) => ({
 		width: '100%',
 		overflow: 'auto',
 		paddingTop: theme.spacing.unit * 2,
-		paddingBottom: theme.spacing.unit * 2
+		paddingBottom: theme.spacing.unit * 2,
+		[theme.breakpoints.up('sm')]: {
+			width: 'calc(100% - 72px)',
+			marginLeft: 'auto',
+			marginRight: 'auto'
+		}
 	}
 })
 
