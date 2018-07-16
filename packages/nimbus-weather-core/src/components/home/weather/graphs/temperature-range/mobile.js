@@ -10,11 +10,12 @@ type Props = {
 	data: HourlyWeatherData
 }
 
-class MobileTemperature extends React.Component<Props> {
+class MobileTemperatureRange extends React.Component<Props> {
 	render() {
 		const { data, dateFormat, timezone, ...props } = this.props
 
-		const tempDataset = data.map(datum => datum.temperature)
+		const lowDataset = data.map(datum => datum.temperatureLow)
+		const highDataset = data.map(datum => datum.temperatureHigh)
 
 		return (
 			<WeatherDataTable
@@ -31,16 +32,32 @@ class MobileTemperature extends React.Component<Props> {
 							})
 					},
 					{
-						key: 'temperature',
-						label: 'Temperature',
-						numeric: true,
-						formatter: (item, units) => `${item}${units.temperature}`,
+						key: 'temperatureLow',
+						label: 'Low',
+						formatter: (low, units) => `${low}${units.temperatureLow}`,
+						styleFormatter: ({ value, theme }) => {
+							const backgroundColor = fade(
+								theme.palette.primary.main,
+								1 -
+									findPercentageWithinRange({
+										dataSet: lowDataset,
+										value: parseFloat(value)
+									})
+							)
+
+							return { backgroundColor }
+						}
+					},
+					{
+						key: 'temperatureHigh',
+						label: 'High',
+						formatter: (high, units) => `${high}${units.temperatureHigh}`,
 						styleFormatter: ({ value, theme }) => {
 							const backgroundColor = fade(
 								theme.palette.secondary.main,
 								findPercentageWithinRange({
-									dataSet: tempDataset,
-									value
+									dataSet: highDataset,
+									value: parseFloat(value)
 								})
 							)
 
@@ -54,4 +71,4 @@ class MobileTemperature extends React.Component<Props> {
 	}
 }
 
-export default MobileTemperature
+export default MobileTemperatureRange

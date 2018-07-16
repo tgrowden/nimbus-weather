@@ -7,19 +7,24 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
+import getUnits from '../lib/units'
 
 const styles = theme => ({
 	root: {
-		width: '100%',
-		marginTop: theme.spacing.unit * 3
+		width: '100%'
 	},
 	tableWrapper: {
 		overflowX: 'auto'
+	},
+	tableCell: {
+		paddingLeft: theme.spacing.unit,
+		paddingRight: theme.spacing.unit
 	}
 })
 
 type Props = {
 	classes: Object,
+	theme: MuiTheme,
 	data: Array<{
 		[key: string]: string | number
 	}>,
@@ -27,7 +32,12 @@ type Props = {
 		label?: string,
 		key: string,
 		numeric?: boolean,
-		formatter?: (string | number) => any
+		formatter?: (value: string | number, units: Units) => any,
+		sortable?: boolean,
+		styleFormatter?: ({
+			value: string | number,
+			theme: MuiTheme
+		}) => { [key: string]: string }
 	}>
 }
 
@@ -39,9 +49,9 @@ type State = {
 function getSorting(order, orderBy) {
 	return order === 'desc'
 		? // $FlowFixMe
-		  (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
+		  (a, b) => (parseFloat(b[orderBy]) < parseFloat(a[orderBy]) ? -1 : 1)
 		: // $FlowFixMe
-		  (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1)
+		  (a, b) => (parseFloat(a[orderBy]) < parseFloat(b[orderBy]) ? -1 : 1)
 }
 
 class WeatherDataTable extends React.Component<Props, State> {
@@ -66,8 +76,9 @@ class WeatherDataTable extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { classes, data, fields } = this.props
+		const { classes, data, fields, theme } = this.props
 		const { order, orderBy } = this.state
+		const units = getUnits()
 
 		return (
 			<div className={classes.root}>
@@ -75,42 +86,63 @@ class WeatherDataTable extends React.Component<Props, State> {
 					<Table className={classes.table} aria-labelledby="Weather Data">
 						<TableHead>
 							<TableRow>
-								{fields.map(field => (
-									<TableCell
-										key={field.key}
-										numeric={field.numeric}
-										padding="dense"
-										sortDirection={orderBy === field.key ? order : false}
-									>
-										<TableSortLabel
-											active={orderBy === field.key}
-											direction={order}
-											onClick={this.handleRequestSort.bind(this, field.key)}
+								{fields.map(field => {
+									/* eslint-disable no-prototype-builtins */
+									const sortable = field.hasOwnProperty('sortable')
+										? field.sortable
+										: true
+									/* eslint-disable no-prototype-builtins */
+
+									return (
+										<TableCell
+											key={field.key}
+											numeric={field.numeric}
+											padding="none"
+											className={classes.tableCell}
+											sortDirection={orderBy === field.key ? order : false}
 										>
-											{field.label || field.key}
-										</TableSortLabel>
-									</TableCell>
-								))}
+											{sortable ? (
+												<TableSortLabel
+													active={orderBy === field.key}
+													direction={order}
+													onClick={this.handleRequestSort.bind(this, field.key)}
+												>
+													{field.label || field.key}
+												</TableSortLabel>
+											) : (
+												field.label || field.key
+											)}
+										</TableCell>
+									)
+								})}
 							</TableRow>
 						</TableHead>
 						<TableBody>
 							{/* eslint-disable react/no-array-index-key */
 								data.sort(getSorting(order, orderBy)).map((datum, datumIndex) => (
-									<TableRow hover tabIndex={-1} key={`row-${datumIndex}`}>
+									<TableRow tabIndex={-1} key={`row-${datumIndex}`}>
 										{fields.map((field, fieldIndex) => {
-											if (!datum[field.key]) return null
-
+										/* eslint-disable no-prototype-builtins */
+											if (!datum.hasOwnProperty(field.key)) return null
+											/* eslint-enable no-prototype-builtins */
 											const item = datum[field.key]
 
 											return (
 												<TableCell
 													key={`cell-${datumIndex}-${fieldIndex}-${item}`}
 													numeric={!!field.numeric}
+													padding="none"
+													className={classes.tableCell}
+													style={
+														!!field.styleFormatter &&
+													typeof field.styleFormatter === 'function'
+															? field.styleFormatter({ value: item, theme })
+															: undefined
+													}
 												>
 													{!!field.formatter &&
-												typeof field.formatter === 'function' &&
-												!!item
-														? field.formatter(item)
+												typeof field.formatter === 'function'
+														? field.formatter(item, units)
 														: item}
 												</TableCell>
 											)
@@ -127,4 +159,4 @@ class WeatherDataTable extends React.Component<Props, State> {
 	}
 }
 
-export default withStyles(styles)(WeatherDataTable)
+export default withStyles(styles, { withTheme: true })(WeatherDataTable)

@@ -1,5 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 import Alert from './alert'
 
 const styles = (theme: MuiTheme) => ({
@@ -18,6 +19,17 @@ type Props = {
 class Alerts extends React.Component<Props> {
 	render() {
 		const { classes, alerts, timezone } = this.props
+
+		if (!alerts || !alerts.length) {
+			return (
+				<div className={classes.root}>
+					<Typography variant="subheading" align="center">
+						There are no alerts currently for this location.
+					</Typography>
+				</div>
+			)
+		}
+
 		return (
 			<div className={classes.root}>
 				{/* eslint-disable react/no-array-index-key  */}

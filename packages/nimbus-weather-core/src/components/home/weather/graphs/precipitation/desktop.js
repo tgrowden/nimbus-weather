@@ -10,10 +10,8 @@ import {
 	CartesianGrid
 } from 'recharts'
 import { withStyles } from '@material-ui/core/styles'
-import formatDate from '../lib/format-date'
-import graphStyles from './styles'
-import getUnits from '../lib/units'
-import TooltipContent from './tooltip-content'
+import graphStyles from '../styles'
+import TooltipContent from '../tooltip-content'
 
 const styles = (theme: MuiTheme) => ({
 	root: {
@@ -25,8 +23,8 @@ type Props = {
 	classes: Object,
 	theme: MuiTheme,
 	data: WeatherData,
-	timezone: string,
-	dateFormat?: string
+	units: Units,
+	displayIntensity: boolean
 }
 
 const CustomTooltip = (props: { payload: Array<Object>, units: Units }) => {
@@ -67,37 +65,8 @@ const CustomTooltip = (props: { payload: Array<Object>, units: Units }) => {
 }
 
 class PrecipitationGraph extends React.Component<Props> {
-	static defaultProps = {
-		dateFormat: 'h:mm a'
-	}
-
-	get weatherData() {
-		const { data, timezone, dateFormat } = this.props
-
-		return data.map(datum => ({
-			time: formatDate({
-				time: datum.time,
-				timezone,
-				format: dateFormat
-			}),
-			'Precipitation Intensity': datum.precipIntensity,
-			'Precipitation Probability': datum.precipProbability * 100,
-			precipIntensityError: datum.precipIntensityError,
-			type: datum.precipType
-		}))
-	}
-
-	get displayIntensity() {
-		return (
-			this.props.data.reduce(
-				(prev, current) => prev + current.precipIntensity,
-				0
-			) > 0
-		)
-	}
-
 	render() {
-		const { classes, theme } = this.props
+		const { classes, theme, units, data, displayIntensity } = this.props
 
 		const {
 			responsiveContainer,
@@ -111,14 +80,10 @@ class PrecipitationGraph extends React.Component<Props> {
 			cartesianGrid
 		} = graphStyles(theme)
 
-		const units = getUnits()
-
-		const { displayIntensity } = this
-
 		return (
 			<div className={classes.root}>
 				<ResponsiveContainer {...responsiveContainer} aspect={4}>
-					<LineChart data={this.weatherData} {...lineChart} syncId="precip">
+					<LineChart data={data} {...lineChart} syncId="precip" aspect={4}>
 						<Line
 							type="monotone"
 							dataKey="Precipitation Probability"
@@ -143,7 +108,7 @@ class PrecipitationGraph extends React.Component<Props> {
 				</ResponsiveContainer>
 				{displayIntensity && (
 					<ResponsiveContainer {...responsiveContainer} aspect={4}>
-						<LineChart data={this.weatherData} {...lineChart} syncId="precip">
+						<LineChart data={data} {...lineChart} syncId="precip">
 							<Line
 								type="monotone"
 								dataKey="Precipitation Intensity"

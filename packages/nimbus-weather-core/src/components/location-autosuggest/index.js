@@ -4,6 +4,9 @@ import * as React from 'react'
 import Downshift from 'downshift'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import IconButton from '@material-ui/core/IconButton'
+import X from '@material-ui/icons/Clear'
 import searchLocation from '../../lib/search-location'
 import renderSuggestion from './render-suggestion'
 import renderInput from './render-input'
@@ -78,6 +81,12 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		this.setState({ inputValue })
 	}
 
+	handleInputValueClear() {
+		this.setState({ inputValue: '' }, () => {
+			this.inputEl.focus()
+		})
+	}
+
 	handleChange = item => {
 		if (!item) return
 
@@ -133,10 +142,16 @@ class LocationAutosuggest extends React.Component<Props, State> {
 
 										this.fetchSuggestions(value)
 									},
-									onFocus: e => {
-										const { target } = e
-										target.setSelectionRange(0, target.value.length)
-									}
+									endAdornment: (
+										<InputAdornment position="end">
+											<IconButton
+												aria-label="Clear Location"
+												onClick={this.handleInputValueClear.bind(this)}
+											>
+												<X />
+											</IconButton>
+										</InputAdornment>
+									)
 								})
 							})}
 							{isOpen && (

@@ -17,7 +17,7 @@ function mapStateToProps(state) {
 }
 
 function updateWeather(dispatch, { lat, lng }, preferredUnits) {
-	fetchWeather({ lat, lng }, preferredUnits)
+	return fetchWeather({ lat, lng }, preferredUnits)
 		.then(weather =>
 			dispatch({
 				type: HomeActions.SET_WEATHER,
@@ -38,13 +38,22 @@ function mapDispatchToProps(dispatch) {
 		fetchWeather: (coords, preferredUnits) => {
 			updateWeather(dispatch, coords, preferredUnits)
 		},
-		setPreferredUnits: (preferredUnits, coords) => {
-			dispatch({
-				type: HomeActions.SET_PREFERRED_UNITS,
-				preferredUnits
-			})
+		setPreferredUnits: async (preferredUnits, coords) => {
+			function dispatchSetUnits() {
+				dispatch({
+					type: HomeActions.SET_PREFERRED_UNITS,
+					preferredUnits
+				})
+			}
+
 			if (coords.lat && coords.lng) {
 				updateWeather(dispatch, coords, preferredUnits)
+					.then(() => dispatchSetUnits())
+					.catch(() => {
+						// do nothing
+					})
+			} else {
+				dispatchSetUnits()
 			}
 		}
 	}

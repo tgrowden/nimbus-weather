@@ -94,6 +94,7 @@ class Current extends React.Component<Props> {
 							only="precip"
 							onGraphChange={() => {}}
 							graph="precip"
+							precipDateFormat="h:mm a"
 						/>
 					</div>
 				)}

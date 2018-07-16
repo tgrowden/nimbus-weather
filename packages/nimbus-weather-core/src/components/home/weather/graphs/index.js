@@ -54,7 +54,7 @@ class Graphs extends React.Component<Props> {
 		exclude: [],
 		tempRangeDateFormat: undefined,
 		tempDateFormat: undefined,
-		precipDateFormat: 'ddd, MMM D, YYYY',
+		precipDateFormat: 'ddd, MMM D',
 		only: undefined
 	}
 
@@ -127,6 +127,7 @@ class Graphs extends React.Component<Props> {
 							{graph === 'temp' && (
 								<Temperature
 									timezone={timezone}
+									// $FlowFixMe
 									data={data}
 									dateFormat={tempDateFormat}
 								/>
@@ -140,6 +141,7 @@ class Graphs extends React.Component<Props> {
 							)}
 							{graph === 'pressure' && (
 								<Pressure
+									// $FlowFixMe
 									data={data}
 									timezone={timezone}
 									dateFormat={precipDateFormat}

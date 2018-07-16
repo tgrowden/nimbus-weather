@@ -10,29 +10,15 @@ import {
 	CartesianGrid
 } from 'recharts'
 import { withTheme } from '@material-ui/core/styles'
-import formatDate from '../lib/format-date'
-import getUnits from '../lib/units'
-import graphStyles from './styles'
+import graphStyles from '../styles'
 
 type Props = {
-	data: WeatherData,
-	timezone: string,
-	dateFormat?: string,
+	data: Array<>,
+	units: Units,
 	theme: MuiTheme
 }
 
-const TemperatureGraph = (props: Props) => {
-	const data = props.data.map(datum => ({
-		...datum,
-		time: formatDate({
-			time: datum.time,
-			timezone: props.timezone,
-			format: props.dateFormat
-		}),
-		Pressure: datum.pressure
-	}))
-
-	const units = getUnits()
+const TemperatureGraph = ({ data, units, theme }: Props) => {
 	const {
 		responsiveContainer,
 		legend,
@@ -42,7 +28,7 @@ const TemperatureGraph = (props: Props) => {
 		lineChart,
 		primaryLine,
 		cartesianGrid
-	} = graphStyles(props.theme)
+	} = graphStyles(theme)
 
 	return (
 		<ResponsiveContainer {...responsiveContainer}>
@@ -61,10 +47,6 @@ const TemperatureGraph = (props: Props) => {
 			</LineChart>
 		</ResponsiveContainer>
 	)
-}
-
-TemperatureGraph.defaultProps = {
-	dateFormat: 'ddd h:mm a'
 }
 
 export default withTheme()(TemperatureGraph)
