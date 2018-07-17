@@ -28,7 +28,7 @@ module.exports = {
 				developerURL: null,
 				dir: 'auto',
 				lang: 'en-US',
-				background: 'rgba(0, 0, 0, 0)',
+				background: 'rgba(255, 255, 255, 0)',
 				theme_color: '#3f51b5',
 				display: 'standalone',
 				orientation: 'any',
