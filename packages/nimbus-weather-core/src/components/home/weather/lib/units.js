@@ -100,7 +100,7 @@ export const us: Units = {
 
 export default function getUnits(): Units {
 	const state = store.getState()
-	const preferredUnits = state.home.preferredUnits || 'us'
+	const preferredUnits = state.weatherVisualizations.preferredUnits || 'us'
 
 	const units = {
 		us,

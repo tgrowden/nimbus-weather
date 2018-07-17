@@ -2,6 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Home from '../components/home'
 import * as HomeActions from '../actions/home'
+import { SET_PREFERRED_UNITS } from '../actions/weather-visualizations'
 import fetchWeather from '../lib/fetch-weather'
 
 function mapStateToProps(state) {
@@ -11,7 +12,7 @@ function mapStateToProps(state) {
 		weather: state.home.weather,
 		activeTab: state.home.activeTab,
 		fetchingWeather: state.home.fetchingWeather,
-		preferredUnits: state.home.preferredUnits,
+		preferredUnits: state.weatherVisualizations.preferredUnits,
 		weatherApiError: state.home.weatherApiError
 	}
 }
@@ -41,7 +42,7 @@ function mapDispatchToProps(dispatch) {
 		setPreferredUnits: async (preferredUnits, coords) => {
 			function dispatchSetUnits() {
 				dispatch({
-					type: HomeActions.SET_PREFERRED_UNITS,
+					type: SET_PREFERRED_UNITS,
 					preferredUnits
 				})
 			}
