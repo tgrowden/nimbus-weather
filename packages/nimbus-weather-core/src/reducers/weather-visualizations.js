@@ -5,6 +5,7 @@ import {
 	SET_COLD_TEMP,
 	SET_HOT_TEMP
 } from '../actions/weather-visualizations'
+import { celsiusToFahrenheit } from '../lib/convert-temperature'
 
 type actionType = {
 	+type: ActionConst
@@ -12,7 +13,10 @@ type actionType = {
 
 export const defaultState = {
 	desktopTableExpanded: false,
-	mobileTableExpanded: true
+	mobileTableExpanded: true,
+	preferredUnits: 'us',
+	coldTemp: 50,
+	hotTemp: 80
 }
 
 export default function weatherVisualizations(
