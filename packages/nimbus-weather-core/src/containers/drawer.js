@@ -6,7 +6,7 @@ import * as DrawerActions from '../actions/drawer'
 function mapStateToProps(state) {
 	return {
 		router: state.router,
-		open: state.drawerIsOpen,
+		open: state.drawer.open,
 		fetchingWeather: state.home.fetchingWeather
 	}
 }

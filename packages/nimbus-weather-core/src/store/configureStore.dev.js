@@ -8,6 +8,7 @@ import storage from 'redux-persist/lib/storage'
 import rootReducer from '../reducers'
 import * as drawerActions from '../actions/drawer'
 import locationChangeMiddleware from './middleware/location-change'
+import * as defaultState from '../reducers/default-state'
 
 const persistConfig = {
 	key: 'root',
@@ -16,7 +17,7 @@ const persistConfig = {
 
 const history = createHashHistory()
 
-const configureStore = (initialState?) => {
+const configureStore = (initialState? = defaultState) => {
 	// Redux Configuration
 	const middleware = []
 	const enhancers = []

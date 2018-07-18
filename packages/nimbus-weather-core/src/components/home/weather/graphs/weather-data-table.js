@@ -10,14 +10,14 @@ import TableSortLabel from '@material-ui/core/TableSortLabel'
 import getUnits from '../lib/units'
 import WeatherDataExpansionPanel from './weather-data-expansion-panel'
 
-const styles = theme => ({
+const styles = {
 	root: {
 		width: '100%'
 	},
 	tableWrapper: {
 		overflowX: 'auto'
 	}
-})
+}
 
 type Props = {
 	classes: Object,

@@ -3,14 +3,12 @@ import React from 'react'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import Home from './'
-import { defaultState } from '../../reducers/home'
+import * as defaultState from '../../reducers/default-state'
 import mountWithRouter from '../../utils/mount'
 
 const defaultProps = {
 	...defaultState,
-	home: {
-		weatherApiError: false
-	}
+	...defaultState.home
 }
 
 const mockStore = configureStore()

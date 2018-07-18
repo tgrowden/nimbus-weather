@@ -8,39 +8,13 @@ import {
 	SET_DAILY_GRAPH,
 	SET_WEATHER_API_ERROR
 } from '../actions/home'
+import { home as homeDefaultState } from './default-state'
 
 type actionType = {
 	+type: ActionConst
 }
 
-export const defaultState = {
-	location: {
-		name: '',
-		coords: {
-			lat: null,
-			lng: null
-		}
-	},
-	weather: {
-		fetched: 0,
-		timezone: '',
-		currently: {
-			time: 0,
-			icon: ''
-		},
-		daily: {},
-		flags: {},
-		hourly: {},
-		latitude: 0,
-		longitude: 0,
-		minutely: {}
-	},
-	activeTab: 0,
-	fetchingWeather: false,
-	hourlyGraph: 'temp',
-	dailyGraph: 'tempRange',
-	weatherApiError: false
-}
+export const defaultState = homeDefaultState
 
 export default function home(state = defaultState, action: actionType) {
 	switch (action.type) {
