@@ -3,7 +3,9 @@ import {
 	SET_MOBILE_TABLE_EXPANDED,
 	SET_PREFERRED_UNITS,
 	SET_COLD_TEMP,
-	SET_HOT_TEMP
+	SET_HOT_TEMP,
+	SET_COLD_TEMP_COLOR,
+	SET_HOT_TEMP_COLOR
 } from '../actions/weather-visualizations'
 import { weatherVisualizations as weatherVisualizationsDefaultState } from './default-state'
 
@@ -27,6 +29,10 @@ export default function weatherVisualizations(
 		case SET_COLD_TEMP:
 			return { ...state, ...action }
 		case SET_HOT_TEMP:
+			return { ...state, ...action }
+		case SET_COLD_TEMP_COLOR:
+			return { ...state, ...action }
+		case SET_HOT_TEMP_COLOR:
 			return { ...state, ...action }
 		default:
 			return state

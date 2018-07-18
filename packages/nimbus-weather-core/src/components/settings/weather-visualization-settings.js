@@ -9,9 +9,14 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as WeatherVisualizationActions from '../../actions/weather-visualizations'
+import { colorOptions } from '../../utils/colors'
 
 const styles = {
 	root: {},
@@ -28,7 +33,11 @@ type Props = {
 	hotTemp: number,
 	setHotTemp: (hotTemp: number) => void,
 	coldTemp: number,
-	setColdTemp: (coldTemp: number) => void
+	setColdTemp: (coldTemp: number) => void,
+	coldTempColor: string,
+	setColdTempColor: (coldTempColor: string) => void,
+	hotTempColor: string,
+	setHotTempColor: (hotTempColor: string) => void
 }
 
 class WeatherVisualizationSettings extends React.Component<Props> {
@@ -51,7 +60,7 @@ class WeatherVisualizationSettings extends React.Component<Props> {
 	}
 
 	render() {
-		const { classes, hotTemp, coldTemp } = this.props
+		const { classes, hotTemp, coldTemp, hotTempColor, coldTempColor } = this.props
 		/* eslint-disable react/jsx-no-duplicate-props */
 		return (
 			<div className={classes.root}>
@@ -63,6 +72,43 @@ class WeatherVisualizationSettings extends React.Component<Props> {
 					</ExpansionPanelSummary>
 					<ExpansionPanelDetails>
 						<Grid container spacing={16}>
+							<Grid item xs={12} sm={6}>
+								<FormControl fullWidth>
+									<InputLabel>Hot Temperature Color</InputLabel>
+									<Select
+										value={hotTempColor}
+										onChange={e => {
+											this.props.setHotTempColor(e.target.value)
+										}}
+									>
+										{colorOptions.map(opt => (
+											<MenuItem value={opt.value} key={`hotTemp-${opt.value}`}>
+												{opt.label}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							</Grid>
+							<Grid item xs={12} sm={6}>
+								<FormControl fullWidth>
+									<InputLabel>Cold Temperature Color</InputLabel>
+									<Select
+										value={coldTempColor}
+										onChange={e => {
+											this.props.setColdTempColor(e.target.value)
+										}}
+									>
+										{colorOptions.map(opt => (
+											<MenuItem
+												value={opt.value}
+												key={`coldTemp-${opt.value}`}
+											>
+												{opt.label}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							</Grid>
 							<Grid item xs={12}>
 								<TextField
 									type="number"
@@ -90,7 +136,9 @@ function mapStateToProps(state) {
 	return {
 		hotTemp: state.weatherVisualizations.hotTemp,
 		coldTemp: state.weatherVisualizations.coldTemp,
-		preferredUnits: state.weatherVisualizations.preferredUnits
+		preferredUnits: state.weatherVisualizations.preferredUnits,
+		hotTempColor: state.weatherVisualizations.hotTempColor,
+		coldTempColor: state.weatherVisualizations.coldTempColor
 	}
 }
 

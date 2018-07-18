@@ -5,6 +5,8 @@ export const SET_MOBILE_TABLE_EXPANDED: ActionConst =
 export const SET_PREFERRED_UNITS: ActionConst = 'SET_PREFERRED_UNITS'
 export const SET_COLD_TEMP: ActionConst = 'SET_COLD_TEMP'
 export const SET_HOT_TEMP: ActionConst = 'SET_HOT_TEMP'
+export const SET_COLD_TEMP_COLOR: ActionConst = 'SET_COLD_TEMP_COLOR'
+export const SET_HOT_TEMP_COLOR: ActionConst = 'SET_HOT_TEMP_COLOR'
 
 export function setDesktopTableExpanded(desktopTableExpanded: boolean) {
 	return {
@@ -38,5 +40,19 @@ export function setHotTemp(hotTemp: number) {
 	return {
 		type: SET_HOT_TEMP,
 		hotTemp
+	}
+}
+
+export function setColdTempColor(coldTempColor: string) {
+	return {
+		type: SET_COLD_TEMP_COLOR,
+		coldTempColor
+	}
+}
+
+export function setHotTempColor(hotTempColor: string) {
+	return {
+		type: SET_HOT_TEMP_COLOR,
+		hotTempColor
 	}
 }

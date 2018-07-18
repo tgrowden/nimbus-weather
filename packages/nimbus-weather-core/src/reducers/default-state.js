@@ -47,5 +47,7 @@ export const weatherVisualizations = {
 	mobileTableExpanded: true,
 	preferredUnits: 'us',
 	coldTemp: 50,
-	hotTemp: 80
+	hotTemp: 80,
+	coldTempColor: 'blue',
+	hotTempColor: 'red'
 }

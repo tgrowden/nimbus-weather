@@ -34,10 +34,11 @@ class TemperatureRangeTable extends React.Component<Props> {
 					{
 						key: 'temperatureLow',
 						label: 'Low',
+						numeric: true,
 						formatter: (low, units) => `${low}${units.temperatureLow}`,
 						styleFormatter: ({ value, theme }) => {
 							const backgroundColor = fade(
-								theme.palette.primary.main,
+								theme.palette.cold.main,
 								1 -
 									findPercentageWithinRange({
 										dataSet: lowDataset,
@@ -51,10 +52,11 @@ class TemperatureRangeTable extends React.Component<Props> {
 					{
 						key: 'temperatureHigh',
 						label: 'High',
+						numeric: true,
 						formatter: (high, units) => `${high}${units.temperatureHigh}`,
 						styleFormatter: ({ value, theme }) => {
 							const backgroundColor = fade(
-								theme.palette.secondary.main,
+								theme.palette.hot.main,
 								findPercentageWithinRange({
 									dataSet: highDataset,
 									value: parseFloat(value)
