@@ -6,11 +6,12 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import rootReducer from '../reducers'
 import locationChangeMiddleware from './middleware/location-change'
-import * as defaultState from '../reducers/default-state'
+import stateReconciler from './state-reconciler'
 
 const persistConfig = {
 	key: 'root',
-	storage
+	storage,
+	stateReconciler
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -19,7 +20,7 @@ const history = createHashHistory()
 const router = routerMiddleware(history)
 const enhancer = applyMiddleware(thunk, router, locationChangeMiddleware)
 
-function configureStore(initialState? = defaultState) {
+function configureStore(initialState?) {
 	return createStore(persistedReducer, initialState, enhancer)
 }
 
