@@ -10,18 +10,14 @@ import TableSortLabel from '@material-ui/core/TableSortLabel'
 import getUnits from '../lib/units'
 import WeatherDataExpansionPanel from './weather-data-expansion-panel'
 
-const styles = theme => ({
+const styles = {
 	root: {
 		width: '100%'
 	},
 	tableWrapper: {
 		overflowX: 'auto'
-	},
-	tableCell: {
-		paddingLeft: theme.spacing.unit,
-		paddingRight: theme.spacing.unit
 	}
-})
+}
 
 type Props = {
 	classes: Object,
@@ -99,8 +95,7 @@ class WeatherDataTable extends React.Component<Props, State> {
 											<TableCell
 												key={field.key}
 												numeric={field.numeric}
-												padding="none"
-												className={classes.tableCell}
+												padding="checkbox"
 												sortDirection={orderBy === field.key ? order : false}
 											>
 												{sortable ? (
@@ -138,8 +133,7 @@ class WeatherDataTable extends React.Component<Props, State> {
 														<TableCell
 															key={`cell-${datumIndex}-${fieldIndex}-${item}`}
 															numeric={!!field.numeric}
-															padding="none"
-															className={classes.tableCell}
+															padding="checkbox"
 															style={
 																!!field.styleFormatter &&
 															typeof field.styleFormatter === 'function'

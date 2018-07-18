@@ -15,6 +15,10 @@ import * as WeatherVisualizationsActions from '../../../../actions/weather-visua
 const styles = {
 	root: {
 		width: '100%'
+	},
+	panelContent: {
+		paddingLeft: 0,
+		paddingRight: 0
 	}
 }
 
@@ -67,10 +71,15 @@ class WeatherDataExpansionPanel extends React.Component<Props> {
 						onChange(!expanded)
 					}}
 				>
-					<ExpansionPanelSummary expandIcon={!!expandIcon && expandIcon}>
+					<ExpansionPanelSummary
+						className={classes.panelContent}
+						expandIcon={!!expandIcon && expandIcon}
+					>
 						<Typography variant="title">{title}</Typography>
 					</ExpansionPanelSummary>
-					<ExpansionPanelDetails>{children}</ExpansionPanelDetails>
+					<ExpansionPanelDetails className={classes.panelContent}>
+						{children}
+					</ExpansionPanelDetails>
 				</ExpansionPanel>
 			</div>
 		)

@@ -1,16 +1,19 @@
 import {
 	SET_DESKTOP_TABLE_EXPANDED,
-	SET_MOBILE_TABLE_EXPANDED
+	SET_MOBILE_TABLE_EXPANDED,
+	SET_PREFERRED_UNITS,
+	SET_COLD_TEMP,
+	SET_HOT_TEMP,
+	SET_COLD_TEMP_COLOR,
+	SET_HOT_TEMP_COLOR
 } from '../actions/weather-visualizations'
+import { weatherVisualizations as weatherVisualizationsDefaultState } from './default-state'
 
 type actionType = {
 	+type: ActionConst
 }
 
-export const defaultState = {
-	desktopTableExpanded: false,
-	mobileTableExpanded: true
-}
+export const defaultState = weatherVisualizationsDefaultState
 
 export default function weatherVisualizations(
 	state = defaultState,
@@ -20,6 +23,16 @@ export default function weatherVisualizations(
 		case SET_DESKTOP_TABLE_EXPANDED:
 			return { ...state, ...action }
 		case SET_MOBILE_TABLE_EXPANDED:
+			return { ...state, ...action }
+		case SET_PREFERRED_UNITS:
+			return { ...state, ...action }
+		case SET_COLD_TEMP:
+			return { ...state, ...action }
+		case SET_HOT_TEMP:
+			return { ...state, ...action }
+		case SET_COLD_TEMP_COLOR:
+			return { ...state, ...action }
+		case SET_HOT_TEMP_COLOR:
 			return { ...state, ...action }
 		default:
 			return state

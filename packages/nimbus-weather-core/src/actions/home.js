@@ -3,7 +3,6 @@ export const SET_WEATHER: ActionConst = 'SET_WEATHER'
 export const WEATHER_FETCH_ERROR: ActionConst = 'WEATHER_FETCH_ERROR'
 export const SET_ACTIVE_TAB: ActionConst = 'SET_ACTIVE_TAB'
 export const SET_FETCHING_WEATHER: ActionConst = 'SET_FETCHING_WEATHER'
-export const SET_PREFERRED_UNITS: ActionConst = 'SET_PREFERRED_UNITS'
 export const SET_HOURLY_GRAPH: ActionConst = 'SET_HOURLY_GRAPH'
 export const SET_DAILY_GRAPH: ActionConst = 'SET_DAILY_GRAPH'
 export const SET_WEATHER_API_ERROR = 'SET_WEATHER_API_ERROR'
@@ -33,13 +32,6 @@ export function setFetchingWeather(fetchingWeather: boolean) {
 	return {
 		type: SET_FETCHING_WEATHER,
 		fetchingWeather
-	}
-}
-
-export function setPreferredUnits(preferredUnits: Unit) {
-	return {
-		type: SET_PREFERRED_UNITS,
-		preferredUnits
 	}
 }
 

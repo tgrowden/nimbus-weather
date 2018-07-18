@@ -37,7 +37,7 @@ class TemperatureTable extends React.Component<Props> {
 						formatter: (item, units) => `${item}${units.temperature}`,
 						styleFormatter: ({ value, theme }) => {
 							const backgroundColor = fade(
-								theme.palette.secondary.main,
+								theme.palette.hot.main,
 								findPercentageWithinRange({
 									dataSet: tempDataset,
 									value

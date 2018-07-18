@@ -8,10 +8,12 @@ import storage from 'redux-persist/lib/storage'
 import rootReducer from '../reducers'
 import * as drawerActions from '../actions/drawer'
 import locationChangeMiddleware from './middleware/location-change'
+import stateReconciler from './state-reconciler'
 
 const persistConfig = {
 	key: 'root',
-	storage
+	storage,
+	stateReconciler
 }
 
 const history = createHashHistory()

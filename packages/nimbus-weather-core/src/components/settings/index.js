@@ -3,6 +3,7 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import AdvancedSettings from './advanced-settings'
 import ThemeSettings from './theme-settings'
+import WeatherVisualizationSettings from './weather-visualization-settings'
 import DarkSkyLogo from './dark-sky-logo'
 
 const styles = (theme: MuiTheme) => ({
@@ -31,6 +32,9 @@ class Settings extends React.Component<Props> {
 			<div className={classes.root}>
 				<div>
 					<ThemeSettings />
+				</div>
+				<div className={classes.advancedSettingsWrapper}>
+					<WeatherVisualizationSettings />
 				</div>
 				<div className={classes.advancedSettingsWrapper}>
 					<AdvancedSettings />

@@ -46,7 +46,8 @@ const styles = (theme: MuiTheme) => ({
 		zIndex: 1,
 		overflow: 'hidden',
 		position: 'relative',
-		display: 'flex'
+		display: 'flex',
+		minHeight: '100%'
 	},
 	appBar: {
 		'-webkit-app-region': 'drag',
