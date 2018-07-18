@@ -2,7 +2,7 @@ import * as React from 'react'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import WeatherDataTable from '../weather-data-table'
 import formatDate from '../../lib/format-date'
-import findPercentageWithinRange from '../../lib/find-percentage-within-range'
+import getTemperatureCellFade from '../../lib/get-temperature-cell-fade'
 
 type Props = {
 	dateFormat: string,
@@ -38,10 +38,7 @@ class TemperatureTable extends React.Component<Props> {
 						styleFormatter: ({ value, theme }) => {
 							const backgroundColor = fade(
 								theme.palette.hot.main,
-								findPercentageWithinRange({
-									dataSet: tempDataset,
-									value
-								})
+								getTemperatureCellFade(value)
 							)
 
 							return { backgroundColor }

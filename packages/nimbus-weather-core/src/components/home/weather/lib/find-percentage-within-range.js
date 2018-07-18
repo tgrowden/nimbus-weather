@@ -1,5 +1,5 @@
 // @flow
-type Args = {
+export type Args = {
 	dataSet: Array<number>,
 	value: number
 }

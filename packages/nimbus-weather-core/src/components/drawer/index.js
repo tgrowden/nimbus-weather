@@ -201,7 +201,7 @@ class Drawer extends React.Component<Props> {
 								Nimbus Weather
 							</Typography>
 						</div>
-						<Tooltip title="Github Repo" className={classes.noDrag}>
+						<Tooltip title="Github Repo">
 							<Link href={packageJson.homepage} style={{ color: 'inherit' }}>
 								<IconButton
 									color="inherit"

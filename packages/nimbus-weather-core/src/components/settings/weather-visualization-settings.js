@@ -17,6 +17,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as WeatherVisualizationActions from '../../actions/weather-visualizations'
 import { colorOptions } from '../../utils/colors'
+import { fahrenheitToCelsius, celsiusToFahrenheit } from '../../lib/convert-temperature'
 
 const styles = {
 	root: {},
@@ -46,11 +47,18 @@ class WeatherVisualizationSettings extends React.Component<Props> {
 	}
 
 	handleTempChange(type, e) {
+		const { preferredUnits } = this.props
 		let { value } = e.target
 
 		if (!value) return
 
 		value = parseInt(value, 10)
+
+		if (preferredUnits === 'us') {
+			value = parseInt(value, 10)
+		} else {
+			value = celsiusToFahrenheit(parseInt(value, 10))
+		}
 
 		if (type === 'hot') {
 			this.props.setHotTemp(value)
@@ -59,8 +67,22 @@ class WeatherVisualizationSettings extends React.Component<Props> {
 		}
 	}
 
+	get hotTemp() {
+		const { preferredUnits, hotTemp } = this.props
+		if (preferredUnits === 'us') return hotTemp
+
+		return fahrenheitToCelsius(hotTemp)
+	}
+
+	get coldTemp() {
+		const { preferredUnits, coldTemp } = this.props
+		if (preferredUnits === 'us') return coldTemp
+
+		return fahrenheitToCelsius(coldTemp)
+	}
+
 	render() {
-		const { classes, hotTemp, coldTemp, hotTempColor, coldTempColor } = this.props
+		const { classes, hotTempColor, coldTempColor } = this.props
 		/* eslint-disable react/jsx-no-duplicate-props */
 		return (
 			<div className={classes.root}>
@@ -109,10 +131,11 @@ class WeatherVisualizationSettings extends React.Component<Props> {
 									</Select>
 								</FormControl>
 							</Grid>
-							<Grid item xs={12}>
+							<Grid item xs={12} sm={6}>
 								<TextField
+									label="Hot Temperature"
 									type="number"
-									value={hotTemp}
+									value={this.hotTemp}
 									InputProps={{
 										endAdornment: <InputAdornment position="end">{this.units}</InputAdornment>
 									}}
@@ -121,6 +144,21 @@ class WeatherVisualizationSettings extends React.Component<Props> {
 										step: 1
 									}}
 									onChange={this.handleTempChange.bind(this, 'hot')}
+								/>
+							</Grid>
+							<Grid item xs={12} sm={6}>
+								<TextField
+									label="Cold Temperature"
+									type="number"
+									value={this.coldTemp}
+									InputProps={{
+										endAdornment: <InputAdornment position="end">{this.units}</InputAdornment>
+									}}
+									inputProps={{
+										pattern: '\\d+',
+										step: 1
+									}}
+									onChange={this.handleTempChange.bind(this, 'cold')}
 								/>
 							</Grid>
 						</Grid>
