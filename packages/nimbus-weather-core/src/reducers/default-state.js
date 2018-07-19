@@ -28,7 +28,14 @@ export const home = {
 	fetchingWeather: false,
 	hourlyGraph: 'temp',
 	dailyGraph: 'tempRange',
-	weatherApiError: false
+	weatherApiError: false,
+	currentLocationError: false,
+	currentLocationErrorMessage: null,
+	currentLocation: {
+		name: 'Current Location',
+		lat: null,
+		lng: null
+	}
 }
 
 export const settings = {

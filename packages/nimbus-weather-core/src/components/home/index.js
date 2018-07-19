@@ -11,6 +11,7 @@ import { withStyles } from '@material-ui/core/styles'
 import WeatherTabs from './weather'
 import LocationAutosuggest from '../location-autosuggest'
 import WeatherErrorModal from './weather/weather-error-modal'
+import SpeedDials from './speed-dials'
 
 type Props = {
 	activeTab: number,
@@ -22,7 +23,12 @@ type Props = {
 	weather: Weather,
 	fetchingWeather: boolean,
 	preferredUnits: Unit,
-	setPreferredUnits: (preferredUnits: Unit, coords: Coords) => void
+	setPreferredUnits: (preferredUnits: Unit, coords: Coords) => void,
+	currentLocation: {
+		name: string,
+		lat: null | number,
+		lng: null | number
+	}
 }
 
 const styles = (theme: MuiTheme) => ({
@@ -85,7 +91,8 @@ class Home extends Component<Props> {
 			activeTab,
 			setActiveTab,
 			fetchingWeather,
-			preferredUnits
+			preferredUnits,
+			currentLocation
 		} = this.props
 
 		const { coords } = location
@@ -100,6 +107,15 @@ class Home extends Component<Props> {
 								<LocationAutosuggest
 									location={location}
 									onChange={this.onLocationChange}
+									otherSuggestions={
+										currentLocation && currentLocation.lat && currentLocation.lng
+											? [{
+												display_name: currentLocation.name,
+												lat: currentLocation.lat,
+												lon: currentLocation.lng
+											}]
+											: undefined
+									}
 								/>
 							</Grid>
 							<Grid item xs={12} md={6}>
@@ -136,6 +152,7 @@ class Home extends Component<Props> {
 						/>
 					)}
 				</div>
+				<SpeedDials />
 			</React.Fragment>
 		)
 	}

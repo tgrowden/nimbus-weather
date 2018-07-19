@@ -1,3 +1,5 @@
+import { fetchWeather } from './home'
+
 export const SET_DESKTOP_TABLE_EXPANDED: ActionConst =
 	'SET_DESKTOP_TABLE_EXPANDED'
 export const SET_MOBILE_TABLE_EXPANDED: ActionConst =
@@ -23,9 +25,15 @@ export function setMobileTableExpanded(mobileTableExpanded: boolean) {
 }
 
 export function setPreferredUnits(preferredUnits: Unit) {
-	return {
-		type: SET_PREFERRED_UNITS,
-		preferredUnits
+	return function dispatchSetPreferredUnits(dispatch, getState) {
+		const prevUnits = getState().weatherVisualizations.preferredUnits
+		dispatch({
+			type: SET_PREFERRED_UNITS,
+			preferredUnits
+		})
+		if (prevUnits !== preferredUnits) {
+			fetchWeather()
+		}
 	}
 }
 

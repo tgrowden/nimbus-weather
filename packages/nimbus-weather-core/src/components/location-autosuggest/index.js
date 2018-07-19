@@ -51,7 +51,12 @@ const styles = theme => ({
 type Props = {
 	classes: Object,
 	location: any,
-	onChange: (location: any) => any
+	onChange: (location: any) => any,
+	otherSuggestions?: Array<{
+		display_name: string,
+		lat: number,
+		lon: number
+	}>
 }
 
 type State = {
@@ -61,6 +66,10 @@ type State = {
 
 class LocationAutosuggest extends React.Component<Props, State> {
 	inputEl: HTMLElement
+
+	static defaultProps = {
+		otherSuggestions: []
+	}
 
 	constructor(props) {
 		super(props)
@@ -156,7 +165,7 @@ class LocationAutosuggest extends React.Component<Props, State> {
 							})}
 							{isOpen && (
 								<Paper className={classes.paper} square>
-									{this.state.suggestions.map((suggestion, index) =>
+									{[ ...this.props.otherSuggestions, ...this.state.suggestions ].map((suggestion, index) =>
 										renderSuggestion({
 											suggestion,
 											index,

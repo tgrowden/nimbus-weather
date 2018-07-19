@@ -6,7 +6,9 @@ import {
 	SET_PREFERRED_UNITS,
 	SET_HOURLY_GRAPH,
 	SET_DAILY_GRAPH,
-	SET_WEATHER_API_ERROR
+	SET_WEATHER_API_ERROR,
+	SET_CURRENT_LOCATION,
+	SET_CURRENT_LOCATION_ERROR
 } from '../actions/home'
 import { home as homeDefaultState } from './default-state'
 
@@ -35,6 +37,12 @@ export default function home(state = defaultState, action: actionType) {
 			return { ...state, ...action }
 		}
 		case SET_WEATHER_API_ERROR: {
+			return { ...state, ...action }
+		}
+		case SET_CURRENT_LOCATION: {
+			return { ...state, ...action }
+		}
+		case SET_CURRENT_LOCATION_ERROR: {
 			return { ...state, ...action }
 		}
 		default:

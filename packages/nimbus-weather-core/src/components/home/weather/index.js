@@ -3,9 +3,7 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 // $FlowFixMe flow-mono error maybe?
 import { differenceInMilliseconds } from 'date-fns'
-import classnames from 'classnames'
-import { AppBar, Tabs, Tab, Paper, Button, Tooltip } from '@material-ui/core'
-import RefreshIcon from '@material-ui/icons/Refresh'
+import { AppBar, Tabs, Tab, Paper } from '@material-ui/core'
 import Current from './current'
 import Hourly from './hourly'
 import Daily from './daily'
@@ -120,7 +118,7 @@ class WeatherApp extends React.Component<Props> {
 	}
 
 	render() {
-		const { classes, setActiveTab, fetchWeather, fetchingWeather } = this.props
+		const { classes, setActiveTab } = this.props
 
 		return (
 			<div className={classes.root}>
@@ -142,17 +140,6 @@ class WeatherApp extends React.Component<Props> {
 					</AppBar>
 					<div className={classes.weatherContainer}>{this.activeView}</div>
 				</Paper>
-				<div className={classes.buttonContainer}>
-					<Tooltip title="Refresh Weather" placement="left">
-						<Button variant="fab" onClick={fetchWeather} color="secondary">
-							<RefreshIcon
-								className={classnames({
-									[classes.loading]: fetchingWeather
-								})}
-							/>
-						</Button>
-					</Tooltip>
-				</div>
 			</div>
 		)
 	}

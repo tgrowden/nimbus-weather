@@ -2,8 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Home from '../components/home'
 import * as HomeActions from '../actions/home'
-import { SET_PREFERRED_UNITS } from '../actions/weather-visualizations'
-import fetchWeather from '../lib/fetch-weather'
+import { setPreferredUnits } from '../actions/weather-visualizations'
 
 function mapStateToProps(state) {
 	return {
@@ -13,51 +12,13 @@ function mapStateToProps(state) {
 		activeTab: state.home.activeTab,
 		fetchingWeather: state.home.fetchingWeather,
 		preferredUnits: state.weatherVisualizations.preferredUnits,
-		weatherApiError: state.home.weatherApiError
+		weatherApiError: state.home.weatherApiError,
+		currentLocation: state.home.currentLocation
 	}
-}
-
-function updateWeather(dispatch, { lat, lng }, preferredUnits) {
-	return fetchWeather({ lat, lng }, preferredUnits)
-		.then(weather =>
-			dispatch({
-				type: HomeActions.SET_WEATHER,
-				weather: {
-					fetched: Date.now(),
-					...weather
-				}
-			})
-		)
-		.catch(() => {
-			dispatch({ type: HomeActions.WEATHER_FETCH_ERROR })
-		})
 }
 
 function mapDispatchToProps(dispatch) {
-	return {
-		...bindActionCreators(HomeActions, dispatch),
-		fetchWeather: (coords, preferredUnits) => {
-			updateWeather(dispatch, coords, preferredUnits)
-		},
-		setPreferredUnits: async (preferredUnits, coords) => {
-			function dispatchSetUnits() {
-				dispatch({
-					type: SET_PREFERRED_UNITS,
-					preferredUnits
-				})
-			}
-
-			if (coords.lat && coords.lng) {
-				updateWeather(dispatch, coords, preferredUnits)
-					.then(() => dispatchSetUnits())
-					.catch(() => {
-						// do nothing
-					})
-			} else {
-				dispatchSetUnits()
-			}
-		}
-	}
+	return bindActionCreators({ ...HomeActions, setPreferredUnits }, dispatch)
 }
 
 export default connect(
