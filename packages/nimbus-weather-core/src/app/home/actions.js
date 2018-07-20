@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { apiHost } from '../../../config'
+import { apiHost } from '../../config'
 
 export const SET_LOCATION: ActionConst = 'SET_LOCATION'
 export const SET_WEATHER: ActionConst = 'SET_WEATHER'
@@ -87,7 +87,10 @@ export function fetchWeather() {
 	}
 }
 
-export function setCurrentLocationError(currentLocationError: boolean, currentLocationErrorMessage: string | null = null) {
+export function setCurrentLocationError(
+	currentLocationError: boolean,
+	currentLocationErrorMessage: string | null = null
+) {
 	return {
 		type: SET_CURRENT_LOCATION_ERROR,
 		currentLocationError,
@@ -116,7 +119,8 @@ export function geolocate() {
 			(position: Position) => {
 				dispatch(setCurrentLocation(position))
 			},
-			(positionError: PositionError) => dispatch(setCurrentLocationError(true, positionError.message)),
+			(positionError: PositionError) =>
+				dispatch(setCurrentLocationError(true, positionError.message)),
 			{ enableHighAccuracy: true }
 		)
 	}

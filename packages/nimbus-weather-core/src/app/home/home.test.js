@@ -3,8 +3,8 @@ import React from 'react'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import Home from './'
-import * as defaultState from '../../reducers/default-state'
-import mountWithRouter from '../../utils/mount'
+import { defaultState } from '../root-reducer'
+import mountWithRouter from '../utils/mount'
 
 const defaultProps = {
 	...defaultState,

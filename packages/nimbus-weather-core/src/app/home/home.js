@@ -16,16 +16,9 @@ import SpeedDials from './speed-dials'
 type Props = {
 	classes: Object,
 	location: Object,
-	fetchWeather: (coords: Coords, preferredUnits: Unit) => void,
-	setLocation: (location: Object) => void,
 	weather: Weather,
 	preferredUnits: Unit,
-	setPreferredUnits: (preferredUnits: Unit, coords: Coords) => void,
-	currentLocation: {
-		name: string,
-		lat: null | number,
-		lng: null | number
-	}
+	setPreferredUnits: (preferredUnits: Unit, coords: Coords) => void
 }
 
 const styles = (theme: MuiTheme) => ({
@@ -74,20 +67,8 @@ class Home extends Component<Props> {
 		)
 	}
 
-	onLocationChange = location => {
-		this.props.setLocation(location)
-
-		this.props.fetchWeather(location.coords, this.props.preferredUnits)
-	}
-
 	render() {
-		const {
-			classes,
-			location,
-			weather,
-			preferredUnits,
-			currentLocation
-		} = this.props
+		const { classes, location, weather, preferredUnits } = this.props
 
 		const { coords } = location
 
@@ -98,19 +79,7 @@ class Home extends Component<Props> {
 					<div className={classes.autocompleteWrapper}>
 						<Grid container spacing={8}>
 							<Grid item xs={12}>
-								<LocationAutosuggest
-									location={location}
-									onChange={this.onLocationChange}
-									otherSuggestions={
-										currentLocation && currentLocation.lat && currentLocation.lng
-											? [{
-												display_name: currentLocation.name,
-												lat: currentLocation.lat,
-												lon: currentLocation.lng
-											}]
-											: undefined
-									}
-								/>
+								<LocationAutosuggest />
 							</Grid>
 							<Grid item xs={12} md={6}>
 								<FormControl fullWidth>
@@ -131,9 +100,7 @@ class Home extends Component<Props> {
 					{!!coords.lat &&
 						!!coords.lng &&
 						!!weather &&
-						!!weather.timezone && (
-						<WeatherTabs />
-					)}
+						!!weather.timezone && <WeatherTabs />}
 				</div>
 				<SpeedDials />
 			</React.Fragment>

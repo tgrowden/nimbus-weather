@@ -1,4 +1,4 @@
-import Store from '../../../../store/configureStore'
+import Store from '../../../store/configureStore'
 
 const { store } = Store
 

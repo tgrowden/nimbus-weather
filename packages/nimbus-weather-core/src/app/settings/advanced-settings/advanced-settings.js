@@ -12,7 +12,7 @@ import {
 	Switch
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import Store from '../../../store/configureStore'
+import Store from '../../store/configureStore'
 import Snackbar from '../../components/snackbar'
 import HelpPopover from '../../components/help-popover'
 

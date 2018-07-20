@@ -1,5 +1,5 @@
 import React from 'react'
-import TooltipContent from './tooltip-content'
+import TooltipContent from '../tooltip-content'
 
 export default (theme: MuiTheme) => {
 	const chartMargins = {

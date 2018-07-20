@@ -11,7 +11,7 @@ import Warning from '@material-ui/icons/Warning'
 import ErrorIcon from '@material-ui/icons/Error'
 import Icon from '@material-ui/core/Icon'
 import formatDate from '../lib/format-date'
-import open from '../../../../lib/open'
+import open from '../../../lib/open'
 
 const styles = {}
 

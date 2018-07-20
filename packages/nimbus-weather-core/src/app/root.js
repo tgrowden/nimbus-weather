@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import Routes from '../routes'
+import Routes from './routes'
 
 type Props = {
 	store: {},

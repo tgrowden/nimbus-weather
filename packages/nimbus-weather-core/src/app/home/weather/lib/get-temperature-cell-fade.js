@@ -1,5 +1,5 @@
 import findPercentageWithinRange from './find-percentage-within-range'
-import Store from '../../../../store/configureStore'
+import Store from '../../../store/configureStore'
 
 const { store } = Store
 
@@ -29,16 +29,15 @@ export const values = {
 }
 
 export default (value: number) => {
-	console.log(value)
 	let res: number = 0
 	if (value <= hotTemp && value >= coldTemp) return res
 
 	let dataSet: Array<number>
 
 	if (value > MIN_HOT_TEMPERATURE) {
-		dataSet = [ value, MAX_HOT_TEMPERATURE]
+		dataSet = [value, MAX_HOT_TEMPERATURE]
 	} else {
-		dataSet = [ value, MIN_COLD_TEMPERATURE]
+		dataSet = [value, MIN_COLD_TEMPERATURE]
 	}
 
 	res = findPercentageWithinRange({ value, dataSet })

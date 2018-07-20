@@ -4,7 +4,7 @@ import { createHashHistory } from 'history'
 import { routerMiddleware } from 'react-router-redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import rootReducer from '../reducers'
+import rootReducer from '../root-reducer'
 import locationChangeMiddleware from './middleware/location-change'
 import stateReconciler from './state-reconciler'
 
