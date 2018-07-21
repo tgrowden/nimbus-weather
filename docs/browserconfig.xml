@@ -6,7 +6,7 @@
             <square150x150logo src="/nimbus-weather/mstile-150x150.png"/>
             <wide310x150logo src="/nimbus-weather/mstile-310x150.png"/>
             <square310x310logo src="/nimbus-weather/mstile-310x310.png"/>
-            <TileColor>rgba(0, 0, 0, 0)</TileColor>
+            <TileColor>rgba(255, 255, 255, 0)</TileColor>
 
         </tile>
 

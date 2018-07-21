@@ -8,7 +8,8 @@ import {
 	SET_DAILY_GRAPH,
 	SET_WEATHER_API_ERROR,
 	SET_CURRENT_LOCATION,
-	SET_CURRENT_LOCATION_ERROR
+	SET_CURRENT_LOCATION_ERROR,
+	SET_GEOLOCATING
 } from './actions'
 
 type actionType = {
@@ -48,7 +49,8 @@ export const defaultState = {
 		name: 'Current Location',
 		lat: null,
 		lng: null
-	}
+	},
+	geolocating: false
 }
 
 export default function home(state = defaultState, action: actionType) {
@@ -76,6 +78,9 @@ export default function home(state = defaultState, action: actionType) {
 			return { ...state, ...action }
 		}
 		case SET_CURRENT_LOCATION_ERROR: {
+			return { ...state, ...action }
+		}
+		case SET_GEOLOCATING: {
 			return { ...state, ...action }
 		}
 		default:

@@ -8,6 +8,7 @@ import storage from 'redux-persist/lib/storage'
 import rootReducer from '../root-reducer'
 import locationChangeMiddleware from './middleware/location-change'
 import stateReconciler from './state-reconciler'
+import * as DrawerActions from '../drawer/actions'
 
 const persistConfig = {
 	key: 'root',
@@ -44,7 +45,8 @@ const configureStore = (initialState?) => {
 
 	// Redux DevTools Configuration
 	const actionCreators = {
-		...routerActions
+		...routerActions,
+		...DrawerActions
 	}
 	// If Redux DevTools Extension is installed use it, otherwise use Redux compose
 	/* eslint-disable no-underscore-dangle */

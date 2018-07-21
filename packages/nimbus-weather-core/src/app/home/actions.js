@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { apiHost } from '../../config'
+import { setInputValue } from './location-autosuggest/actions'
 
 export const SET_LOCATION: ActionConst = 'SET_LOCATION'
 export const SET_WEATHER: ActionConst = 'SET_WEATHER'
@@ -11,6 +12,7 @@ export const SET_DAILY_GRAPH: ActionConst = 'SET_DAILY_GRAPH'
 export const SET_WEATHER_API_ERROR = 'SET_WEATHER_API_ERROR'
 export const SET_CURRENT_LOCATION = 'SET_CURRENT_LOCATION'
 export const SET_CURRENT_LOCATION_ERROR = 'SET_CURRENT_LOCATION_ERROR'
+export const SET_GEOLOCATING = 'SET_GEOLOCATING'
 
 export function setLocation(location) {
 	return {
@@ -77,6 +79,7 @@ export function fetchWeather() {
 			})
 			.then(res => res.data)
 			.then(res => {
+				dispatch(setWeather(res))
 				dispatch(setFetchingWeather(false))
 				return res
 			})
@@ -109,19 +112,56 @@ export function setCurrentLocation(position: Position) {
 	}
 }
 
+export function setGeolocating(geolocating: boolean) {
+	return {
+		type: SET_GEOLOCATING,
+		geolocating
+	}
+}
+
 export function geolocate() {
-	return function dispatchGeolocate(dispatch) {
+	return function dispatchGeolocate(dispatch, getState) {
 		if (!navigator || !navigator.geolocation) {
-			return dispatch(setCurrentLocationError(true))
+			dispatch(setCurrentLocationError(true))
+			return
 		}
+
+		dispatch(setGeolocating(true))
 
 		return navigator.geolocation.getCurrentPosition(
 			(position: Position) => {
 				dispatch(setCurrentLocation(position))
+				const location = {
+					name: 'Current Location',
+					coords: {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					}
+				}
+				dispatch(setLocation(location))
+				dispatch(setGeolocating(false))
+				dispatch(setInputValue(location.name))
+				dispatch(fetchWeather())
 			},
-			(positionError: PositionError) =>
-				dispatch(setCurrentLocationError(true, positionError.message)),
-			{ enableHighAccuracy: true }
+			(positionError: PositionError) => {
+				dispatch(setGeolocating(false))
+				dispatch({
+					type: SET_CURRENT_LOCATION,
+					currentLocation: {
+						name: '',
+						lat: null,
+						lng: null
+					}
+				})
+				if (getState().locationAutosuggest.inputValue === 'Current Location') {
+					dispatch(setInputValue(''))
+				}
+				dispatch(setCurrentLocationError(true, positionError.message))
+			},
+			{
+				enableHighAccuracy: true,
+				timeout: 10000
+			}
 		)
 	}
 }

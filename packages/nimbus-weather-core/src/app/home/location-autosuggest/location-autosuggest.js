@@ -3,6 +3,7 @@ import * as React from 'react'
 // $FlowFixMe flow-mono error maybe?
 import Downshift from 'downshift'
 import { withStyles } from '@material-ui/core/styles'
+import withWidth from '@material-ui/core/withWidth'
 import Paper from '@material-ui/core/Paper'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import IconButton from '@material-ui/core/IconButton'
@@ -57,12 +58,14 @@ type Props = {
 		display_name: string,
 		lat: number,
 		lon: number
-	}>
+	}>,
+	inputValue: string,
+	setInputValue: (inputValue: string) => void,
+	width: string
 }
 
 type State = {
-	suggestions: Array<Object>,
-	inputValue: string
+	suggestions: Array<Object>
 }
 
 class LocationAutosuggest extends React.Component<Props, State> {
@@ -76,8 +79,7 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		super(props)
 
 		this.state = {
-			suggestions: [],
-			inputValue: (props.location && props.location.name) || ''
+			suggestions: []
 		}
 	}
 
@@ -88,21 +90,18 @@ class LocationAutosuggest extends React.Component<Props, State> {
 	)
 
 	handleInputValueChange(inputValue) {
-		this.setState({ inputValue })
+		this.props.setInputValue(inputValue)
 	}
 
 	handleInputValueClear() {
-		this.setState({ inputValue: '' }, () => {
-			this.inputEl.focus()
-		})
+		this.props.setInputValue('')
+		this.inputEl.focus()
 	}
 
 	handleChange = item => {
 		if (!item) return
 
-		this.setState({
-			inputValue: item.display_name
-		})
+		this.props.setInputValue(item.display_name)
 
 		const res = {
 			name: item.display_name,
@@ -121,9 +120,7 @@ class LocationAutosuggest extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { classes, location } = this.props
-
-		const { inputValue } = this.state
+		const { classes, location, inputValue, width } = this.props
 
 		return (
 			<div className={classes.root}>
@@ -132,7 +129,6 @@ class LocationAutosuggest extends React.Component<Props, State> {
 					value={location}
 					itemToString={i => (i && i.name ? i.name : '')}
 					inputValue={inputValue}
-					defaultInputValue={(location && location.name) || ''}
 					onInputValueChange={this.handleInputValueChange.bind(this)}
 				>
 					{({
@@ -151,6 +147,7 @@ class LocationAutosuggest extends React.Component<Props, State> {
 									this.inputEl = el
 								},
 								InputProps: getInputProps({
+									multiline: width === 'xs',
 									onChange: e => {
 										const { value } = e.target
 										if (!value) return
@@ -192,4 +189,4 @@ class LocationAutosuggest extends React.Component<Props, State> {
 	}
 }
 
-export default withStyles(styles)(LocationAutosuggest)
+export default withWidth()(withStyles(styles)(LocationAutosuggest))

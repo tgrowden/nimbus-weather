@@ -57,6 +57,7 @@
     "server:dev": "./bin/server dev",
     "alert-not-ci": "echo \"Detected a CI server. Skipping installing flow typings\"",
     "webapp:dev": "concurrently \"./bin/core dev\" \"./bin/webapp dev\"",
+    "electron:dev": "concurrently \"./bin/core dev\" \"./bin/electron dev\"",
     "format": "prettier-eslint --write '**/*.js'",
     "precommit": "lint-staged"
   },

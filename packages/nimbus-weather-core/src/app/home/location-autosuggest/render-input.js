@@ -6,7 +6,6 @@ export default function renderInput(inputProps) {
 
 	return (
 		<TextField
-			multiline
 			InputProps={{
 				inputRef: ref,
 				classes: {

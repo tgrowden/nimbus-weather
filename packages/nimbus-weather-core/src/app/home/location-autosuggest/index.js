@@ -1,6 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as HomeActions from '../actions'
+import { fetchWeather, setLocation } from '../actions'
+import { setInputValue } from './actions'
 import LocationAutosuggest from './location-autosuggest'
 
 function mapStateToProps(state) {
@@ -17,13 +18,21 @@ function mapStateToProps(state) {
 			: undefined
 
 	return {
+		inputValue: state.locationAutosuggest.inputValue,
 		location: state.home.location,
 		otherSuggestions
 	}
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators(HomeActions, dispatch)
+	return bindActionCreators(
+		{
+			fetchWeather,
+			setLocation,
+			setInputValue
+		},
+		dispatch
+	)
 }
 
 export default connect(

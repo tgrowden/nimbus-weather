@@ -6,6 +6,7 @@ import settings, { defaultState as settingsDefaultState } from './settings/reduc
 import home, { defaultState as homeDefaultState } from './home/reducers'
 import theme, { defaultState as themeDefaultState } from './settings/theme-settings/reducers'
 import weatherVisualizations, { defaultState as weatherVisualizationsDefaultState } from './settings/weather-visualization-settings/reducers'
+import locationAutosuggest, { defaultState as locationAutosuggestDefaultState } from './home/location-autosuggest/reducers'
 
 const rootReducer = combineReducers({
 	drawer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
 	settings,
 	theme,
 	weatherVisualizations,
+	locationAutosuggest,
 	router
 })
 
@@ -23,5 +25,6 @@ export const defaultState = {
 	settings: settingsDefaultState,
 	home: homeDefaultState,
 	theme: themeDefaultState,
-	weatherVisualizations: weatherVisualizationsDefaultState
+	weatherVisualizations: weatherVisualizationsDefaultState,
+	locationAutosuggest: locationAutosuggestDefaultState
 }
