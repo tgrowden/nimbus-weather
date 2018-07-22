@@ -16,7 +16,7 @@ import Visibility from '../field/visibility'
 import Ozone from '../field/ozone'
 import Wind from '../field/wind'
 import GeneralSummary from '../general-summary'
-import Graphs from '../graphs'
+import Visualizations from '../visualizations'
 import FieldWrapper from '../field/field-wrapper'
 
 type Props = {
@@ -50,7 +50,7 @@ class Hourly extends React.Component<Props> {
 
 		return (
 			<div className={classes.root}>
-				<Graphs
+				<Visualizations
 					timezone={timezone}
 					data={weather.data}
 					exclude={['tempRange']}

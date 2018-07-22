@@ -46,6 +46,7 @@
   "scripts": {
     "lint": "eslint . --cache",
     "lint:no-cache": "eslint . --no-cache",
+    "lint:fix": "eslint . --fix",
     "flow": "flow",
     "flow:setup": "rimraf packages/nimbus-weather-*/.flow-config packages/nimbus-weather-*/flow-typed/npm && flow-mono install-types && flow-mono create-symlinks .flowconfig",
     "postinstall": "is-ci 'alert-not-ci' 'flow:setup'",

@@ -5,8 +5,13 @@ import * as HomeActions from '../../actions'
 import Daily from './daily'
 
 function mapStateToProps(state) {
+	const { weather } = state.home
+
 	return {
-		graph: state.home.dailyGraph
+		graph: state.home.dailyGraph,
+		weather: weather.daily,
+		timezone: weather.timezone,
+		units: (weather && weather.flags && weather.flags.units) || undefined
 	}
 }
 

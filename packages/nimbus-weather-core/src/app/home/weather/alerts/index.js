@@ -1,50 +1,14 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import Alert from './alert'
+// @flow
+import { connect } from 'react-redux'
+import Alerts from './alerts'
 
-const styles = (theme: MuiTheme) => ({
-	root: {},
-	alertWrapper: {
-		marginBottom: theme.spacing.unit * 2
-	}
-})
+function mapStateToProps(state) {
+	const { weather } = state.home
 
-type Props = {
-	alerts: WeatherAlerts,
-	classes: Object,
-	timezone: string
-}
-
-class Alerts extends React.Component<Props> {
-	render() {
-		const { classes, alerts, timezone } = this.props
-
-		if (!alerts || !alerts.length) {
-			return (
-				<div className={classes.root}>
-					<Typography variant="subheading" align="center">
-						There are no alerts currently for this location.
-					</Typography>
-				</div>
-			)
-		}
-
-		return (
-			<div className={classes.root}>
-				{/* eslint-disable react/no-array-index-key  */}
-				{alerts.map((alert, i) => (
-					<div
-						className={classes.alertWrapper}
-						key={`alert-${alert.time}-${i}`}
-					>
-						<Alert data={alert} timezone={timezone} />
-					</div>
-				))}
-				{/* eslint-enable react/no-array-index-key  */}
-			</div>
-		)
+	return {
+		alerts: weather.alerts,
+		timezone: weather.timezone
 	}
 }
 
-export default withStyles(styles)(Alerts)
+export default connect(mapStateToProps)(Alerts)

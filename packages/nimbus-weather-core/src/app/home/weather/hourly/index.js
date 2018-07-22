@@ -5,8 +5,13 @@ import * as HomeActions from '../../actions'
 import Hourly from './hourly'
 
 function mapStateToProps(state) {
+	const { weather } = state.home
+
 	return {
-		graph: state.home.hourlyGraph
+		graph: state.home.hourlyGraph,
+		weather: weather.hourly,
+		timezone: weather.timezone,
+		units: (weather && weather.flags && weather.flags.units) || undefined
 	}
 }
 

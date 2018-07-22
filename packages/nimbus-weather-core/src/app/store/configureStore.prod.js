@@ -2,19 +2,9 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { createHashHistory } from 'history'
 import { routerMiddleware } from 'react-router-redux'
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-import rootReducer from '../root-reducer'
+import { persistStore } from 'redux-persist'
 import locationChangeMiddleware from './middleware/location-change'
-import stateReconciler from './state-reconciler'
-
-const persistConfig = {
-	key: 'root',
-	storage,
-	stateReconciler
-}
-
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+import persistedReducer from './persisted-reducer'
 
 const history = createHashHistory()
 const router = routerMiddleware(history)

@@ -67,17 +67,22 @@ export function fetchWeather() {
 	return function dispatchFetchWeather(dispatch, getState) {
 		dispatch(setFetchingWeather(true))
 
-		const { home, weatherVisualizations } = getState()
+		const { home, weatherVisualizations, settings } = getState()
+
+		const host = settings.customWeatherApiHost || apiHost
 
 		return axios
-			.get(`${apiHost}/forecast`, {
+			.get(`${host}/forecast`, {
 				params: {
 					lat: home.location.coords.lat,
 					lng: home.location.coords.lng,
 					units: weatherVisualizations.preferredUnits
 				}
 			})
-			.then(res => res.data)
+			.then(res => ({
+				...res.data,
+				fetched: Date.now()
+			}))
 			.then(res => {
 				dispatch(setWeather(res))
 				dispatch(setFetchingWeather(false))
@@ -126,42 +131,48 @@ export function geolocate() {
 			return
 		}
 
+		const { geolocationTimeout, geolocationHighAccuracy } = getState().settings
+
 		dispatch(setGeolocating(true))
 
 		return navigator.geolocation.getCurrentPosition(
-			(position: Position) => {
-				dispatch(setCurrentLocation(position))
-				const location = {
-					name: 'Current Location',
-					coords: {
-						lat: position.coords.latitude,
-						lng: position.coords.longitude
-					}
-				}
-				dispatch(setLocation(location))
-				dispatch(setGeolocating(false))
-				dispatch(setInputValue(location.name))
-				dispatch(fetchWeather())
-			},
-			(positionError: PositionError) => {
-				dispatch(setGeolocating(false))
-				dispatch({
-					type: SET_CURRENT_LOCATION,
-					currentLocation: {
-						name: '',
-						lat: null,
-						lng: null
-					}
-				})
-				if (getState().locationAutosuggest.inputValue === 'Current Location') {
-					dispatch(setInputValue(''))
-				}
-				dispatch(setCurrentLocationError(true, positionError.message))
-			},
+			onGeolocationSuccess.bind(null, dispatch),
+			onGeolocationError.bind(null, dispatch, getState),
 			{
-				enableHighAccuracy: true,
-				timeout: 10000
+				enableHighAccuracy: geolocationHighAccuracy,
+				timeout: geolocationTimeout
 			}
 		)
 	}
+}
+
+function onGeolocationSuccess(dispatch, position: Position) {
+	dispatch(setCurrentLocation(position))
+	const location = {
+		name: 'Current Location',
+		coords: {
+			lat: position.coords.latitude,
+			lng: position.coords.longitude
+		}
+	}
+	dispatch(setLocation(location))
+	dispatch(setGeolocating(false))
+	dispatch(setInputValue(location.name))
+	dispatch(fetchWeather())
+}
+
+function onGeolocationError(dispatch, getState, positionError: PositionError) {
+	dispatch(setGeolocating(false))
+	dispatch({
+		type: SET_CURRENT_LOCATION,
+		currentLocation: {
+			name: '',
+			lat: null,
+			lng: null
+		}
+	})
+	if (getState().locationAutosuggest.inputValue === 'Current Location') {
+		dispatch(setInputValue(''))
+	}
+	dispatch(setCurrentLocationError(true, positionError.message))
 }

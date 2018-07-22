@@ -81,38 +81,15 @@ class WeatherApp extends React.Component<Props> {
 	}
 
 	get activeView() {
-		const { weather } = this.props
-
-		const units = (weather && weather.flags && weather.flags.units) || undefined
-
 		switch (this.activeTab) {
 			case VIEWS.hourly:
-				return (
-					<Hourly
-						weather={weather.hourly}
-						timezone={weather.timezone}
-						units={units}
-					/>
-				)
+				return <Hourly />
 			case VIEWS.daily:
-				return (
-					<Daily
-						weather={weather.daily}
-						timezone={weather.timezone}
-						units={units}
-					/>
-				)
+				return <Daily />
 			case VIEWS.alerts:
-				return <Alerts alerts={weather.alerts} timezone={weather.timezone} />
+				return <Alerts />
 			default:
-				return (
-					<Current
-						weather={weather.currently}
-						minutely={weather.minutely}
-						timezone={weather.timezone}
-						units={units}
-					/>
-				)
+				return <Current />
 		}
 	}
 

@@ -37,7 +37,8 @@ type Props = {
 		name: string,
 		lat: number | null,
 		lng: number | null
-	}
+	},
+	geolocating: boolean
 }
 
 type State = {
@@ -68,15 +69,20 @@ class SpeedDials extends React.Component<Props, State> {
 	}
 
 	get actions() {
-		const { classes, fetchWeather, coords, fetchingWeather, timezone, currentLocation, geolocate } = this.props
+		const {
+			classes,
+			fetchWeather,
+			coords,
+			fetchingWeather,
+			timezone,
+			currentLocation,
+			geolocate,
+			geolocating
+		} = this.props
 
 		const res = []
 
-		if (
-			!!coords.lat &&
-			!!coords.lng &&
-			!!timezone
-		) {
+		if (!!coords.lat && !!coords.lng && !!timezone) {
 			res.push({
 				name: 'Refresh Weather',
 				onClick: fetchWeather,
@@ -88,15 +94,21 @@ class SpeedDials extends React.Component<Props, State> {
 					/>
 				),
 				ButtonProps: {
-					color: 'secondary'
+					color: 'secondary',
+					disabled: fetchingWeather
 				}
 			})
 		}
 
 		res.push({
-			name: `${currentLocation.lat && currentLocation.lng ? 'Update' : 'Get'} Current Location`,
+			name: `${
+				currentLocation.lat && currentLocation.lng ? 'Update' : 'Get'
+			} Current Location`,
 			icon: <Location className={classes.defaultButtonIcon} />,
-			onClick: geolocate
+			onClick: geolocate,
+			ButtonProps: {
+				disabled: geolocating
+			}
 		})
 
 		return res
@@ -127,13 +139,7 @@ class SpeedDials extends React.Component<Props, State> {
 				{this.actions.map(action => {
 					const { name, ...props } = action
 
-					return (
-						<SpeedDialAction
-							key={name}
-							tooltipTitle={name}
-							{...props}
-						/>
-					)
+					return <SpeedDialAction key={name} tooltipTitle={name} {...props} />
 				})}
 			</SpeedDial>
 		)

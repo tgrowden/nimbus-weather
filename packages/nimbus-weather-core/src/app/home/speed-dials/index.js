@@ -8,7 +8,8 @@ function mapStateToProps(state) {
 		coords: state.home.location.coords,
 		fetchingWeather: state.home.fetchingWeather,
 		timezone: state.home.weather.timezone,
-		currentLocation: state.home.currentLocation
+		currentLocation: state.home.currentLocation,
+		geolocating: state.home.geolocating
 	}
 }
 

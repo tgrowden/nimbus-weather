@@ -3,18 +3,10 @@ import thunk from 'redux-thunk'
 import { createHashHistory } from 'history'
 import { routerMiddleware, routerActions } from 'react-router-redux'
 import { createLogger } from 'redux-logger'
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-import rootReducer from '../root-reducer'
+import { persistStore } from 'redux-persist'
 import locationChangeMiddleware from './middleware/location-change'
-import stateReconciler from './state-reconciler'
 import * as DrawerActions from '../drawer/actions'
-
-const persistConfig = {
-	key: 'root',
-	storage,
-	stateReconciler
-}
+import persistedReducer from './persisted-reducer'
 
 const history = createHashHistory()
 
@@ -61,8 +53,6 @@ const configureStore = (initialState?) => {
 	// Apply Middleware & Compose Enhancers
 	enhancers.push(applyMiddleware(...middleware))
 	const enhancer = composeEnhancers(...enhancers)
-
-	const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 	// Create Store
 	const store = createStore(persistedReducer, initialState, enhancer)

@@ -12,6 +12,8 @@ import WeatherTabs from './weather'
 import LocationAutosuggest from './location-autosuggest'
 import WeatherErrorModal from './weather/weather-error-modal'
 import SpeedDials from './speed-dials'
+import WeatherApiError from './error-dialog/weather-api-error'
+import GeolocationError from './error-dialog/geolocation-error'
 
 type Props = {
 	classes: Object,
@@ -103,6 +105,8 @@ class Home extends Component<Props> {
 						!!weather.timezone && <WeatherTabs />}
 				</div>
 				<SpeedDials />
+				<WeatherApiError />
+				<GeolocationError />
 			</React.Fragment>
 		)
 	}
