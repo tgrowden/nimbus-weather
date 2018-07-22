@@ -17,7 +17,7 @@ async function dev() {
 		outDir: path.join(corePath, 'dist')
 	}
 
-	const bundler = new Bundler(path.join(corePath, 'src', 'index.js'), opts)
+	const bundler = new Bundler(path.join(corePath, 'src', 'app', 'index.js'), opts)
 
 	await bundler.bundle()
 }
@@ -31,7 +31,7 @@ async function build() {
 		outDir: path.join(corePath, 'dist')
 	}
 
-	const bundler = new Bundler(path.join(corePath, 'src', 'index.js'), opts)
+	const bundler = new Bundler(path.join(corePath, 'src', 'app', 'index.js'), opts)
 
 	await bundler.bundle()
 }

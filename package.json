@@ -46,6 +46,7 @@
   "scripts": {
     "lint": "eslint . --cache",
     "lint:no-cache": "eslint . --no-cache",
+    "lint:fix": "eslint . --fix",
     "flow": "flow",
     "flow:setup": "rimraf packages/nimbus-weather-*/.flow-config packages/nimbus-weather-*/flow-typed/npm && flow-mono install-types && flow-mono create-symlinks .flowconfig",
     "postinstall": "is-ci 'alert-not-ci' 'flow:setup'",
@@ -57,6 +58,7 @@
     "server:dev": "./bin/server dev",
     "alert-not-ci": "echo \"Detected a CI server. Skipping installing flow typings\"",
     "webapp:dev": "concurrently \"./bin/core dev\" \"./bin/webapp dev\"",
+    "electron:dev": "concurrently \"./bin/core dev\" \"./bin/electron dev\"",
     "format": "prettier-eslint --write '**/*.js'",
     "precommit": "lint-staged"
   },

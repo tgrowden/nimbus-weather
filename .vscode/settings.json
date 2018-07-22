@@ -19,6 +19,6 @@
   "prettier.eslintIntegration": true,
   "eslint.packageManager": "yarn",
   "eslint.options": {
-    "cache": true
+    "cache": "true"
   }
 }

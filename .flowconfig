@@ -5,6 +5,11 @@
 <PROJECT_ROOT>/packages/*/**/resources/.*
 <PROJECT_ROOT>/.git/.*
 <PROJECT_ROOT>/node_modules/config-chain/test/broken.json
+<PROJECT_ROOT>/docs/.*
+<PROJECT_ROOT>/packages/nimbus-weather-core/dist/.*
+<PROJECT_ROOT>/packages/nimbus-weather-electron/.cache/.*
+<PROJECT_ROOT>/packages/nimbus-weather-electron/dist/.*
+<PROJECT_ROOT>/packages/nimbus-weather-webapp/dev/.*
 
 [include]
 <PROJECT_ROOT>/../../node_modules/.*
