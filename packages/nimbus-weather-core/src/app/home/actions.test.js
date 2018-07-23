@@ -61,7 +61,7 @@ describe('Home Actions', () => {
 		}
 
 		it('Should request geolocation with the configured options', () => {
-			const geolocationTimeout = 69000
+			const geolocationTimeout = 69
 			const geolocationHighAccuracy = false
 
 			const store = mockStore({
@@ -80,7 +80,7 @@ describe('Home Actions', () => {
 				expect.any(Function),
 				{
 					enableHighAccuracy: geolocationHighAccuracy,
-					timeout: geolocationTimeout
+					timeout: geolocationTimeout * 1000
 				}
 			)
 		})
