@@ -140,7 +140,7 @@ export function geolocate() {
 			onGeolocationError.bind(null, dispatch, getState),
 			{
 				enableHighAccuracy: geolocationHighAccuracy,
-				timeout: geolocationTimeout
+				timeout: geolocationTimeout * 1000
 			}
 		)
 	}
