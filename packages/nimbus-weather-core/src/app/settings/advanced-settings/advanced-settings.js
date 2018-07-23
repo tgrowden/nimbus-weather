@@ -30,7 +30,12 @@ const styles = (theme: MuiTheme) => ({
 		alignItems: 'center'
 	},
 	details: {
-		flexDirection: 'column'
+		flexDirection: 'column',
+		'&:not(:first-of-type)': {
+			marginTop: theme.spacing.unit * 1.5,
+			paddingTop: theme.spacing.unit * 1.5,
+			borderTop: `2px solid ${theme.palette.background.default}`
+		}
 	},
 	divider: {
 		marginTop: theme.spacing.unit * 2,
