@@ -51,21 +51,20 @@ const styles = theme => ({
 
 type Props = {
 	classes: Object,
-	location: any,
-	setLocation: (location: Object) => void,
+	location: OSMLocation,
+	setLocation: (location: OSMLocation) => void,
 	fetchWeather: () => void,
-	otherSuggestions?: Array<{
-		display_name: string,
-		lat: number,
-		lon: number
-	}>,
+	otherSuggestions?: Array<OSMLocation>,
 	inputValue: string,
 	setInputValue: (inputValue: string) => void,
-	width: string
+	width: string,
+	addFavoriteLocation: (location: OSMLocation) => void,
+	removeFavoriteLocation: (location: OSMLocation) => void
 }
 
 type State = {
-	suggestions: Array<Object>
+	suggestions: Array<OSMLocation>,
+	focused: false
 }
 
 class LocationAutosuggest extends React.Component<Props, State> {
@@ -79,8 +78,19 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		super(props)
 
 		this.state = {
-			suggestions: []
+			suggestions: [],
+			focused: false
 		}
+	}
+
+	componentDidMount() {
+		this.inputEl.addEventListener('focus', this.handleInputFocus)
+		this.inputEl.addEventListener('blur', this.handleInputBlur)
+	}
+
+	componentWillUnmount() {
+		this.inputEl.removeEventListener('focus', this.handleInputFocus)
+		this.inputEl.removeEventListener('blur', this.handleInputBlur)
 	}
 
 	fetchSuggestions = debounce(
@@ -115,8 +125,30 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		this.props.fetchWeather()
 	}
 
-	get suggestions() {
-		return [...(this.props.otherSuggestions || []), ...this.state.suggestions]
+	addFavoriteLocation = (location, e) => {
+		e.preventDefault()
+		e.stopPropagation()
+		this.props.addFavoriteLocation(location)
+	}
+
+	removeFavoriteLocation = (location, e) => {
+		e.preventDefault()
+		e.stopPropagation()
+		this.props.removeFavoriteLocation(location)
+	}
+
+	handleInputFocus = () => {
+		this.setState({
+			focused: true
+		})
+	}
+
+	handleInputBlur = e => {
+		e.preventDefault()
+		e.stopPropagation()
+		this.setState({
+			focused: false
+		})
 	}
 
 	render() {
@@ -166,9 +198,12 @@ class LocationAutosuggest extends React.Component<Props, State> {
 									)
 								})
 							})}
-							{isOpen && (
+							{(isOpen || this.state.focused) && (
 								<Paper className={classes.paper} square>
-									{this.suggestions.map((suggestion, index) =>
+									{[
+										...this.props.otherSuggestions,
+										...this.state.suggestions
+									].map((suggestion, index) =>
 										renderSuggestion({
 											suggestion,
 											index,
@@ -176,7 +211,15 @@ class LocationAutosuggest extends React.Component<Props, State> {
 												item: suggestion
 											}),
 											highlightedIndex,
-											selectedItem
+											selectedItem,
+											addFavoriteLocation: this.addFavoriteLocation.bind(
+												this,
+												suggestion
+											),
+											removeFavoriteLocation: this.removeFavoriteLocation.bind(
+												this,
+												suggestion
+											)
 										})
 									)}
 								</Paper>

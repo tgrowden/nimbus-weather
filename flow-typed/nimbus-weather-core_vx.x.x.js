@@ -284,7 +284,7 @@ export type MuiTheme = {
 	}
 }
 
-export type OSMResponse = {
+export type OSMLocation = {
 	place_id: string,
 	lat: string,
 	lon: string,

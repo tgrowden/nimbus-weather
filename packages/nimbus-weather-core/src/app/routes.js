@@ -2,7 +2,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router'
 import HomeIcon from '@material-ui/icons/Cloud'
-import SettingsIcon from '@material-ui/icons/Settings'
+import SettingsIcon from '@material-ui/icons/SettingsSharp'
 import Drawer from './drawer'
 import Home from './home'
 import Settings from './settings'
