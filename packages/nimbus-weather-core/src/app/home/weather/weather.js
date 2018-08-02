@@ -4,6 +4,8 @@ import { withStyles } from '@material-ui/core/styles'
 // $FlowFixMe flow-mono error maybe?
 import { differenceInMilliseconds } from 'date-fns'
 import { AppBar, Tabs, Tab, Paper } from '@material-ui/core'
+import ErrorOutline from '@material-ui/icons/ErrorOutline'
+import classnames from 'classnames'
 import Current from './current'
 import Hourly from './hourly'
 import Daily from './daily'
@@ -40,6 +42,9 @@ const styles = (theme: MuiTheme) => ({
 		marginLeft: 'auto',
 		marginRight: 'auto',
 		padding: theme.spacing.unit * 4
+	},
+	activeAlerts: {
+		color: theme.palette.error.main
 	}
 })
 
@@ -111,7 +116,19 @@ class WeatherApp extends React.Component<Props> {
 							<Tab label="Current" />
 							<Tab label="Hourly" />
 							<Tab label="Daily" />
-							<Tab label="Alerts" disabled={this.alertsDisabled} />
+							<Tab
+								label="Alerts"
+								disabled={this.alertsDisabled}
+								classes={{
+									textColorInherit: classnames(
+										!this.alertsDisabled && classes.activeAlerts
+									),
+									selected: classnames(
+										!this.alertsDisabled && classes.activeAlertsSelected
+									)
+								}}
+								icon={this.alertsDisabled ? undefined : <ErrorOutline />}
+							/>
 						</Tabs>
 					</AppBar>
 					<div className={classes.weatherContainer}>{this.activeView}</div>
