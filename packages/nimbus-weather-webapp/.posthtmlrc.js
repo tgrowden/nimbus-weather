@@ -26,8 +26,8 @@ module.exports = {
 				path: postHtmlConfig.path,
 				appName: 'Nimbus Weather',
 				appDescription: null,
-				developerName: null,
-				developerURL: null,
+				developerName: 'Taylor Growden <taylor.growden@gmail.com>',
+				developerURL: 'https://github.com/tgrowden',
 				dir: 'auto',
 				lang: 'en-US',
 				background: '#fff',
@@ -39,7 +39,9 @@ module.exports = {
 				logging: false,
 				icons: {
 					android: true,
-					appleIcon: true,
+					appleIcon: {
+						background: false
+					},
 					appleStartup: false,
 					coast: true,
 					favicons: true,
