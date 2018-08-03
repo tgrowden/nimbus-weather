@@ -5,12 +5,14 @@ const isDev = process.env.NODE_ENV !== 'production'
 
 const devConfig = {
 	outDir: path.join(config.paths.webapp, 'dev'),
-	path: '/'
+	path: '/',
+	start_url: '/'
 }
 
 const prodConfig = {
 	outDir: path.join(config.paths.projectRoot, 'docs'),
-	path: '/nimbus-weather/'
+	path: '/nimbus-weather/',
+	start_url: '/nimbus-weather/'
 }
 
 const postHtmlConfig = isDev ? devConfig : prodConfig
@@ -24,21 +26,23 @@ module.exports = {
 				path: postHtmlConfig.path,
 				appName: 'Nimbus Weather',
 				appDescription: null,
-				developerName: null,
-				developerURL: null,
+				developerName: 'Taylor Growden <taylor.growden@gmail.com>',
+				developerURL: 'https://github.com/tgrowden',
 				dir: 'auto',
 				lang: 'en-US',
-				background: 'rgba(255, 255, 255, 0)',
+				background: '#fff',
 				theme_color: '#3f51b5',
 				display: 'standalone',
 				orientation: 'any',
-				start_url: '/nimbus-weather',
+				start_url: postHtmlConfig.start_url,
 				version: '1.0',
 				logging: false,
 				icons: {
 					android: true,
-					appleIcon: true,
-					appleStartup: true,
+					appleIcon: {
+						background: false
+					},
+					appleStartup: false,
 					coast: true,
 					favicons: true,
 					firefox: true,

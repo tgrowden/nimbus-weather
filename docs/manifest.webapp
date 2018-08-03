@@ -8,7 +8,7 @@
     "512": "/nimbus-weather/firefox_app_512x512.png"
   },
   "developer": {
-    "name": null,
-    "url": null
+    "name": "Taylor Growden <taylor.growden@gmail.com>",
+    "url": "https://github.com/tgrowden"
   }
 }

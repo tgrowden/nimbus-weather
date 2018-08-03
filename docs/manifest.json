@@ -6,8 +6,8 @@
   "lang": "en-US",
   "display": "standalone",
   "orientation": "any",
-  "start_url": "/nimbus-weather",
-  "background_color": "rgba(255, 255, 255, 0)",
+  "start_url": "/nimbus-weather/",
+  "background_color": "#fff",
   "theme_color": "#3f51b5",
   "icons": [
     {
