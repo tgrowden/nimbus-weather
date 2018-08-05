@@ -1,7 +1,7 @@
 {
   "name": "nimbus-weather-core",
   "productName": "Nimbus Weather",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "description": "A great weather app with beautiful visualizations.",
   "main": "./dist/index.js",
   "homepage": "https://github.com/tgrowden/nimbus-weather#readme",
