@@ -153,9 +153,9 @@
     "@babel/runtime" "^7.0.0-beta.42"
     recompose "^0.27.0"
 
-"@material-ui/lab@^1.0.0-alpha.6":
-  version "1.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/@material-ui/lab/-/lab-1.0.0-alpha.6.tgz#ee5c03a8577a9cbc4e41b2bfbdfc15b561822749"
+"@material-ui/lab@^1.0.0-alpha.8":
+  version "1.0.0-alpha.8"
+  resolved "https://registry.yarnpkg.com/@material-ui/lab/-/lab-1.0.0-alpha.8.tgz#4dec1584bb902f6cfd473b9272bf49a0ec8e4f98"
 
 "@octokit/rest@^15.2.6":
   version "15.9.4"

@@ -3,7 +3,7 @@
   "api_version": 1,
   "layout": {
     "logo": "/nimbus-weather/yandex-browser-50x50.png",
-    "color": "rgba(255, 255, 255, 0)",
+    "color": "#fff",
     "show_title": true
   }
 }

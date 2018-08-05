@@ -20,9 +20,6 @@ const styles = theme => ({
 		'100%': {
 			transform: 'rotate(360deg)'
 		}
-	},
-	defaultButtonIcon: {
-		color: 'rgba(0, 0, 0, 0.54)'
 	}
 })
 
@@ -104,9 +101,10 @@ class SpeedDials extends React.Component<Props, State> {
 			name: `${
 				currentLocation.lat && currentLocation.lng ? 'Update' : 'Get'
 			} Current Location`,
-			icon: <Location className={classes.defaultButtonIcon} />,
+			icon: <Location />,
 			onClick: geolocate,
 			ButtonProps: {
+				color: 'secondary',
 				disabled: geolocating
 			}
 		})

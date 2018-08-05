@@ -11,7 +11,7 @@ import Warning from '@material-ui/icons/Warning'
 import ErrorIcon from '@material-ui/icons/Error'
 import Icon from '@material-ui/core/Icon'
 import formatDate from '../lib/format-date'
-import open from '../../../lib/open'
+import Link from '../../../components/link'
 
 const styles = {}
 
@@ -78,7 +78,13 @@ class Alert extends React.Component<Props> {
 					<Typography>{data.description}</Typography>
 				</CardContent>
 				<CardActions>
-					<Button size="small" onClick={open.bind(null, data.uri)}>
+					<Button
+						size="small"
+						href={data.uri}
+						component={Link}
+						target="_blank"
+						rel="noreferrer noopener"
+					>
 						Learn More
 					</Button>
 				</CardActions>
