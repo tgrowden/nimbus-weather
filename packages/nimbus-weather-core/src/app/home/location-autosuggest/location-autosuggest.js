@@ -1,16 +1,11 @@
 // @flow
 import * as React from 'react'
-// $FlowFixMe flow-mono error maybe?
-import Downshift from 'downshift'
 import { withStyles } from '@material-ui/core/styles'
 import withWidth from '@material-ui/core/withWidth'
-import Paper from '@material-ui/core/Paper'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import IconButton from '@material-ui/core/IconButton'
-import X from '@material-ui/icons/Clear'
+import MuiDownshift from 'mui-downshift'
+import ListSubheader from '@material-ui/core/ListSubheader'
 import searchLocation from '../../lib/search-location'
 import renderSuggestion from './render-suggestion'
-import renderInput from './render-input'
 
 function debounce(fn, time) {
 	let timeoutId
@@ -27,45 +22,23 @@ function debounce(fn, time) {
 }
 
 const styles = theme => ({
-	container: {
-		flexGrow: 1,
-		position: 'relative',
-		height: 'auto'
-	},
-	suggestionsContainerOpen: {
-		position: 'absolute',
-		zIndex: 1,
-		marginTop: theme.spacing.unit,
-		left: 0,
-		right: 0
-	},
-	suggestion: {
-		display: 'block'
-	},
-	suggestionsList: {
-		margin: 0,
-		padding: 0,
-		listStyleType: 'none'
+	listSubheaderRoot: {
+		paddingLeft: theme.spacing.unit * 2,
+		textTransform: 'uppercase'
 	}
 })
 
 type Props = {
 	classes: Object,
-	location: any,
-	setLocation: (location: Object) => void,
+	location: OSMLocation,
+	setLocation: (location: OSMLocation) => void,
 	fetchWeather: () => void,
-	otherSuggestions?: Array<{
-		display_name: string,
-		lat: number,
-		lon: number
-	}>,
-	inputValue: string,
-	setInputValue: (inputValue: string) => void,
+	otherSuggestions?: Array<OSMLocation>,
 	width: string
 }
 
 type State = {
-	suggestions: Array<Object>
+	suggestions: Array<OSMLocation>
 }
 
 class LocationAutosuggest extends React.Component<Props, State> {
@@ -78,8 +51,11 @@ class LocationAutosuggest extends React.Component<Props, State> {
 	constructor(props) {
 		super(props)
 
+		const suggestions =
+			props.location && props.location.display_name ? [props.location] : []
+
 		this.state = {
-			suggestions: []
+			suggestions
 		}
 	}
 
@@ -89,21 +65,11 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		300
 	)
 
-	handleInputValueChange(inputValue) {
-		this.props.setInputValue(inputValue)
-	}
-
-	handleInputValueClear() {
-		this.props.setInputValue('')
-		this.inputEl.focus()
-	}
-
 	handleChange = item => {
 		if (!item) return
 
-		this.props.setInputValue(item.display_name)
-
 		const res = {
+			...item,
 			name: item.display_name,
 			coords: {
 				lat: item.lat ? parseFloat(item.lat) : null,
@@ -115,76 +81,70 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		this.props.fetchWeather()
 	}
 
-	get suggestions() {
-		return [...(this.props.otherSuggestions || []), ...this.state.suggestions]
+	handleStateChange = changes => {
+		if (
+			typeof changes.inputValue === 'string' &&
+			changes.inputValue !== 'Current Location'
+		) {
+			if (changes.inputValue === '') {
+				this.setState({
+					suggestions: [this.props.location]
+				})
+			} else {
+				this.fetchSuggestions(changes.inputValue)
+			}
+		}
 	}
 
+	getInputProps = () => ({
+		multiline: this.props.width === 'xs',
+		fullWidth: true,
+		label: 'Location',
+		placeholder: this.props.location.display_name
+	})
+
 	render() {
-		const { classes, location, inputValue, width } = this.props
+		const { classes, location } = this.props
+
+		const existingSuggestions = (this.props.otherSuggestions || []).map(
+			i => i && i.display_name
+		)
+
+		let items = this.state.suggestions.filter(
+			i =>
+				i &&
+				i.display_name &&
+				existingSuggestions.indexOf(i.display_name) === -1
+		)
+
+		if (this.props.otherSuggestions && this.props.otherSuggestions.length > 0) {
+			items = [
+				...items,
+				<ListSubheader
+					classes={{
+						root: classes.listSubheaderRoot
+					}}
+					component="div"
+				>
+					Favorites
+				</ListSubheader>,
+				...this.props.otherSuggestions
+			]
+		}
 
 		return (
-			<div className={classes.root}>
-				<Downshift
-					onChange={this.handleChange}
-					value={location}
-					itemToString={i => (i && i.name ? i.name : '')}
-					inputValue={inputValue}
-					onInputValueChange={this.handleInputValueChange.bind(this)}
-				>
-					{({
-						getInputProps,
-						getItemProps,
-						isOpen,
-						selectedItem,
-						highlightedIndex
-					}) => (
-						<div className={classes.container}>
-							{renderInput({
-								fullWidth: true,
-								classes,
-								label: 'Location',
-								ref: el => {
-									this.inputEl = el
-								},
-								InputProps: getInputProps({
-									multiline: width === 'xs',
-									onChange: e => {
-										const { value } = e.target
-										if (!value) return
-
-										this.fetchSuggestions(value)
-									},
-									endAdornment: (
-										<InputAdornment position="end">
-											<IconButton
-												aria-label="Clear Location"
-												onClick={this.handleInputValueClear.bind(this)}
-											>
-												<X />
-											</IconButton>
-										</InputAdornment>
-									)
-								})
-							})}
-							{isOpen && (
-								<Paper className={classes.paper} square>
-									{this.suggestions.map((suggestion, index) =>
-										renderSuggestion({
-											suggestion,
-											index,
-											itemProps: getItemProps({
-												item: suggestion
-											}),
-											highlightedIndex,
-											selectedItem
-										})
-									)}
-								</Paper>
-							)}
-						</div>
-					)}
-				</Downshift>
-			</div>
+			<MuiDownshift
+				items={items}
+				onStateChange={this.handleStateChange}
+				itemToString={i => (i && i.display_name) || ''}
+				value={location}
+				defaultInputValue={location.display_name}
+				onChange={this.handleChange}
+				getListItem={renderSuggestion}
+				getInputProps={this.getInputProps}
+				selectedItem={location && location.display_name ? location : undefined}
+				focusOnClear
+			/>
 		)
 	}
 }

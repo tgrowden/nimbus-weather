@@ -1,14 +1,12 @@
-import {
-	SET_INPUT_VALUE
-} from './actions'
+import { SET_FAVORITE_LOCATIONS } from './actions'
 
 export const defaultState = {
-	inputValue: ''
+	favoriteLocations: {}
 }
 
 export default function locationAutosuggest(state = defaultState, action) {
 	switch (action.type) {
-		case SET_INPUT_VALUE:
+		case SET_FAVORITE_LOCATIONS:
 			return { ...state, ...action }
 		default:
 			return state
