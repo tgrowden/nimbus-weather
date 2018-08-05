@@ -5,7 +5,10 @@ import Star from '@material-ui/icons/Star'
 import StarBorder from '@material-ui/icons/StarBorder'
 import IconButton from '@material-ui/core/IconButton'
 import ListItemText from '@material-ui/core/ListItemText'
-import { removeFavoriteLocation, addFavoriteLocation } from './lib/favorite-locations'
+import {
+	removeFavoriteLocation,
+	addFavoriteLocation
+} from './lib/favorite-locations'
 
 type Props = {
 	item: OSMLocation,
@@ -32,10 +35,15 @@ export default function renderSuggestion({
 
 	const isHighlighted = downshiftProps.highlightedIndex === index
 
+	/* eslint-disable-next-line no-prototype-builtins */
+	if (item.hasOwnProperty('$$typeof')) {
+		return item
+	}
+
 	return (
 		<MenuItem
 			{...itemProps}
-			key={`location-item-${item.osm_id}-${item.cached}`}
+			key={`location-item-${item.osm_id}-${item.cached ? 'true' : 'false'}`}
 			selected={isHighlighted}
 			component="div"
 			style={{ whiteSpace: 'normal', height: 'auto' }}

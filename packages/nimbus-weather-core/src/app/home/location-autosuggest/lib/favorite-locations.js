@@ -1,11 +1,12 @@
 import Store from '../../../store/configureStore'
-import { addFavoriteLocation as add, removeFavoriteLocation as remove } from '../actions'
+import {
+	addFavoriteLocation as add,
+	removeFavoriteLocation as remove
+} from '../actions'
 
 const { store } = Store
 
-export const addFavoriteLocation = location => e => {
-	e.preventDefault()
-	e.stopPropagation()
+export const addFavoriteLocation = location => () => {
 	store.dispatch(add(location))
 }
 

@@ -285,13 +285,15 @@ export type MuiTheme = {
 }
 
 export type OSMLocation = {
+	osm_id: string,
 	place_id: string,
 	lat: string,
 	lon: string,
 	display_name: string,
 	category?: string,
 	type?: string,
-	icon?: string
+	icon?: string,
+	cached?: boolean
 }
 
 export interface WeatherDataVisualization {

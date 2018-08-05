@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { apiHost } from '../../config'
-import { setInputValue } from './location-autosuggest/actions'
 
 export const SET_LOCATION: ActionConst = 'SET_LOCATION'
 export const SET_WEATHER: ActionConst = 'SET_WEATHER'
@@ -159,7 +158,6 @@ function onGeolocationSuccess(dispatch, position: Position) {
 	}
 	dispatch(setLocation(location))
 	dispatch(setGeolocating(false))
-	dispatch(setInputValue(location.name))
 	dispatch(fetchWeather())
 }
 
@@ -173,8 +171,5 @@ function onGeolocationError(dispatch, getState, positionError: PositionError) {
 			lng: null
 		}
 	})
-	if (getState().locationAutosuggest.inputValue === 'Current Location') {
-		dispatch(setInputValue(''))
-	}
 	dispatch(setCurrentLocationError(true, positionError.message))
 }

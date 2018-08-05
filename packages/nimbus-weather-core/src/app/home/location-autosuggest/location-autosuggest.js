@@ -3,6 +3,7 @@ import * as React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import withWidth from '@material-ui/core/withWidth'
 import MuiDownshift from 'mui-downshift'
+import ListSubheader from '@material-ui/core/ListSubheader'
 import searchLocation from '../../lib/search-location'
 import renderSuggestion from './render-suggestion'
 
@@ -21,25 +22,9 @@ function debounce(fn, time) {
 }
 
 const styles = theme => ({
-	container: {
-		flexGrow: 1,
-		position: 'relative',
-		height: 'auto'
-	},
-	suggestionsContainerOpen: {
-		position: 'absolute',
-		zIndex: 1,
-		marginTop: theme.spacing.unit,
-		left: 0,
-		right: 0
-	},
-	suggestion: {
-		display: 'block'
-	},
-	suggestionsList: {
-		margin: 0,
-		padding: 0,
-		listStyleType: 'none'
+	listSubheaderRoot: {
+		paddingLeft: theme.spacing.unit * 2,
+		textTransform: 'uppercase'
 	}
 })
 
@@ -49,11 +34,7 @@ type Props = {
 	setLocation: (location: OSMLocation) => void,
 	fetchWeather: () => void,
 	otherSuggestions?: Array<OSMLocation>,
-	inputValue: string,
-	setInputValue: (inputValue: string) => void,
-	width: string,
-	addFavoriteLocation: (location: OSMLocation) => void,
-	removeFavoriteLocation: (location: OSMLocation) => void
+	width: string
 }
 
 type State = {
@@ -70,8 +51,11 @@ class LocationAutosuggest extends React.Component<Props, State> {
 	constructor(props) {
 		super(props)
 
+		const suggestions =
+			props.location && props.location.display_name ? [props.location] : []
+
 		this.state = {
-			suggestions: []
+			suggestions
 		}
 	}
 
@@ -81,14 +65,8 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		300
 	)
 
-	handleInputValueChange(inputValue) {
-		this.props.setInputValue(inputValue)
-	}
-
 	handleChange = item => {
 		if (!item) return
-
-		this.props.setInputValue(item.display_name)
 
 		const res = {
 			...item,
@@ -103,25 +81,14 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		this.props.fetchWeather()
 	}
 
-	addFavoriteLocation = (location, e) => {
-		e.preventDefault()
-		e.stopPropagation()
-		this.props.addFavoriteLocation(location)
-	}
-
-	removeFavoriteLocation = (location, e) => {
-		e.preventDefault()
-		e.stopPropagation()
-		this.props.removeFavoriteLocation(location)
-	}
-
 	handleStateChange = changes => {
-		if (typeof changes.inputValue === 'string' && changes.inputValue !== 'Current Location') {
+		if (
+			typeof changes.inputValue === 'string' &&
+			changes.inputValue !== 'Current Location'
+		) {
 			if (changes.inputValue === '') {
 				this.setState({
-					suggestions: [
-						this.props.location
-					]
+					suggestions: [this.props.location]
 				})
 			} else {
 				this.fetchSuggestions(changes.inputValue)
@@ -130,33 +97,52 @@ class LocationAutosuggest extends React.Component<Props, State> {
 	}
 
 	getInputProps = () => ({
+		multiline: this.props.width === 'xs',
 		fullWidth: true,
 		label: 'Location',
-		placeholder: this.props.location.name
+		placeholder: this.props.location.display_name
 	})
 
 	render() {
-		const { classes, inputValue, width, location } = this.props
+		const { classes, location } = this.props
 
-		const existingSuggestions = this.props.otherSuggestions.map(i => i.name || i.display_name || i.label)
+		const existingSuggestions = (this.props.otherSuggestions || []).map(
+			i => i && i.display_name
+		)
 
-		const items = [
-			...this.props.otherSuggestions,
-			...this.state.suggestions
-				.filter(i => (i && i.display_name && existingSuggestions.indexOf(i.display_name) === -1))
-		]
+		let items = this.state.suggestions.filter(
+			i =>
+				i &&
+				i.display_name &&
+				existingSuggestions.indexOf(i.display_name) === -1
+		)
+
+		if (this.props.otherSuggestions && this.props.otherSuggestions.length > 0) {
+			items = [
+				...items,
+				<ListSubheader
+					classes={{
+						root: classes.listSubheaderRoot
+					}}
+					component="div"
+				>
+					Favorites
+				</ListSubheader>,
+				...this.props.otherSuggestions
+			]
+		}
 
 		return (
 			<MuiDownshift
 				items={items}
 				onStateChange={this.handleStateChange}
-				itemToString={i => (i && i.display_name || '')}
+				itemToString={i => (i && i.display_name) || ''}
 				value={location}
-				defaultInputValue={location.name}
+				defaultInputValue={location.display_name}
 				onChange={this.handleChange}
 				getListItem={renderSuggestion}
 				getInputProps={this.getInputProps}
-				selectedItem={location && location.name ? location : undefined}
+				selectedItem={location && location.display_name ? location : undefined}
 				focusOnClear
 			/>
 		)
