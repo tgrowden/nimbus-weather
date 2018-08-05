@@ -111,6 +111,7 @@ export function setCurrentLocation(position: Position) {
 		type: SET_CURRENT_LOCATION,
 		currentLocation: {
 			name: 'Current Location',
+			display_name: 'Current Location',
 			lat: position.coords.latitude,
 			lng: position.coords.longitude
 		}
@@ -150,6 +151,7 @@ function onGeolocationSuccess(dispatch, position: Position) {
 	dispatch(setCurrentLocation(position))
 	const location = {
 		name: 'Current Location',
+		display_name: 'Current Location',
 		coords: {
 			lat: position.coords.latitude,
 			lng: position.coords.longitude

@@ -1,16 +1,10 @@
 // @flow
 import * as React from 'react'
-// $FlowFixMe flow-mono error maybe?
-import Downshift from 'downshift'
 import { withStyles } from '@material-ui/core/styles'
 import withWidth from '@material-ui/core/withWidth'
-import Paper from '@material-ui/core/Paper'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import IconButton from '@material-ui/core/IconButton'
-import X from '@material-ui/icons/Clear'
+import MuiDownshift from 'mui-downshift'
 import searchLocation from '../../lib/search-location'
 import renderSuggestion from './render-suggestion'
-import renderInput from './render-input'
 
 function debounce(fn, time) {
 	let timeoutId
@@ -63,8 +57,7 @@ type Props = {
 }
 
 type State = {
-	suggestions: Array<OSMLocation>,
-	focused: false
+	suggestions: Array<OSMLocation>
 }
 
 class LocationAutosuggest extends React.Component<Props, State> {
@@ -78,19 +71,8 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		super(props)
 
 		this.state = {
-			suggestions: [],
-			focused: false
+			suggestions: []
 		}
-	}
-
-	componentDidMount() {
-		this.inputEl.addEventListener('focus', this.handleInputFocus)
-		this.inputEl.addEventListener('blur', this.handleInputBlur)
-	}
-
-	componentWillUnmount() {
-		this.inputEl.removeEventListener('focus', this.handleInputFocus)
-		this.inputEl.removeEventListener('blur', this.handleInputBlur)
 	}
 
 	fetchSuggestions = debounce(
@@ -103,17 +85,13 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		this.props.setInputValue(inputValue)
 	}
 
-	handleInputValueClear() {
-		this.props.setInputValue('')
-		this.inputEl.focus()
-	}
-
 	handleChange = item => {
 		if (!item) return
 
 		this.props.setInputValue(item.display_name)
 
 		const res = {
+			...item,
 			name: item.display_name,
 			coords: {
 				lat: item.lat ? parseFloat(item.lat) : null,
@@ -137,97 +115,50 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		this.props.removeFavoriteLocation(location)
 	}
 
-	handleInputFocus = () => {
-		this.setState({
-			focused: true
-		})
+	handleStateChange = changes => {
+		if (typeof changes.inputValue === 'string' && changes.inputValue !== 'Current Location') {
+			if (changes.inputValue === '') {
+				this.setState({
+					suggestions: [
+						this.props.location
+					]
+				})
+			} else {
+				this.fetchSuggestions(changes.inputValue)
+			}
+		}
 	}
 
-	handleInputBlur = e => {
-		e.preventDefault()
-		e.stopPropagation()
-		this.setState({
-			focused: false
-		})
-	}
+	getInputProps = () => ({
+		fullWidth: true,
+		label: 'Location',
+		placeholder: this.props.location.name
+	})
 
 	render() {
-		const { classes, location, inputValue, width } = this.props
+		const { classes, inputValue, width, location } = this.props
+
+		const existingSuggestions = this.props.otherSuggestions.map(i => i.name || i.display_name || i.label)
+
+		const items = [
+			...this.props.otherSuggestions,
+			...this.state.suggestions
+				.filter(i => (i && i.display_name && existingSuggestions.indexOf(i.display_name) === -1))
+		]
 
 		return (
-			<div className={classes.root}>
-				<Downshift
-					onChange={this.handleChange}
-					value={location}
-					itemToString={i => (i && i.name ? i.name : '')}
-					inputValue={inputValue}
-					onInputValueChange={this.handleInputValueChange.bind(this)}
-				>
-					{({
-						getInputProps,
-						getItemProps,
-						isOpen,
-						selectedItem,
-						highlightedIndex
-					}) => (
-						<div className={classes.container}>
-							{renderInput({
-								fullWidth: true,
-								classes,
-								label: 'Location',
-								ref: el => {
-									this.inputEl = el
-								},
-								InputProps: getInputProps({
-									multiline: width === 'xs',
-									onChange: e => {
-										const { value } = e.target
-										if (!value) return
-
-										this.fetchSuggestions(value)
-									},
-									endAdornment: (
-										<InputAdornment position="end">
-											<IconButton
-												aria-label="Clear Location"
-												onClick={this.handleInputValueClear.bind(this)}
-											>
-												<X />
-											</IconButton>
-										</InputAdornment>
-									)
-								})
-							})}
-							{(isOpen || this.state.focused) && (
-								<Paper className={classes.paper} square>
-									{[
-										...this.props.otherSuggestions,
-										...this.state.suggestions
-									].map((suggestion, index) =>
-										renderSuggestion({
-											suggestion,
-											index,
-											itemProps: getItemProps({
-												item: suggestion
-											}),
-											highlightedIndex,
-											selectedItem,
-											addFavoriteLocation: this.addFavoriteLocation.bind(
-												this,
-												suggestion
-											),
-											removeFavoriteLocation: this.removeFavoriteLocation.bind(
-												this,
-												suggestion
-											)
-										})
-									)}
-								</Paper>
-							)}
-						</div>
-					)}
-				</Downshift>
-			</div>
+			<MuiDownshift
+				items={items}
+				onStateChange={this.handleStateChange}
+				itemToString={i => (i && i.display_name || '')}
+				value={location}
+				defaultInputValue={location.name}
+				onChange={this.handleChange}
+				getListItem={renderSuggestion}
+				getInputProps={this.getInputProps}
+				selectedItem={location && location.name ? location : undefined}
+				focusOnClear
+			/>
 		)
 	}
 }

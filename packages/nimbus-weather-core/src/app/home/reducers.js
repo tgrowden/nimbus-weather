@@ -47,6 +47,7 @@ export const defaultState = {
 	currentLocationErrorMessage: null,
 	currentLocation: {
 		name: 'Current Location',
+		display_name: 'Current Location',
 		lat: null,
 		lng: null
 	},
