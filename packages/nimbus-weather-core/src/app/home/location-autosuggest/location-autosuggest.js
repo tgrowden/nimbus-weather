@@ -64,6 +64,7 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		value =>
 			searchLocation(value)
 				.then(
+					// $FlowFixMe
 					(suggestions: Array<OSMLocation>): Array<Location> =>
 						suggestions.map(
 							(suggestion: OSMLocation): Location =>
