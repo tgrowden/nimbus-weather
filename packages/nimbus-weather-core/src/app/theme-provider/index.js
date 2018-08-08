@@ -14,6 +14,15 @@ function mapStateToProps(state) {
 				error: colors[state.theme.errorColor],
 				cold: colors[state.weatherVisualizations.coldTempColor],
 				hot: colors[state.weatherVisualizations.hotTempColor]
+			},
+			mixins: {
+				noSelect: {
+					'-moz-user-select': 'none',
+					'-webkit-user-select': 'none',
+					'-ms-user-select': 'none',
+					'user-select': 'none',
+					'-o-user-select': 'none'
+				}
 			}
 		}
 	}
