@@ -10,7 +10,6 @@ import {
 	addFavoriteLocation
 } from '../lib/favorite-locations'
 import Location from '../../../models/location'
-import SecondaryLabel from './secondary-label'
 
 type Props = {
 	item: Location,
@@ -52,7 +51,7 @@ export default function Suggestion({
 		>
 			<ListItemText
 				primary={item.primaryLabel}
-				secondary={<SecondaryLabel location={item} />}
+				secondary={item.secondaryLabel}
 			/>
 			{item.primaryLabel !== 'Current Location' && (
 				<React.Fragment>
