@@ -27,7 +27,7 @@ type Props = {
 	classes: object,
 	fetchWeather: () => void,
 	fetchingWeather: boolean,
-	coords: Coords,
+	location: Object,
 	timezone: string,
 	geolocate: () => void,
 	currentLocation: {
@@ -69,7 +69,7 @@ class SpeedDials extends React.Component<Props, State> {
 		const {
 			classes,
 			fetchWeather,
-			coords,
+			location,
 			fetchingWeather,
 			timezone,
 			currentLocation,
@@ -79,7 +79,7 @@ class SpeedDials extends React.Component<Props, State> {
 
 		const res = []
 
-		if (!!coords.lat && !!coords.lng && !!timezone) {
+		if (!!location.lat && !!location.lng && !!timezone) {
 			res.push({
 				name: 'Refresh Weather',
 				onClick: fetchWeather,

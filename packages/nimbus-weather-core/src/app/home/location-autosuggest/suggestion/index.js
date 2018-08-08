@@ -8,10 +8,12 @@ import ListItemText from '@material-ui/core/ListItemText'
 import {
 	removeFavoriteLocation,
 	addFavoriteLocation
-} from './lib/favorite-locations'
+} from '../lib/favorite-locations'
+import Location from '../../../models/location'
+import SecondaryLabel from './secondary-label'
 
 type Props = {
-	item: OSMLocation,
+	item: Location,
 	index: number,
 	getItemProps: () => Object,
 	downshiftProps: {
@@ -25,7 +27,7 @@ type Props = {
 	}
 }
 
-export default function renderSuggestion({
+export default function Suggestion({
 	item,
 	index,
 	getItemProps,
@@ -43,13 +45,16 @@ export default function renderSuggestion({
 	return (
 		<MenuItem
 			{...itemProps}
-			key={`location-item-${item.osm_id}-${item.cached ? 'true' : 'false'}`}
+			key={`location-item-${item.id}-${item.cached ? 'true' : 'false'}`}
 			selected={isHighlighted}
 			component="div"
 			style={{ whiteSpace: 'normal', height: 'auto' }}
 		>
-			<ListItemText primary={item.display_name} />
-			{item.display_name !== 'Current Location' && (
+			<ListItemText
+				primary={item.primaryLabel}
+				secondary={<SecondaryLabel location={item} />}
+			/>
+			{item.primaryLabel !== 'Current Location' && (
 				<React.Fragment>
 					{item.cached ? (
 						<IconButton onClick={removeFavoriteLocation(item)}>

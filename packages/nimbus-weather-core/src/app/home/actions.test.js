@@ -13,8 +13,8 @@ describe('Home Actions', () => {
 		function getQueryParams(state) {
 			return {
 				params: {
-					lat: state.home.location.coords.lat,
-					lng: state.home.location.coords.lng,
+					lat: state.home.location.lat,
+					lng: state.home.location.lng,
 					units: state.weatherVisualizations.preferredUnits
 				}
 			}

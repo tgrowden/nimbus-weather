@@ -5,7 +5,8 @@ import withWidth from '@material-ui/core/withWidth'
 import MuiDownshift from 'mui-downshift'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import searchLocation from '../../lib/search-location'
-import renderSuggestion from './render-suggestion'
+import Suggestion from './suggestion'
+import Location from '../../models/location'
 
 function debounce(fn, time) {
 	let timeoutId
@@ -30,15 +31,15 @@ const styles = theme => ({
 
 type Props = {
 	classes: Object,
-	location: OSMLocation,
-	setLocation: (location: OSMLocation) => void,
+	location: Location,
+	setLocation: (location: Location) => void,
 	fetchWeather: () => void,
-	otherSuggestions?: Array<OSMLocation>,
+	otherSuggestions?: Array<Location>,
 	width: string
 }
 
 type State = {
-	suggestions: Array<OSMLocation>
+	suggestions: Array<Location>
 }
 
 class LocationAutosuggest extends React.Component<Props, State> {
@@ -61,23 +62,28 @@ class LocationAutosuggest extends React.Component<Props, State> {
 
 	fetchSuggestions = debounce(
 		value =>
-			searchLocation(value).then(suggestions => this.setState({ suggestions })),
+			searchLocation(value)
+				.then(
+					(suggestions: Array<OSMLocation>): Array<Location> =>
+						suggestions.map(
+							(suggestion: OSMLocation): Location =>
+								new Location({
+									lat: suggestion.lat,
+									lng: suggestion.lon,
+									primaryLabel: suggestion.display_name,
+									id: suggestion.osm_id
+								})
+						)
+				)
+				.then((suggestions: Array<Location>) => this.setState({ suggestions })),
 		300
 	)
 
 	handleChange = item => {
-		if (!item) return
+		if (!item || item === this.props.location) return
 
-		const res = {
-			...item,
-			name: item.display_name,
-			coords: {
-				lat: item.lat ? parseFloat(item.lat) : null,
-				lng: item.lon ? parseFloat(item.lon) : null
-			}
-		}
 		// $FlowFixMe
-		this.props.setLocation(res)
+		this.props.setLocation(item)
 		this.props.fetchWeather()
 	}
 
@@ -100,21 +106,21 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		multiline: this.props.width === 'xs',
 		fullWidth: true,
 		label: 'Location',
-		placeholder: this.props.location.display_name
+		placeholder: this.props.location.primaryLabel
 	})
 
 	render() {
 		const { classes, location } = this.props
 
 		const existingSuggestions = (this.props.otherSuggestions || []).map(
-			i => i && i.display_name
+			i => i && i.primaryLabel
 		)
 
 		let items = this.state.suggestions.filter(
 			i =>
 				i &&
-				i.display_name &&
-				existingSuggestions.indexOf(i.display_name) === -1
+				i.primaryLabel &&
+				existingSuggestions.indexOf(i.primaryLabel) === -1
 		)
 
 		if (this.props.otherSuggestions && this.props.otherSuggestions.length > 0) {
@@ -136,13 +142,13 @@ class LocationAutosuggest extends React.Component<Props, State> {
 			<MuiDownshift
 				items={items}
 				onStateChange={this.handleStateChange}
-				itemToString={i => (i && i.display_name) || ''}
+				itemToString={i => (i && i.primaryLabel) || ''}
 				value={location}
-				defaultInputValue={location.display_name}
+				defaultInputValue={location.primaryLabel}
 				onChange={this.handleChange}
-				getListItem={renderSuggestion}
+				getListItem={Suggestion}
 				getInputProps={this.getInputProps}
-				selectedItem={location && location.display_name ? location : undefined}
+				selectedItem={location && location.primaryLabel ? location : undefined}
 				focusOnClear
 			/>
 		)

@@ -11,19 +11,14 @@ import {
 	SET_CURRENT_LOCATION_ERROR,
 	SET_GEOLOCATING
 } from './actions'
+import Location from '../models/location'
 
 type actionType = {
 	+type: ActionConst
 }
 
 export const defaultState = {
-	location: {
-		name: '',
-		coords: {
-			lat: null,
-			lng: null
-		}
-	},
+	location: new Location(),
 	weather: {
 		fetched: 0,
 		timezone: '',
@@ -45,12 +40,7 @@ export const defaultState = {
 	weatherApiError: false,
 	currentLocationError: false,
 	currentLocationErrorMessage: null,
-	currentLocation: {
-		name: 'Current Location',
-		display_name: 'Current Location',
-		lat: null,
-		lng: null
-	},
+	currentLocation: new Location(),
 	geolocating: false
 }
 

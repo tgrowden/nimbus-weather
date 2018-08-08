@@ -5,7 +5,7 @@ import SpeedDials from './speed-dials'
 
 function mapStateToProps(state) {
 	return {
-		coords: state.home.location.coords,
+		location: state.home.location,
 		fetchingWeather: state.home.fetchingWeather,
 		timezone: state.home.weather.timezone,
 		currentLocation: state.home.currentLocation,

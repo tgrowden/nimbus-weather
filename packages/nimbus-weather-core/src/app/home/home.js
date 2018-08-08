@@ -65,14 +65,17 @@ class Home extends Component<Props> {
 		this.props.setPreferredUnits(
 			// $FlowFixMe
 			preferredUnits,
-			this.props.location.coords
+			{
+				lat: this.props.location.lat,
+				lng: this.props.location.lng
+			}
 		)
 	}
 
 	render() {
 		const { classes, location, weather, preferredUnits } = this.props
 
-		const { coords } = location
+		const { lat, lng } = location
 
 		return (
 			<React.Fragment>
@@ -99,10 +102,7 @@ class Home extends Component<Props> {
 							</Grid>
 						</Grid>
 					</div>
-					{!!coords.lat &&
-						!!coords.lng &&
-						!!weather &&
-						!!weather.timezone && <WeatherTabs />}
+					{!!lat && !!lng && !!weather && !!weather.timezone && <WeatherTabs />}
 				</div>
 				<SpeedDials />
 				<WeatherApiError />
