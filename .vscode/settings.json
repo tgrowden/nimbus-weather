@@ -20,5 +20,15 @@
   "eslint.packageManager": "yarn",
   "eslint.options": {
     "cache": "true"
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/flow-typed/npm/**": true,
+    "**/nimbus-weather-webapp/dev/**": true,
+    "**/dist/**": true,
+    "**/docs/**": true,
+    "**/.cache/**": true
   }
 }

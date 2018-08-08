@@ -13,7 +13,6 @@ import Divider from '@material-ui/core/Divider'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Store from '../../store/configureStore'
 import Snackbar from '../../components/snackbar'
-import HelpPopover from '../../components/help-popover'
 import CustomWeatherApiHostInput from './custom-weather-api-host-input'
 import GeolocationOptions from './geolocation-options'
 
@@ -45,8 +44,8 @@ const styles = (theme: MuiTheme) => ({
 
 type Props = {
 	classes: Object,
-	renderIcons: boolean,
-	setRenderIcons: (renderIcons: boolean) => void
+	animateIcons: boolean,
+	setAnimateIcons: (animateIcons: boolean) => void
 }
 
 type State = {
@@ -77,8 +76,8 @@ class AdvancedSettings extends React.Component<Props, State> {
 		this.toggleTodoMessage(true)
 	}
 
-	onRenderIconsChange = (e, renderIcons: boolean) => {
-		this.props.setRenderIcons(renderIcons)
+	onAnimateIconsChange = (e, animateIcons: boolean) => {
+		this.props.setAnimateIcons(animateIcons)
 	}
 
 	render() {
@@ -122,20 +121,13 @@ class AdvancedSettings extends React.Component<Props, State> {
 								<FormControlLabel
 									control={
 										<Switch
-											checked={this.props.renderIcons}
-											onChange={this.onRenderIconsChange}
+											checked={this.props.animateIcons}
+											onChange={this.onAnimateIconsChange}
 										/>
 									}
 									label={
 										<div className={classes.switchLabelWrapper}>
-											<Typography style={{ marginRight: 10 }}>
-												Render Icons?
-											</Typography>
-											<HelpPopover size="sm">
-												The weather icons in the app use an HTML5 canvas for
-												animations. Rendering a lot at once can cause
-												performance hits.
-											</HelpPopover>
+											<Typography>Animate Weather Icons?</Typography>
 										</div>
 									}
 								/>

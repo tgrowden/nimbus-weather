@@ -7,7 +7,8 @@ const styles = (theme: MuiTheme) => ({
 	arrowWrapper: {
 		width: 'fit-content',
 		display: 'inline-block',
-		marginLeft: theme.spacing.unit / 2
+		marginLeft: theme.spacing.unit / 2,
+		...theme.mixins.noSelect
 	}
 })
 

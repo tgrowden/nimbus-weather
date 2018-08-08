@@ -26,7 +26,8 @@ const styles = (theme: MuiTheme) => ({
 			width: 'calc(100% - 72px)',
 			marginLeft: 'auto',
 			marginRight: 'auto'
-		}
+		},
+		...theme.mixins.noSelect
 	}
 })
 

@@ -2,6 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { fetchWeather, setLocation } from '../actions'
 import LocationAutosuggest from './location-autosuggest'
+import Location from '../../models/location'
 
 function mapStateToProps(state) {
 	const { currentLocation } = state.home
@@ -10,15 +11,16 @@ function mapStateToProps(state) {
 	const otherSuggestions = []
 
 	if (currentLocation && currentLocation.lat && currentLocation.lng) {
-		otherSuggestions.push({
-			display_name: currentLocation.name,
-			lat: currentLocation.lat,
-			lon: currentLocation.lng
-		})
+		otherSuggestions.push(currentLocation)
 	}
 
 	const transformedFavorites = Object.keys(favoriteLocations).map(
-		locationKey => ({ ...favoriteLocations[locationKey], cached: true })
+		locationKey => {
+			const location = new Location(favoriteLocations[locationKey])
+			location.cached = true
+
+			return location
+		}
 	)
 
 	return {

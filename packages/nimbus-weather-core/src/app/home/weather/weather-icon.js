@@ -8,8 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 type Props = {
 	icon: IconTypes,
 	style?: Object,
-	autoplay?: boolean,
-	renderIcons: boolean,
+	animateIcons: boolean,
 	theme: MuiTheme
 }
 
@@ -26,7 +25,9 @@ const iconEnum = [
 	'FOG'
 ]
 
-function getIconLabel(iconName: string) {
+function getIconLabel(iconName?: string): string {
+	if (!iconName) return ''
+
 	return iconName
 		.replace(/-/g, ' ')
 		.replace(/(\b[a-z](?!\s))/g, l => l.toUpperCase())
@@ -37,19 +38,16 @@ class WeatherIcon extends React.Component<Props> {
 		style: {
 			width: 150,
 			height: 'auto'
-		},
-		autoplay: true
+		}
 	}
 
 	render() {
-		if (!this.props.renderIcons) return null
 		if (!this.props.icon) return null
 		const iconType = this.props.icon.toUpperCase().replace(/-/g, '_')
 		if (iconEnum.indexOf(iconType) === -1) return null
-		// $FlowFixMe
 		const iconLabel = getIconLabel(this.props.icon)
 
-		const { style, autoplay, theme } = this.props
+		const { style, theme, animateIcons } = this.props
 
 		return (
 			<div style={style}>
@@ -57,7 +55,7 @@ class WeatherIcon extends React.Component<Props> {
 					<Skycons
 						color={theme.palette.type === 'dark' ? 'white' : 'black'}
 						icon={iconType}
-						autoplay={autoplay}
+						autoplay={animateIcons}
 						style={{ width: '100%', height: 'auto' }}
 					/>
 				</Tooltip>
@@ -68,7 +66,7 @@ class WeatherIcon extends React.Component<Props> {
 
 function mapStateToProps(state) {
 	return {
-		renderIcons: state.settings.renderIcons
+		animateIcons: state.settings.animateIcons
 	}
 }
 

@@ -218,7 +218,8 @@ export type MuiTheme = {
 	overrides: Object,
 	mixins: {
 		gutters: (...args: any) => any,
-		toolbar: Object
+		toolbar: Object,
+		[key: string]: Object
 	},
 	palette: {
 		common: {

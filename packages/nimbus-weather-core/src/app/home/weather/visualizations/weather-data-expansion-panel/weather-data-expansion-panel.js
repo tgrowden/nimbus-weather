@@ -10,18 +10,17 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import withWidth from '@material-ui/core/withWidth'
 import classnames from 'classnames'
 
-const styles = {
+const styles = (theme: MuiTheme) => ({
 	root: {
 		width: '100%'
 	},
-	panelContent: {
-		paddingLeft: 0,
-		paddingRight: 0
-	},
+	panelContent: {},
 	panelDetails: {
+		paddingLeft: theme.spacing.unit,
+		paddingRight: theme.spacing.unit,
 		paddingBottom: 0
 	}
-}
+})
 
 type Props = {
 	classes: Object,

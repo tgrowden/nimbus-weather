@@ -6,7 +6,7 @@ import AdvancedSettings from './advanced-settings'
 
 function mapStateToProps(state) {
 	return {
-		renderIcons: state.settings.renderIcons
+		animateIcons: state.settings.animateIcons
 	}
 }
 

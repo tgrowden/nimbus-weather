@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { apiHost } from '../../config'
+import Location from '../models/location'
+import reverseGeocode from '../lib/reverse-geocode'
 
 export const SET_LOCATION: ActionConst = 'SET_LOCATION'
 export const SET_WEATHER: ActionConst = 'SET_WEATHER'
@@ -73,8 +75,8 @@ export function fetchWeather() {
 		return axios
 			.get(`${host}/forecast`, {
 				params: {
-					lat: home.location.coords.lat,
-					lng: home.location.coords.lng,
+					lat: home.location.lat,
+					lng: home.location.lng,
 					units: weatherVisualizations.preferredUnits
 				}
 			})
@@ -105,15 +107,10 @@ export function setCurrentLocationError(
 	}
 }
 
-export function setCurrentLocation(position: Position) {
+export function setCurrentLocation(currentLocation) {
 	return {
 		type: SET_CURRENT_LOCATION,
-		currentLocation: {
-			name: 'Current Location',
-			display_name: 'Current Location',
-			lat: position.coords.latitude,
-			lng: position.coords.longitude
-		}
+		currentLocation
 	}
 }
 
@@ -146,16 +143,21 @@ export function geolocate() {
 	}
 }
 
-function onGeolocationSuccess(dispatch, position: Position) {
-	dispatch(setCurrentLocation(position))
-	const location = {
-		name: 'Current Location',
-		display_name: 'Current Location',
-		coords: {
-			lat: position.coords.latitude,
-			lng: position.coords.longitude
-		}
-	}
+async function onGeolocationSuccess(dispatch, position: Position) {
+	const geocoded = await reverseGeocode({
+		lat: position.coords.latitude,
+		lng: position.coords.longitude
+	})
+
+	const location = new Location({
+		primaryLabel: 'Current Location',
+		secondaryLabel: geocoded.display_name,
+		lat: position.coords.latitude,
+		lng: position.coords.longitude,
+		id: geocoded.osm_id
+	})
+
+	dispatch(setCurrentLocation(location))
 	dispatch(setLocation(location))
 	dispatch(setGeolocating(false))
 	dispatch(fetchWeather())
@@ -165,11 +167,7 @@ function onGeolocationError(dispatch, getState, positionError: PositionError) {
 	dispatch(setGeolocating(false))
 	dispatch({
 		type: SET_CURRENT_LOCATION,
-		currentLocation: {
-			name: '',
-			lat: null,
-			lng: null
-		}
+		currentLocation: new Location()
 	})
 	dispatch(setCurrentLocationError(true, positionError.message))
 }
