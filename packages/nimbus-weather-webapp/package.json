@@ -1,6 +1,6 @@
 {
   "name": "nimbus-weather-webapp",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "The webapp for Nimbus Weather",
   "repository": "github:tgrowden/nimbus-weather",
   "author": {
@@ -13,7 +13,7 @@
   "private": true,
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "nimbus-weather-core": "^0.7.0",
+    "nimbus-weather-core": "^0.7.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
   },
