@@ -107,7 +107,8 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		multiline: this.props.width === 'xs',
 		fullWidth: true,
 		label: 'Location',
-		placeholder: this.props.location.primaryLabel
+		placeholder: this.props.location.primaryLabel,
+		helperText: this.props.location.secondaryLabel
 	})
 
 	render() {

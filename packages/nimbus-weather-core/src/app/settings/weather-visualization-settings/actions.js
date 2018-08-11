@@ -32,7 +32,7 @@ export function setPreferredUnits(preferredUnits: Unit) {
 			preferredUnits
 		})
 		if (prevUnits !== preferredUnits) {
-			fetchWeather()
+			dispatch(fetchWeather())
 		}
 	}
 }

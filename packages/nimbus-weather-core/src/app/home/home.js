@@ -49,9 +49,8 @@ const styles = (theme: MuiTheme) => ({
 	autocompleteWrapper: {
 		marginBottom: theme.spacing.unit * 2
 	},
-	unitsSelectWrapper: {
-		marginBottom: theme.spacing.unit * 2,
-		maxWidth: 300
+	unitsGridItem: {
+		marginTop: theme.spacing.unit * 2
 	}
 })
 
@@ -86,7 +85,7 @@ class Home extends Component<Props> {
 							<Grid item xs={12}>
 								<LocationAutosuggest />
 							</Grid>
-							<Grid item xs={12} md={6}>
+							<Grid item xs={12} md={6} className={classes.unitsGridItem}>
 								<FormControl fullWidth>
 									<InputLabel>Preferred Units</InputLabel>
 									<Select
