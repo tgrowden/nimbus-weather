@@ -1,8 +1,8 @@
-export const SET_FAVORITE_LOCATIONS = 'SET_FAVORITE_LOCATIONS'
+import * as consts from './consts'
 
 export function setFavoriteLocations(favoriteLocations: Array<OSMLocation>) {
 	return {
-		type: SET_FAVORITE_LOCATIONS,
+		type: consts.SET_FAVORITE_LOCATIONS,
 		favoriteLocations
 	}
 }

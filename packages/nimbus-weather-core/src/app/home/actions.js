@@ -1,65 +1,54 @@
 import axios from 'axios'
+import * as consts from './consts'
 import { apiHost } from '../../config'
 import Location from '../models/location'
 import reverseGeocode from '../lib/reverse-geocode'
 
-export const SET_LOCATION: ActionConst = 'SET_LOCATION'
-export const SET_WEATHER: ActionConst = 'SET_WEATHER'
-export const WEATHER_FETCH_ERROR: ActionConst = 'WEATHER_FETCH_ERROR'
-export const SET_ACTIVE_TAB: ActionConst = 'SET_ACTIVE_TAB'
-export const SET_FETCHING_WEATHER: ActionConst = 'SET_FETCHING_WEATHER'
-export const SET_HOURLY_GRAPH: ActionConst = 'SET_HOURLY_GRAPH'
-export const SET_DAILY_GRAPH: ActionConst = 'SET_DAILY_GRAPH'
-export const SET_WEATHER_API_ERROR = 'SET_WEATHER_API_ERROR'
-export const SET_CURRENT_LOCATION = 'SET_CURRENT_LOCATION'
-export const SET_CURRENT_LOCATION_ERROR = 'SET_CURRENT_LOCATION_ERROR'
-export const SET_GEOLOCATING = 'SET_GEOLOCATING'
-
 export function setLocation(location) {
 	return {
-		type: SET_LOCATION,
+		type: consts.SET_LOCATION,
 		location
 	}
 }
 
 export function setWeather(weather: CurrentWeather) {
 	return {
-		type: SET_WEATHER,
+		type: consts.SET_WEATHER,
 		weather
 	}
 }
 
 export function setActiveTab(activeTab: number) {
 	return {
-		type: SET_ACTIVE_TAB,
+		type: consts.SET_ACTIVE_TAB,
 		activeTab
 	}
 }
 
 export function setFetchingWeather(fetchingWeather: boolean) {
 	return {
-		type: SET_FETCHING_WEATHER,
+		type: consts.SET_FETCHING_WEATHER,
 		fetchingWeather
 	}
 }
 
 export function setHourlyGraph(hourlyGraph: GraphOptions) {
 	return {
-		type: SET_HOURLY_GRAPH,
+		type: consts.SET_HOURLY_GRAPH,
 		hourlyGraph
 	}
 }
 
 export function setDailyGraph(dailyGraph: GraphOptions) {
 	return {
-		type: SET_DAILY_GRAPH,
+		type: consts.SET_DAILY_GRAPH,
 		dailyGraph
 	}
 }
 
 export function setWeatherApiError(weatherApiError: boolean) {
 	return {
-		type: SET_WEATHER_API_ERROR,
+		type: consts.SET_WEATHER_API_ERROR,
 		weatherApiError
 	}
 }
@@ -101,7 +90,7 @@ export function setCurrentLocationError(
 	currentLocationErrorMessage: string | null = null
 ) {
 	return {
-		type: SET_CURRENT_LOCATION_ERROR,
+		type: consts.SET_CURRENT_LOCATION_ERROR,
 		currentLocationError,
 		currentLocationErrorMessage
 	}
@@ -109,14 +98,14 @@ export function setCurrentLocationError(
 
 export function setCurrentLocation(currentLocation) {
 	return {
-		type: SET_CURRENT_LOCATION,
+		type: consts.SET_CURRENT_LOCATION,
 		currentLocation
 	}
 }
 
 export function setGeolocating(geolocating: boolean) {
 	return {
-		type: SET_GEOLOCATING,
+		type: consts.SET_GEOLOCATING,
 		geolocating
 	}
 }
@@ -166,7 +155,7 @@ async function onGeolocationSuccess(dispatch, position: Position) {
 function onGeolocationError(dispatch, getState, positionError: PositionError) {
 	dispatch(setGeolocating(false))
 	dispatch({
-		type: SET_CURRENT_LOCATION,
+		type: consts.SET_CURRENT_LOCATION,
 		currentLocation: new Location()
 	})
 	dispatch(setCurrentLocationError(true, positionError.message))

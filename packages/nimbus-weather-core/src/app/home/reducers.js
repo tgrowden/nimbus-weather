@@ -10,7 +10,7 @@ import {
 	SET_CURRENT_LOCATION,
 	SET_CURRENT_LOCATION_ERROR,
 	SET_GEOLOCATING
-} from './actions'
+} from './consts'
 import Location from '../models/location'
 
 type actionType = {

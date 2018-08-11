@@ -1,4 +1,4 @@
-import { OPEN_DRAWER, CLOSE_DRAWER, TOGGLE_DRAWER } from './actions'
+import { OPEN_DRAWER, CLOSE_DRAWER, TOGGLE_DRAWER } from './consts'
 
 type actionType = {
 	+type: ActionConst
