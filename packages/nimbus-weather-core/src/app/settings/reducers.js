@@ -14,8 +14,7 @@ export const defaultState = {
 	animateIcons: true,
 	customWeatherApiHost: '',
 	geolocationTimeout: 10,
-	geolocationHighAccuracy: true,
-	allowAnalytics: false
+	geolocationHighAccuracy: true
 }
 
 export default function settings(state = defaultState, action: actionType) {

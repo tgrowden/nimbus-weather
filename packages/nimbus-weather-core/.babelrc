@@ -19,6 +19,14 @@
 				"polyfill": false,
 				"regenerator": true
 			}
+		],
+		[
+			"transform-inline-environment-variables",
+			{
+				"include": [
+					"GA_TRACKING_ID"
+				]
+			}
 		]
 	]
 }
