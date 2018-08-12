@@ -14,7 +14,9 @@ export const defaultState = {
 	animateIcons: true,
 	customWeatherApiHost: '',
 	geolocationTimeout: 10,
-	geolocationHighAccuracy: true
+	geolocationHighAccuracy: true,
+	// Generally boolean, but initialized as falsey `null` to determine if the modal should be displayed
+	allowAnalytics: null
 }
 
 export default function settings(state = defaultState, action: actionType) {

@@ -6,6 +6,7 @@ import { persistStore } from 'redux-persist'
 import locationChangeMiddleware from './middleware/location-change'
 import persistedReducer from './persisted-reducer'
 import analyticsMiddleware from './middleware/analytics'
+import analyticsOptOutMiddleware from './middleware/analytics-opt-out'
 
 const history = createHashHistory()
 const router = routerMiddleware(history)
@@ -13,6 +14,7 @@ const enhancer = applyMiddleware(
 	thunk,
 	router,
 	locationChangeMiddleware,
+	analyticsOptOutMiddleware,
 	analyticsMiddleware
 )
 
