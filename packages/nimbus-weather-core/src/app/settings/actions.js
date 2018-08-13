@@ -1,4 +1,5 @@
 import * as consts from './consts'
+import gaDisable from './lib/ga-disable'
 
 export function setAnimateIcons(animateIcons: boolean) {
 	return {
@@ -29,8 +30,12 @@ export function setGeolocationHighAccuracy(geolocationHighAccuracy: boolean) {
 }
 
 export function setAllowAnalytics(allowAnalytics: boolean) {
-	return {
-		type: consts.SET_ALLOW_ANALYTICS,
-		allowAnalytics
+	return function dispatchSetAllowAnalytics(dispatch) {
+		gaDisable(!allowAnalytics)
+
+		dispatch({
+			type: consts.SET_ALLOW_ANALYTICS,
+			allowAnalytics
+		})
 	}
 }

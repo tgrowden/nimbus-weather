@@ -1,15 +1,16 @@
-import { REHYDRATE } from 'redux-persist'
-import { SET_ALLOW_ANALYTICS } from '../../settings/consts'
-import { gaTrackingId } from '../../../config'
+import { LOCATION_CHANGE } from 'react-router-redux'
+import gaDisable, { windowKey } from '../../settings/lib/ga-disable'
 
 export default store => next => action => {
 	const state = store.getState()
 
 	if (
+		action.type === LOCATION_CHANGE &&
 		window &&
-		(action.type === REHYDRATE || action.type === SET_ALLOW_ANALYTICS)
+		// eslint-disable-next-line no-prototype-builtins
+		!window.hasOwnProperty(windowKey)
 	) {
-		window[`ga-disable-${gaTrackingId}`] = !state.settings.allowAnalytics
+		gaDisable(!state.settings.allowAnalytics)
 	}
 
 	return next(action)

@@ -15,6 +15,7 @@ import Store from '../../store/configureStore'
 import Snackbar from '../../components/snackbar'
 import CustomWeatherApiHostInput from './custom-weather-api-host-input'
 import GeolocationOptions from './geolocation-options'
+import AnalyticsOptions from './analytics-options'
 
 const { persistor } = Store
 
@@ -103,6 +104,11 @@ class AdvancedSettings extends React.Component<Props, State> {
 						<Typography variant="display1">Geolocation</Typography>
 						<Divider className={classes.divider} />
 						<GeolocationOptions />
+					</ExpansionPanelDetails>
+					<ExpansionPanelDetails className={classes.details}>
+						<Typography variant="display1">Analytics</Typography>
+						<Divider className={classes.divider} />
+						<AnalyticsOptions />
 					</ExpansionPanelDetails>
 					<ExpansionPanelDetails className={classes.details}>
 						<Typography variant="display1">Misc.</Typography>
