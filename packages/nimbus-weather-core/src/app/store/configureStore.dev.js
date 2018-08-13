@@ -37,9 +37,10 @@ const configureStore = (initialState?) => {
 
 	middleware.push(locationChangeMiddleware)
 
-	middleware.push(analyticsOptOutMiddleware)
-
-	middleware.push(analyticsMiddleware)
+	if (process.env.NODE_ENV !== 'test') {
+		middleware.push(analyticsOptOutMiddleware)
+		middleware.push(analyticsMiddleware)
+	}
 
 	// Redux DevTools Configuration
 	const actionCreators = {

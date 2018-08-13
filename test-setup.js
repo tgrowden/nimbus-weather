@@ -8,3 +8,5 @@ window.require = () => ({
 		openExternal: () => {}
 	}
 })
+
+window.gtag = () => {}
