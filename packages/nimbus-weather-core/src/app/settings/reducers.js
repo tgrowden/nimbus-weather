@@ -2,8 +2,9 @@ import {
 	SET_ANIMATE_ICONS,
 	SET_CUSTOM_WEATHER_API_HOST,
 	SET_GEOLOCATION_TIMEOUT,
-	SET_GEOLOCATION_HIGH_ACCURACY
-} from './actions'
+	SET_GEOLOCATION_HIGH_ACCURACY,
+	SET_ALLOW_ANALYTICS
+} from './consts'
 
 type actionType = {
 	+type: ActionConst
@@ -13,7 +14,9 @@ export const defaultState = {
 	animateIcons: true,
 	customWeatherApiHost: '',
 	geolocationTimeout: 10,
-	geolocationHighAccuracy: true
+	geolocationHighAccuracy: true,
+	// Generally boolean, but initialized as falsey `null` to determine if the modal should be displayed
+	allowAnalytics: null
 }
 
 export default function settings(state = defaultState, action: actionType) {
@@ -25,6 +28,8 @@ export default function settings(state = defaultState, action: actionType) {
 		case SET_GEOLOCATION_TIMEOUT:
 			return { ...state, ...action }
 		case SET_GEOLOCATION_HIGH_ACCURACY:
+			return { ...state, ...action }
+		case SET_ALLOW_ANALYTICS:
 			return { ...state, ...action }
 		default:
 			return state

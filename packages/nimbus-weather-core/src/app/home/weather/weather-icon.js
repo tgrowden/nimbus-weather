@@ -2,10 +2,17 @@
 import React from 'react'
 import Skycons from 'react-skycons'
 import { connect } from 'react-redux'
-import { withTheme } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles'
 import Tooltip from '@material-ui/core/Tooltip'
 
+const styles = (theme: MuiTheme) => ({
+	skycons: {
+		...theme.mixins.noSelect
+	}
+})
+
 type Props = {
+	classes: Object,
 	icon: IconTypes,
 	style?: Object,
 	animateIcons: boolean,
@@ -47,12 +54,13 @@ class WeatherIcon extends React.Component<Props> {
 		if (iconEnum.indexOf(iconType) === -1) return null
 		const iconLabel = getIconLabel(this.props.icon)
 
-		const { style, theme, animateIcons } = this.props
+		const { style, theme, animateIcons, classes } = this.props
 
 		return (
 			<div style={style}>
 				<Tooltip title={iconLabel} placement="top">
 					<Skycons
+						className={classes.skycons}
 						color={theme.palette.type === 'dark' ? 'white' : 'black'}
 						icon={iconType}
 						autoplay={animateIcons}
@@ -70,4 +78,6 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps)(withTheme()(WeatherIcon))
+export default connect(mapStateToProps)(
+	withStyles(styles, { withTheme: true })(WeatherIcon)
+)

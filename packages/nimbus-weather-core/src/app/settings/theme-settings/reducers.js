@@ -3,7 +3,7 @@ import {
 	SET_PRIMARY_COLOR,
 	SET_SECONDARY_COLOR,
 	SET_ERROR_COLOR
-} from './actions'
+} from './consts'
 
 type actionType = {
 	+type: ActionConst

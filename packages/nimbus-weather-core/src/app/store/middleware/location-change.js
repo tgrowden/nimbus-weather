@@ -1,5 +1,5 @@
 import { LOCATION_CHANGE } from 'react-router-redux'
-import { CLOSE_DRAWER } from '../../drawer/actions'
+import { CLOSE_DRAWER } from '../../drawer/consts'
 
 export default store => next => action => {
 	const state = store.getState()

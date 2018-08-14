@@ -1,7 +1,7 @@
 {
   "name": "nimbus-weather-core",
   "productName": "Nimbus Weather",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "A great weather app with beautiful visualizations.",
   "main": "./dist/index.js",
   "homepage": "https://github.com/tgrowden/nimbus-weather#readme",
@@ -13,13 +13,15 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "@material-ui/core": "^1.4.2",
-    "@material-ui/icons": "^2.0.0",
-    "@material-ui/lab": "^1.0.0-alpha.8",
+    "@material-ui/core": "^1.5.0",
+    "@material-ui/icons": "^2.0.2",
+    "@material-ui/lab": "^1.0.0-alpha.10",
+    "@redux-beacon/google-analytics-gtag": "^1.0.2",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
     "date-fns": "^1.29.0",
+    "debug": "^3.1.0",
     "deepmerge": "^2.1.1",
     "font-awesome": "^4.7.0",
     "history": "^4.7.2",
@@ -38,12 +40,14 @@
     "react-skycons": "^0.7.0",
     "recharts": "^1.0.1",
     "redux": "^4.0.0",
+    "redux-beacon": "^2.0.3",
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.9.1",
     "redux-thunk": "^2.2.0",
     "source-map-support": "^0.5.6"
   },
   "devDependencies": {
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "flow-bin": "^0.75.0",
     "redux-mock-store": "^1.5.3"
   }

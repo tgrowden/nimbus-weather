@@ -5,6 +5,8 @@ import { routerMiddleware, routerActions } from 'react-router-redux'
 import { createLogger } from 'redux-logger'
 import { persistStore } from 'redux-persist'
 import locationChangeMiddleware from './middleware/location-change'
+import analyticsOptOutMiddleware from './middleware/analytics-opt-out'
+import analyticsMiddleware from './middleware/analytics'
 import * as DrawerActions from '../drawer/actions'
 import persistedReducer from './persisted-reducer'
 
@@ -34,6 +36,11 @@ const configureStore = (initialState?) => {
 	middleware.push(router)
 
 	middleware.push(locationChangeMiddleware)
+
+	if (process.env.NODE_ENV !== 'test') {
+		middleware.push(analyticsOptOutMiddleware)
+		middleware.push(analyticsMiddleware)
+	}
 
 	// Redux DevTools Configuration
 	const actionCreators = {

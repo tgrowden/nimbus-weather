@@ -26,6 +26,7 @@ import Github from './github'
 import Link from '../components/link'
 import ProgressIndicator from './progress-indicator'
 import packageJson from '../../../package.json'
+import AnalyticsPermissionDialog from './analytics-permission-dialog'
 
 const drawerWidth = 240
 
@@ -43,7 +44,6 @@ const styles = (theme: MuiTheme) => ({
 	root: {
 		flexGrow: 1,
 		zIndex: 1,
-		overflow: 'hidden',
 		position: 'relative',
 		display: 'flex',
 		minHeight: '100%'
@@ -169,6 +169,7 @@ class Drawer extends React.Component<Props> {
 
 		return (
 			<div className={classes.root}>
+				<AnalyticsPermissionDialog />
 				<CssBaseline />
 				<AppBar
 					position="fixed"

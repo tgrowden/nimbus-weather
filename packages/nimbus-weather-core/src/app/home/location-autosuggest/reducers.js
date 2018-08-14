@@ -1,4 +1,4 @@
-import { SET_FAVORITE_LOCATIONS } from './actions'
+import { SET_FAVORITE_LOCATIONS } from './consts'
 
 export const defaultState = {
 	favoriteLocations: {}

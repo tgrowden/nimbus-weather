@@ -6,7 +6,7 @@ import {
 	SET_HOT_TEMP,
 	SET_COLD_TEMP_COLOR,
 	SET_HOT_TEMP_COLOR
-} from './actions'
+} from './consts'
 
 type actionType = {
 	+type: ActionConst
