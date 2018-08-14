@@ -11,7 +11,7 @@ const styles = theme => ({
 	speedDial: {
 		position: 'fixed',
 		bottom: theme.spacing.unit * 2,
-		right: theme.spacing.unit * 3
+		right: theme.spacing.unit * 2
 	},
 	loading: {
 		animation: 'spin 1s linear infinite'
@@ -133,6 +133,7 @@ class SpeedDials extends React.Component<Props, State> {
 				onMouseEnter={isTouch ? undefined : this.handleOpen}
 				onMouseLeave={this.handleClose}
 				open={open}
+				direction="up"
 			>
 				{this.actions.map(action => {
 					const { name, ...props } = action
