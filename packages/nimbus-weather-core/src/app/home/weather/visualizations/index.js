@@ -108,13 +108,18 @@ class Graphs extends React.Component<Props> {
 						<Grid item xs={12} sm={6}>
 							<Select
 								value={graph}
-								onChange={(e: SyntheticEvent<EventTarget>) =>
+								onChange={(
+									e: SyntheticEvent<EventTarget>
+								) =>
 									/* $FlowFixMe */
 									onGraphChange(e.target.value)
 								}
 							>
 								{options.map(key => (
-									<MenuItem key={`graph-option-${key}`} value={key}>
+									<MenuItem
+										key={`graph-option-${key}`}
+										value={key}
+									>
 										{graphOptions[key]}
 									</MenuItem>
 								))}

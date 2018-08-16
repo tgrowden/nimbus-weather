@@ -23,23 +23,17 @@ const styles = (theme: MuiTheme) => ({
 })
 
 const Summary = (props: Props) => (
-	<Grid container spacing={8} className={props.classes.container}>
-		<Grid item xs={12} sm={4}>
-			<Typography variant="subheading">
-				{formatDate({
-					time: props.time,
-					timezone: props.timezone,
-					format: props.dateFormat
-				})}
-			</Typography>
-		</Grid>
-		<Grid item xs={12} sm={4}>
-			<Typography variant="subheading">{props.summary}</Typography>
-		</Grid>
-		<Grid item xs={12} sm={4}>
-			<WeatherIcon icon={props.icon} />
-		</Grid>
-	</Grid>
+	<React.Fragment>
+		<Typography variant="subheading">
+			{formatDate({
+				time: props.time,
+				timezone: props.timezone,
+				format: props.dateFormat
+			})}
+		</Typography>
+		<Typography variant="subheading">{props.summary}</Typography>
+		<WeatherIcon icon={props.icon} />
+	</React.Fragment>
 )
 
 Summary.defaultProps = {

@@ -14,9 +14,11 @@ import UVIndex from '../field/uv-index'
 import Visibility from '../field/visibility'
 import Ozone from '../field/ozone'
 import Wind from '../field/wind'
-import GeneralSummary from '../general-summary'
 import Visualizations from '../visualizations'
 import FieldWrapper from '../field/field-wrapper'
+import WeatherIcon from '../weather-icon'
+import formatDate from '../lib/format-date'
+import WeatherCard from '../weather-card'
 
 type Props = {
 	classes: Object,
@@ -48,7 +50,7 @@ class Daily extends React.Component<Props> {
 		const units = Units[this.props.units]
 
 		return (
-			<div className={classes.root}>
+			<React.Fragment>
 				<Visualizations
 					timezone={timezone}
 					data={weather.data}
@@ -56,41 +58,47 @@ class Daily extends React.Component<Props> {
 					graph={graph}
 					onGraphChange={setDailyGraph}
 				/>
-				<GeneralSummary summary={weather.summary} />
 				{weather.data.map(day => (
-					<FieldWrapper key={`day-${day.time}`}>
-						<Summary
-							icon={day.icon}
-							time={day.time}
-							summary={day.summary}
-							timezone={timezone}
-							dateFormat="ddd, MMM D, YYYY"
-						/>
-						<TemperatureRange
-							min={day.temperatureLow}
-							max={day.temperatureHigh}
-							units={units}
-						/>
-						<PrecipitationProbability
-							value={day.precipProbability}
-							units={units}
-						/>
-						<PrecipitationIntensity value={day.precipIntensity} units={units} />
-						<DewPoint value={day.dewPoint} units={units} />
-						<Humidity value={day.humidity} units={units} />
-						<Wind
-							windBearing={day.windBearing}
-							windSpeed={day.windSpeed}
-							units={units}
-						/>
-						<WindGust value={day.windGust} units={units} />
-						<CloudCover value={day.cloudCover} units={units} />
-						<UVIndex value={day.uvIndex} />
-						<Visibility value={day.visibility} units={units} />
-						<Ozone value={day.ozone} units={units} />
-					</FieldWrapper>
+					<WeatherCard
+						key={`day-${day.time}`}
+						headerProps={{
+							avatar: <WeatherIcon icon={day.icon} />,
+							title: formatDate({
+								time: day.time,
+								timezone,
+								format: 'ddd, MMM D, YYYY'
+							}),
+							subheader: day.summary
+						}}
+						content={(
+							<FieldWrapper>
+								<TemperatureRange
+									min={day.temperatureLow}
+									max={day.temperatureHigh}
+									units={units}
+								/>
+								<PrecipitationProbability
+									value={day.precipProbability}
+									units={units}
+								/>
+								<PrecipitationIntensity value={day.precipIntensity} units={units} />
+								<DewPoint value={day.dewPoint} units={units} />
+								<Humidity value={day.humidity} units={units} />
+								<Wind
+									windBearing={day.windBearing}
+									windSpeed={day.windSpeed}
+									units={units}
+								/>
+								<WindGust value={day.windGust} units={units} />
+								<CloudCover value={day.cloudCover} units={units} />
+								<UVIndex value={day.uvIndex} />
+								<Visibility value={day.visibility} units={units} />
+								<Ozone value={day.ozone} units={units} />
+							</FieldWrapper>
+						)}
+					/>
 				))}
-			</div>
+			</React.Fragment>
 		)
 	}
 }

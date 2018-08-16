@@ -3,7 +3,9 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 // $FlowFixMe flow-mono error maybe?
 import { differenceInMilliseconds } from 'date-fns'
-import { AppBar, Tabs, Tab, Paper } from '@material-ui/core'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
 import ErrorOutline from '@material-ui/icons/ErrorOutline'
 import classnames from 'classnames'
 import Current from './current'
@@ -103,36 +105,34 @@ class WeatherApp extends React.Component<Props> {
 
 		return (
 			<div className={classes.root}>
-				<Paper>
-					<AppBar position="static">
-						<Tabs
-							value={this.activeTab}
-							onChange={(e, tabIndex) => {
-								setActiveTab(tabIndex)
+				<AppBar position="static">
+					<Tabs
+						value={this.activeTab}
+						onChange={(e, tabIndex) => {
+							setActiveTab(tabIndex)
+						}}
+						scrollable
+						scrollButtons="auto"
+					>
+						<Tab label="Current" />
+						<Tab label="Hourly" />
+						<Tab label="Daily" />
+						<Tab
+							label="Alerts"
+							disabled={this.alertsDisabled}
+							classes={{
+								textColorInherit: classnames(
+									!this.alertsDisabled && classes.activeAlerts
+								),
+								selected: classnames(
+									!this.alertsDisabled && classes.activeAlertsSelected
+								)
 							}}
-							scrollable
-							scrollButtons="auto"
-						>
-							<Tab label="Current" />
-							<Tab label="Hourly" />
-							<Tab label="Daily" />
-							<Tab
-								label="Alerts"
-								disabled={this.alertsDisabled}
-								classes={{
-									textColorInherit: classnames(
-										!this.alertsDisabled && classes.activeAlerts
-									),
-									selected: classnames(
-										!this.alertsDisabled && classes.activeAlertsSelected
-									)
-								}}
-								icon={this.alertsDisabled ? undefined : <ErrorOutline />}
-							/>
-						</Tabs>
-					</AppBar>
-					<div className={classes.weatherContainer}>{this.activeView}</div>
-				</Paper>
+							icon={this.alertsDisabled ? undefined : <ErrorOutline />}
+						/>
+					</Tabs>
+				</AppBar>
+				<div className={classes.weatherContainer}>{this.activeView}</div>
 			</div>
 		)
 	}

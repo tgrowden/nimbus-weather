@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import withWidth from '@material-ui/core/withWidth'
 import MuiDownshift from 'mui-downshift'
 import ListSubheader from '@material-ui/core/ListSubheader'
+import { compose } from 'recompose'
 import searchLocation from '../../lib/search-location'
 import Suggestion from './suggestion'
 import Location from '../../models/location'
@@ -157,4 +158,8 @@ class LocationAutosuggest extends React.Component<Props, State> {
 	}
 }
 
-export default withWidth()(withStyles(styles)(LocationAutosuggest))
+// export default withWidth()(withStyles(styles)(LocationAutosuggest))
+export default compose(
+	withWidth(),
+	withStyles(styles)
+)(LocationAutosuggest)
