@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
 import * as Units from '../lib/units'
 import PrecipitationIntensity from '../field/precipitation-intensity'
 import PrecipitationProbability from '../field/precipitation-probability'
@@ -21,7 +20,6 @@ import formatDate from '../lib/format-date'
 import WeatherCard from '../weather-card'
 
 type Props = {
-	classes: Object,
 	timezone: string,
 	units: Unit,
 	weather: HourlyWeather,
@@ -29,24 +27,9 @@ type Props = {
 	setHourlyGraph: (hourlyGraph: GraphOptions) => void
 }
 
-const styles = (theme: MuiTheme) => ({
-	hour: {
-		borderBottom: `1px solid ${theme.palette.divider}`,
-		'&:not(:first-of-type)': {
-			paddingTop: theme.spacing.unit * 2
-		},
-		'&:not(:last-of-type)': {
-			paddingBottom: theme.spacing.unit * 2
-		},
-		'&:last-of-type': {
-			borderBottom: 'none'
-		}
-	}
-})
-
 class Hourly extends React.Component<Props> {
 	render() {
-		const { weather, classes, timezone, graph, setHourlyGraph } = this.props
+		const { weather, timezone, graph, setHourlyGraph } = this.props
 		const units = Units[this.props.units]
 
 		return (
@@ -75,7 +58,7 @@ class Hourly extends React.Component<Props> {
 							}),
 							subheader: hour.summary
 						}}
-						content={(
+						content={
 							<FieldWrapper key={`hour-${hour.time}`}>
 								<Temperature value={hour.temperature} units={units} />
 								<ApparentTemperature
@@ -103,7 +86,7 @@ class Hourly extends React.Component<Props> {
 								<Visibility value={hour.visibility} units={units} />
 								<Ozone value={hour.ozone} units={units} />
 							</FieldWrapper>
-						)}
+						}
 					/>
 				))}
 			</React.Fragment>
@@ -111,4 +94,4 @@ class Hourly extends React.Component<Props> {
 	}
 }
 
-export default withStyles(styles)(Hourly)
+export default Hourly

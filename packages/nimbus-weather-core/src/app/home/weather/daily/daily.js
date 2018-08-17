@@ -1,8 +1,6 @@
 // @flow
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
 import * as Units from '../lib/units'
-import Summary from '../summary'
 import PrecipitationIntensity from '../field/precipitation-intensity'
 import PrecipitationProbability from '../field/precipitation-probability'
 import TemperatureRange from '../field/temperature-range'
@@ -21,7 +19,6 @@ import formatDate from '../lib/format-date'
 import WeatherCard from '../weather-card'
 
 type Props = {
-	classes: Object,
 	timezone: string,
 	units: Unit,
 	weather: DailyWeather,
@@ -29,24 +26,9 @@ type Props = {
 	setDailyGraph: (dailyGraph: GraphOptions) => void
 }
 
-const styles = (theme: MuiTheme) => ({
-	day: {
-		borderBottom: `1px solid ${theme.palette.divider}`,
-		'&:not(:first-of-type)': {
-			paddingTop: theme.spacing.unit * 2
-		},
-		'&:not(:last-of-type)': {
-			paddingBottom: theme.spacing.unit * 2
-		},
-		'&:last-of-type': {
-			borderBottom: 'none'
-		}
-	}
-})
-
 class Daily extends React.Component<Props> {
 	render() {
-		const { weather, classes, timezone, graph, setDailyGraph } = this.props
+		const { weather, timezone, graph, setDailyGraph } = this.props
 		const units = Units[this.props.units]
 
 		return (
@@ -70,7 +52,7 @@ class Daily extends React.Component<Props> {
 							}),
 							subheader: day.summary
 						}}
-						content={(
+						content={
 							<FieldWrapper>
 								<TemperatureRange
 									min={day.temperatureLow}
@@ -81,7 +63,10 @@ class Daily extends React.Component<Props> {
 									value={day.precipProbability}
 									units={units}
 								/>
-								<PrecipitationIntensity value={day.precipIntensity} units={units} />
+								<PrecipitationIntensity
+									value={day.precipIntensity}
+									units={units}
+								/>
 								<DewPoint value={day.dewPoint} units={units} />
 								<Humidity value={day.humidity} units={units} />
 								<Wind
@@ -95,7 +80,7 @@ class Daily extends React.Component<Props> {
 								<Visibility value={day.visibility} units={units} />
 								<Ozone value={day.ozone} units={units} />
 							</FieldWrapper>
-						)}
+						}
 					/>
 				))}
 			</React.Fragment>
@@ -103,4 +88,4 @@ class Daily extends React.Component<Props> {
 	}
 }
 
-export default withStyles(styles)(Daily)
+export default Daily

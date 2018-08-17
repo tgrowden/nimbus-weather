@@ -15,7 +15,7 @@ const styles = (theme: MuiTheme) => ({
 		width: '100%'
 	},
 	rootXs: {
-		marginTop: theme.spacing.unit * 3
+		// marginTop: theme.spacing.unit * 2
 	},
 	panelContent: {},
 	panelDetails: {
@@ -88,10 +88,7 @@ class WeatherDataExpansionPanel extends React.Component<Props> {
 						<Typography variant="title">{title}</Typography>
 					</ExpansionPanelSummary>
 					<ExpansionPanelDetails
-						className={classnames(
-							classes.panelContent,
-							classes.panelDetails
-						)}
+						className={classnames(classes.panelContent, classes.panelDetails)}
 					>
 						{children}
 					</ExpansionPanelDetails>

@@ -2,7 +2,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import * as Units from '../lib/units'
-import Summary from '../summary'
 import NearestStormDistance from '../field/nearest-storm-distance'
 import NearestStormBearing from '../field/nearest-storm-bearing'
 import PrecipitationIntensity from '../field/precipitation-intensity'
@@ -19,6 +18,9 @@ import Ozone from '../field/ozone'
 import Wind from '../field/wind'
 import FieldWrapper from '../field/field-wrapper'
 import Visualizations from '../visualizations'
+import WeatherCard from '../weather-card'
+import WeatherIcon from '../weather-icon'
+import formatDate from '../lib/format-date'
 
 type Props = {
 	classes: Object,
@@ -44,47 +46,53 @@ class Current extends React.Component<Props> {
 
 		return (
 			<div className={classes.root}>
-				<FieldWrapper>
-					<Summary
-						icon={weather.icon}
-						time={weather.time}
-						summary={weather.summary}
-						timezone={timezone}
-					/>
-					<Temperature value={weather.temperature} units={units} />
-					<ApparentTemperature
-						value={weather.apparentTemperature}
-						units={units}
-					/>
-					<PrecipitationProbability
-						value={weather.precipProbability}
-						units={units}
-					/>
-					<PrecipitationIntensity
-						value={weather.precipIntensity}
-						units={units}
-					/>
-					<NearestStormDistance
-						value={weather.nearestStormDistance}
-						units={units}
-					/>
-					<NearestStormBearing
-						value={weather.nearestStormBearing}
-						units={units}
-					/>
-					<DewPoint value={weather.dewPoint} units={units} />
-					<Humidity value={weather.humidity} units={units} />
-					<Wind
-						windBearing={weather.windBearing}
-						windSpeed={weather.windSpeed}
-						units={units}
-					/>
-					<WindGust value={weather.windGust} units={units} />
-					<CloudCover value={weather.cloudCover} units={units} />
-					<UVIndex value={weather.uvIndex} />
-					<Visibility value={weather.visibility} units={units} />
-					<Ozone value={weather.ozone} units={units} />
-				</FieldWrapper>
+				<WeatherCard
+					headerProps={{
+						avatar: <WeatherIcon icon={weather.icon} />,
+						title: formatDate({
+							time: weather.time,
+							timezone
+						}),
+						subheader: weather.summary
+					}}
+					content={
+						<FieldWrapper>
+							<Temperature value={weather.temperature} units={units} />
+							<ApparentTemperature
+								value={weather.apparentTemperature}
+								units={units}
+							/>
+							<PrecipitationProbability
+								value={weather.precipProbability}
+								units={units}
+							/>
+							<PrecipitationIntensity
+								value={weather.precipIntensity}
+								units={units}
+							/>
+							<NearestStormDistance
+								value={weather.nearestStormDistance}
+								units={units}
+							/>
+							<NearestStormBearing
+								value={weather.nearestStormBearing}
+								units={units}
+							/>
+							<DewPoint value={weather.dewPoint} units={units} />
+							<Humidity value={weather.humidity} units={units} />
+							<Wind
+								windBearing={weather.windBearing}
+								windSpeed={weather.windSpeed}
+								units={units}
+							/>
+							<WindGust value={weather.windGust} units={units} />
+							<CloudCover value={weather.cloudCover} units={units} />
+							<UVIndex value={weather.uvIndex} />
+							<Visibility value={weather.visibility} units={units} />
+							<Ozone value={weather.ozone} units={units} />
+						</FieldWrapper>
+					}
+				/>
 				{minutely &&
 					minutely.data && (
 					<div className={classes.graphWrapper}>

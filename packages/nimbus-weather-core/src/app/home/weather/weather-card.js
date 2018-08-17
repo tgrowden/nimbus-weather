@@ -4,8 +4,18 @@ import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = (theme: MuiTheme) => ({
+	root: {
+		'&:not(:last-of-type)': {
+			marginBottom: theme.spacing.unit * 2
+		}
+	}
+})
 
 type Props = {
+	classes: Object,
 	cardProps?: Object,
 	header?: React.Node,
 	headerProps?: Object,
@@ -27,35 +37,26 @@ class WeatherCard extends React.Component<Props> {
 	}
 
 	render() {
-		const { cardProps, headerProps, content, contentProps, actions, actionsProps } = this.props
+		const {
+			classes,
+			cardProps,
+			headerProps,
+			content,
+			contentProps,
+			actions,
+			actionsProps
+		} = this.props
 
 		return (
-			<Card {...cardProps}>
-				{
-					headerProps &&
-					(
-						<CardHeader {...headerProps} />
-					)
-				}
-				{
-					content &&
-					(
-						<CardContent {...contentProps}>
-							{ content }
-						</CardContent>
-					)
-				}
-				{
-					actions &&
-					(
-						<CardActions {...actionsProps}>
-							{ actions }
-						</CardActions>
-					)
-				}
-			</Card>
+			<div className={classes.root}>
+				<Card {...cardProps}>
+					{headerProps && <CardHeader {...headerProps} />}
+					{content && <CardContent {...contentProps}>{content}</CardContent>}
+					{actions && <CardActions {...actionsProps}>{actions}</CardActions>}
+				</Card>
+			</div>
 		)
 	}
 }
 
-export default WeatherCard
+export default withStyles(styles)(WeatherCard)
