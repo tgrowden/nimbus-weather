@@ -158,7 +158,6 @@ class LocationAutosuggest extends React.Component<Props, State> {
 	}
 }
 
-// export default withWidth()(withStyles(styles)(LocationAutosuggest))
 export default compose(
 	withWidth(),
 	withStyles(styles)

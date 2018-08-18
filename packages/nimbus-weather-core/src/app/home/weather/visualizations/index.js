@@ -20,7 +20,6 @@ const styles = (theme: MuiTheme) => ({
 	},
 	graphWrapper: {
 		width: '100%',
-		overflow: 'auto',
 		paddingTop: theme.spacing.unit * 2,
 		[theme.breakpoints.up('sm')]: {
 			width: '99%',

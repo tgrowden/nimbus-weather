@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import withWidth from '@material-ui/core/withWidth'
 import classnames from 'classnames'
+import { compose } from 'recompose'
 
 const styles = (theme: MuiTheme) => ({
 	root: {
@@ -97,5 +98,7 @@ class WeatherDataExpansionPanel extends React.Component<Props> {
 		)
 	}
 }
-// $FlowFixMe
-export default withWidth()(withStyles(styles)(WeatherDataExpansionPanel))
+export default compose(
+	withWidth(),
+	withStyles(styles)
+)(WeatherDataExpansionPanel)
