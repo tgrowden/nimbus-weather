@@ -15,15 +15,14 @@ const styles = (theme: MuiTheme) => ({
 		marginBottom: theme.spacing.unit * 2,
 		maxWidth: theme.breakpoints.values.lg,
 		marginLeft: 'auto',
-		marginRight: 'auto'
+		marginRight: 'auto',
+		width: '100%'
 	},
 	graphWrapper: {
 		width: '100%',
-		overflow: 'auto',
 		paddingTop: theme.spacing.unit * 2,
-		paddingBottom: theme.spacing.unit * 2,
 		[theme.breakpoints.up('sm')]: {
-			width: 'calc(100% - 72px)',
+			width: '99%',
 			marginLeft: 'auto',
 			marginRight: 'auto'
 		},

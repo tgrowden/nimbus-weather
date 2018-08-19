@@ -1,7 +1,7 @@
 {
   "name": "nimbus-weather-core",
   "productName": "Nimbus Weather",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "A great weather app with beautiful visualizations.",
   "main": "./dist/index.js",
   "homepage": "https://github.com/tgrowden/nimbus-weather#readme",
@@ -38,7 +38,8 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "react-scroll": "^1.7.9",
     "react-skycons": "^0.7.0",
-    "recharts": "^1.0.1",
+    "recharts": "^1.1.0",
+    "recompose": "^0.28.2",
     "redux": "^4.0.0",
     "redux-beacon": "^2.0.3",
     "redux-logger": "^3.0.6",

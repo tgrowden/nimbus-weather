@@ -138,7 +138,17 @@ class SpeedDials extends React.Component<Props, State> {
 				{this.actions.map(action => {
 					const { name, ...props } = action
 
-					return <SpeedDialAction key={name} tooltipTitle={name} {...props} />
+					return (
+						<SpeedDialAction
+							key={name}
+							tooltipTitle={
+								props.ButtonProps && props.ButtonProps.disabled === true
+									? undefined
+									: name
+							}
+							{...props}
+						/>
+					)
 				})}
 			</SpeedDial>
 		)

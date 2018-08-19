@@ -3,8 +3,8 @@ import * as React from 'react'
 import withWidth from '@material-ui/core/withWidth'
 import formatDate from '../../lib/format-date'
 import getUnits from '../../lib/units'
-import DesktopPressure from './desktop'
-import MobilePressure from './mobile'
+import PressureGraph from './graph'
+import PressureTable from './table'
 
 type Props = {
 	data: HourlyWeatherData,
@@ -44,18 +44,25 @@ class PressureVisualization extends React.Component<Props>
 	render() {
 		const { width } = this.props
 
+		const table = (
+			<PressureTable
+				units={this.units}
+				data={this.props.data}
+				dateFormat={this.props.dateFormat}
+				timezone={this.props.timezone}
+			/>
+		)
+
 		if (width === 'xs') {
-			return (
-				<MobilePressure
-					units={this.units}
-					data={this.props.data}
-					dateFormat={this.props.dateFormat}
-					timezone={this.props.timezone}
-				/>
-			)
+			return table
 		}
 
-		return <DesktopPressure units={this.units} data={this.data} />
+		return (
+			<React.Fragment>
+				<PressureGraph units={this.units} data={this.data} />
+				{table}
+			</React.Fragment>
+		)
 	}
 }
 

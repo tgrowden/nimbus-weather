@@ -9,10 +9,14 @@ import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import withWidth from '@material-ui/core/withWidth'
 import classnames from 'classnames'
+import { compose } from 'recompose'
 
 const styles = (theme: MuiTheme) => ({
 	root: {
 		width: '100%'
+	},
+	rootXs: {
+		// marginTop: theme.spacing.unit * 2
 	},
 	panelContent: {},
 	panelDetails: {
@@ -64,9 +68,16 @@ class WeatherDataExpansionPanel extends React.Component<Props> {
 		}
 
 		return (
-			<div className={classes.root}>
+			<div
+				className={classnames(classes.root, {
+					[classes.rootXs]: width === 'xs'
+				})}
+			>
 				<ExpansionPanel
 					expanded={expanded}
+					CollapseProps={{
+						timeout: 350
+					}}
 					onChange={() => {
 						onChange(!expanded)
 					}}
@@ -87,5 +98,7 @@ class WeatherDataExpansionPanel extends React.Component<Props> {
 		)
 	}
 }
-// $FlowFixMe
-export default withWidth()(withStyles(styles)(WeatherDataExpansionPanel))
+export default compose(
+	withWidth(),
+	withStyles(styles)
+)(WeatherDataExpansionPanel)
