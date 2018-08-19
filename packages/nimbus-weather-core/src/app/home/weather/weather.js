@@ -43,7 +43,7 @@ const styles = (theme: MuiTheme) => ({
 		flexDirection: 'column',
 		marginLeft: 'auto',
 		marginRight: 'auto',
-		padding: theme.spacing.unit * 4
+		paddingTop: theme.spacing.unit * 4
 	},
 	activeAlerts: {
 		color: theme.palette.error.main

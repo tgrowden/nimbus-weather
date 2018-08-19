@@ -87,6 +87,9 @@ class LocationAutosuggest extends React.Component<Props, State> {
 		// $FlowFixMe
 		this.props.setLocation(item)
 		this.props.fetchWeather()
+		if (this.inputEl) {
+			this.inputEl.blur()
+		}
 	}
 
 	handleStateChange = changes => {
@@ -153,6 +156,9 @@ class LocationAutosuggest extends React.Component<Props, State> {
 				getInputProps={this.getInputProps}
 				selectedItem={location && location.primaryLabel ? location : undefined}
 				focusOnClear
+				inputRef={node => {
+					this.inputEl = node
+				}}
 			/>
 		)
 	}
